@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nymphe Illustration</title>
+
+  <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons CDN -->
+  
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========== NAVIGATION ========== -->
+  <header class="nav-header">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a href="index.html" class="logo">
+        <span class="logo-main">Nymphe</span>
+        <span class="logo-sub">Illustration</span>
+      </a>
+
+      <!-- Nav Links (desktop) -->
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="nav-link active">Illustration</a>
+        <a href="index.html#galerie" class="nav-link">Sticker</a>
+        <a href="about.html" class="nav-link">Bio</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Icons -->
+      <div class="nav-icons">
+        <button class="icon-btn" aria-label="Rechercher"><i data-lucide="search"></i></button>
+        <button class="icon-btn" aria-label="Mon compte"><i data-lucide="user"></i></button>
+        <a href="#" class="icon-btn" aria-label="Panier"><i data-lucide="shopping-bag"></i></a>
+        <!-- Hamburger (mobile) -->
+        <button class="icon-btn hamburger" id="hamburger" aria-label="Menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html" class="mobile-link">Illustration</a>
+      <a href="index.html#galerie" class="mobile-link">Sticker</a>
+      <a href="about.html" class="mobile-link">Bio</a>
+      <a href="contact.html" class="mobile-link">Contact</a>
+      <a href="commission.html" class="mobile-link">Commander</a>
+    </div>
+  </header>
+
+  <!-- ========== HERO BANNER ========== -->
+  <section class="hero">
+    <!-- Image side -->
+    <div class="hero-image">
+      <img
+        src="https://placehold.co/600x420/d4c9a8/7a6e52?text=Illustration+hero"
+        alt="Illustration mise en avant"
+        class="hero-img"
+      />
+    </div>
+    <!-- Text side -->
+    <div class="hero-text">
+      <p class="hero-tagline">Je vais y réfléchir</p>
+      <p class="hero-quote"><em>"caca"</em> Lilou 2026</p>
+      <a href="#galerie" class="btn-primary">Voir la boutique</a>
+    </div>
+  </section>
+
+  <!-- ========== NOUVEAUTÉS ========== -->
+  <section class="section" id="galerie">
+    <h2 class="section-title">Nouveautés</h2>
+
+    <div class="product-grid">
+
+      <!-- Product card 1 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Cat+Lady" alt="Cat Lady Sunday" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Cat Lady Sunday</h3>
+            <p class="product-price">€ 3 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 2 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Pivoine" alt="Pivoine blanche" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Pivoine blanche</h3>
+            <p class="product-price">€ 2 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 3 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Grenouilles" alt="Grenouilles et champignon" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Grenouilles et champignon</h3>
+            <p class="product-price">€ 2 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 4 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Plants" alt="Plants are friends" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Plants are friends</h3>
+            <p class="product-price">€ 3 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 5 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Stickers" alt="Lot de stickers" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Lot de stickers</h3>
+            <p class="product-price">€ 2 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 6 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Matcha" alt="Matcha" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Matcha</h3>
+            <p class="product-price">€ 2 EUR</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Product card 7 -->
+      <article class="product-card">
+        <a href="#" class="product-link">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Scarab%C3%A9e" alt="Scarabée lucane" class="product-img" />
+            <div class="product-overlay"><span>Voir</span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Scarabée lucane</h3>
+            <p class="product-price">€ 3 EUR</p>
+          </div>
+        </a>
+      </article>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="section-cta">
+      <a href="#" class="btn-outline">Voir toutes les créations</a>
+    </div>
+  </section>
+
+  <!-- ========== COMMISSION BANNER ========== -->
+  <section class="commission-banner">
+    <div class="commission-inner">
+      <div class="commission-text">
+        <h2>Une illustration sur mesure ?</h2>
+        <p>Portraits, illustrations botaniques, projets éditoriaux… Parlons de votre projet.</p>
+        <a href="commission.html" class="btn-primary">Commander une commission</a>
+      </div>
+      <div class="commission-img">
+        <img src="https://placehold.co/480x340/c8d4b4/6a7e52?text=Commission+art" alt="Exemple de commission" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-main">Nymphe</span>
+        <span class="logo-sub">Illustration</span>
+      </div>
+      <nav class="footer-links">
+        <a href="about.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="commission.html">Commissions</a>
+      </nav>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2026 Nymphe Illustration — Tous droits réservés</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+  <script>
+    // Init Lucide icons
+    document.addEventListener("DOMContentLoaded", function() { lucide.createIcons(); });
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

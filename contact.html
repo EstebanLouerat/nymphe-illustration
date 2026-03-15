@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — Nymphe Illustration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Extra style for contact info cards -->
+    <style>
+      .contact-info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+      .contact-card {
+        background: var(--linen-dark);
+        border-radius: var(--radius);
+        padding: 20px 16px;
+        text-align: center;
+      }
+      .contact-card svg {
+        color: var(--sage-dark);
+        margin: 0 auto 10px;
+        width: 22px;
+        height: 22px;
+      }
+      .contact-card h4 {
+        font-family: var(--font-display);
+        font-size: 0.88rem;
+        letter-spacing: 0.06em;
+        color: var(--text);
+        margin-bottom: 4px;
+      }
+      .contact-card p {
+        font-size: 0.78rem;
+        color: var(--brown-light);
+      }
+      @media (max-width: 600px) {
+        .contact-info {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION -->
+    <header class="nav-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </a>
+        <nav class="nav-links" id="nav-links">
+          <a href="index.html" class="nav-link">Illustration</a>
+          <a href="index.html#galerie" class="nav-link">Sticker</a>
+          <a href="about.html" class="nav-link">Bio</a>
+          <a href="contact.html" class="nav-link active">Contact</a>
+        </nav>
+        <div class="nav-icons">
+          <button class="icon-btn" aria-label="Rechercher">
+            <i data-lucide="search"></i>
+          </button>
+          <button class="icon-btn" aria-label="Mon compte">
+            <i data-lucide="user"></i>
+          </button>
+          <a href="#" class="icon-btn" aria-label="Panier"
+            ><i data-lucide="shopping-bag"></i
+          ></a>
+          <button class="icon-btn hamburger" id="hamburger">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Illustration</a>
+        <a href="index.html#galerie" class="mobile-link">Sticker</a>
+        <a href="about.html" class="mobile-link">Bio</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="commission.html" class="mobile-link">Commander</a>
+      </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <h1>Contact</h1>
+      <p>Une question, une collaboration ? Écrivez-moi.</p>
+    </div>
+    <hr class="divider" />
+
+    <!-- CONTACT CONTENT -->
+    <div class="contact-wrap">
+      <!-- Infos rapides -->
+      <div class="contact-info">
+        <div class="contact-card">
+          <i data-lucide="mail"></i>
+          <h4>Email</h4>
+          <p>hello@nymphe-illustration.fr</p>
+        </div>
+        <div class="contact-card">
+          <i data-lucide="instagram"></i>
+          <h4>Instagram</h4>
+          <p>@nymphe.illustration</p>
+        </div>
+        <div class="contact-card">
+          <i data-lucide="clock"></i>
+          <h4>Réponse sous</h4>
+          <p>48 heures</p>
+        </div>
+      </div>
+
+      <h2>Envoyez-moi un message</h2>
+      <p>
+        Pour une commande, une collaboration ou juste dire bonjour — je suis
+        ravie de lire vos messages.
+      </p>
+
+      <!--
+      FORMSPREE — Action du formulaire
+      1. Créez un compte gratuit sur https://formspree.io
+      2. Créez un nouveau formulaire et copiez l'URL d'action
+      3. Remplacez "YOUR_FORM_ID" ci-dessous par votre ID
+      Exemple: action="https://formspree.io/f/xpwzabcd"
+    -->
+      <form
+        id="contact-form"
+        action="https://formspree.io/f/xeerlrkd"
+        method="POST"
+      >
+        <!-- Champ anti-spam Formspree -->
+        <input type="text" name="_gotcha" style="display: none" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first-name">Prénom</label>
+            <input
+              type="text"
+              id="first-name"
+              name="first_name"
+              placeholder="Marie"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Nom</label>
+            <input
+              type="text"
+              id="last-name"
+              name="last_name"
+              placeholder="Dupont"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="marie@example.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Sujet</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            placeholder="Objet de votre message"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Bonjour, je souhaitais…"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-primary">Envoyer le message</button>
+        </div>
+      </form>
+
+      <!-- Message de succès (affiché via JS après envoi) -->
+      <div class="form-success" id="form-success">
+        ✦ Merci ! Votre message a bien été envoyé.<br />
+        <small
+          style="
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--sage-dark);
+          "
+        >
+          Je vous répondrai dans les 48 heures.
+        </small>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </div>
+        <nav class="footer-links">
+          <a href="about.html">À propos</a>
+          <a href="contact.html">Contact</a>
+          <a href="commission.html">Commissions</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+        </div>
+      </div>
+      <p class="footer-copy">
+        © 2026 Nymphe Illustration — Tous droits réservés
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+
+      // Hamburger
+      document.getElementById("hamburger").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.toggle("open");
+      });
+
+      // Formspree AJAX submission — affichage du message de succès sans rechargement
+      const form = document.getElementById("contact-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const btn = form.querySelector('button[type="submit"]');
+        btn.textContent = "Envoi en cours…";
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            body: data,
+            headers: { Accept: "application/json" },
+          });
+          if (res.ok) {
+            form.style.display = "none";
+            document.getElementById("form-success").style.display = "block";
+          } else {
+            btn.textContent = "Erreur — Réessayez";
+            btn.disabled = false;
+          }
+        } catch {
+          btn.textContent = "Erreur réseau — Réessayez";
+          btn.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
