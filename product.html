@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Illustration — Nymphe Illustration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* ── Page produit ── */
+      .product-page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 52px 24px 80px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+      }
+
+      /* Galerie image */
+      .product-gallery {
+        position: sticky;
+        top: calc(var(--nav-h) + 20px);
+      }
+      .product-gallery-main {
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--linen-dark);
+        aspect-ratio: 1;
+      }
+      .product-gallery-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .product-gallery-main:hover img {
+        transform: scale(1.04);
+      }
+
+      /* Info produit */
+      .product-detail {
+        padding-top: 8px;
+      }
+      .product-detail-category {
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--sage-dark);
+        margin-bottom: 10px;
+      }
+      .product-detail-title {
+        font-family: var(--font-display);
+        font-size: 2.4rem;
+        font-weight: 300;
+        color: var(--text);
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .product-detail-price {
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        color: var(--brown);
+        margin-bottom: 28px;
+      }
+      .product-detail-divider {
+        border: none;
+        border-top: 1px solid var(--linen-dark);
+        margin: 24px 0;
+      }
+      .product-detail-desc {
+        font-size: 0.88rem;
+        color: var(--brown-light);
+        line-height: 1.85;
+        margin-bottom: 28px;
+      }
+
+      /* Sélecteur format */
+      .format-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--brown-light);
+        margin-bottom: 10px;
+      }
+      .format-options {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+      .format-btn {
+        padding: 7px 16px;
+        border: 1px solid var(--linen-dark);
+        border-radius: var(--radius);
+        font-size: 0.78rem;
+        color: var(--brown-light);
+        cursor: pointer;
+        transition:
+          border-color var(--transition),
+          color var(--transition),
+          background var(--transition);
+        font-family: var(--font-body);
+      }
+      .format-btn:hover,
+      .format-btn.selected {
+        border-color: var(--brown);
+        color: var(--text);
+        background: var(--linen);
+      }
+
+      /* CTA */
+      .product-cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn-add-cart {
+        flex: 1;
+        min-width: 180px;
+        padding: 14px 24px;
+        background: var(--brown);
+        color: var(--white);
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border-radius: var(--radius);
+        text-align: center;
+        transition:
+          background var(--transition),
+          transform var(--transition);
+        font-family: var(--font-body);
+        cursor: pointer;
+        border: none;
+      }
+      .btn-add-cart:hover {
+        background: var(--text);
+        transform: translateY(-1px);
+      }
+      .btn-add-cart:active {
+        transform: translateY(0);
+      }
+      .btn-wishlist {
+        width: 50px;
+        height: 50px;
+        border: 1px solid var(--linen-dark);
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--brown-light);
+        cursor: pointer;
+        transition:
+          border-color var(--transition),
+          color var(--transition);
+        flex-shrink: 0;
+      }
+      .btn-wishlist:hover {
+        border-color: var(--brown);
+        color: var(--brown);
+      }
+      .btn-wishlist svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Infos livraison */
+      .shipping-info {
+        margin-top: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .shipping-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        color: var(--brown-light);
+      }
+      .shipping-row svg {
+        width: 16px;
+        height: 16px;
+        color: var(--sage-dark);
+        flex-shrink: 0;
+      }
+
+      /* Breadcrumb */
+      .breadcrumb {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px 24px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        color: var(--brown-light);
+      }
+      .breadcrumb a {
+        color: var(--brown-light);
+        transition: color var(--transition);
+      }
+      .breadcrumb a:hover {
+        color: var(--text);
+      }
+      .breadcrumb span {
+        color: var(--linen-dark);
+      }
+
+      /* Skeleton loader */
+      .skeleton {
+        background: linear-gradient(
+          90deg,
+          var(--linen-dark) 25%,
+          var(--linen) 50%,
+          var(--linen-dark) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.4s infinite;
+        border-radius: var(--radius);
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Related products */
+      .related-section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 24px 80px;
+      }
+      .related-section h2 {
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: var(--text);
+        margin-bottom: 28px;
+      }
+
+      @media (max-width: 768px) {
+        .product-page {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .product-gallery {
+          position: static;
+        }
+        .product-detail-title {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ========== NAVIGATION ========== -->
+    <header class="nav-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link active">Illustration</a>
+          <a href="index.html#galerie" class="nav-link">Sticker</a>
+          <a href="about.html" class="nav-link">Bio</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-icons">
+          <button class="icon-btn" aria-label="Rechercher">
+            <i data-lucide="search"></i>
+          </button>
+          <button class="icon-btn" aria-label="Mon compte">
+            <i data-lucide="user"></i>
+          </button>
+          <div class="cart-btn-wrap">
+            <button class="icon-btn" id="cart-toggle" aria-label="Panier">
+              <i data-lucide="shopping-bag"></i>
+            </button>
+            <span class="cart-badge">0</span>
+          </div>
+          <button class="icon-btn hamburger" id="hamburger">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Illustration</a>
+        <a href="index.html#galerie" class="mobile-link">Sticker</a>
+        <a href="about.html" class="mobile-link">Bio</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="commission.html" class="mobile-link">Commander</a>
+      </div>
+    </header>
+
+    <!-- ========== CART SIDE PANEL ========== -->
+    <div
+      class="cart-overlay"
+      id="cart-overlay"
+      onclick="Cart.closePanel()"
+    ></div>
+    <aside class="cart-panel" id="cart-panel" role="dialog" aria-label="Panier">
+      <div class="cart-header">
+        <h2>Votre panier</h2>
+        <button
+          class="cart-close"
+          onclick="Cart.closePanel()"
+          aria-label="Fermer le panier"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="cart-items-list" id="cart-items-list"></div>
+      <div class="cart-footer" id="cart-footer">
+        <div class="cart-subtotal">
+          <span>Total</span>
+          <span id="cart-total">€ 0.00</span>
+        </div>
+        <a href="checkout.html" class="cart-checkout">Commander →</a>
+        <button class="cart-continue" onclick="Cart.closePanel()">
+          Continuer mes achats
+        </button>
+      </div>
+    </aside>
+
+    <!-- Toast -->
+    <div class="cart-toast" id="cart-toast"></div>
+
+    <!-- ========== BREADCRUMB ========== -->
+    <nav class="breadcrumb" id="breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span>›</span>
+      <a href="index.html#galerie">Galerie</a>
+      <span>›</span>
+      <span id="breadcrumb-title">…</span>
+    </nav>
+
+    <!-- ========== CONTENU PRODUIT ========== -->
+    <main>
+      <!-- Skeleton pendant le chargement -->
+      <div class="product-page" id="product-skeleton">
+        <div
+          class="skeleton"
+          style="aspect-ratio: 1; width: 100%; border-radius: 4px"
+        ></div>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-top: 8px;
+          "
+        >
+          <div class="skeleton" style="height: 14px; width: 80px"></div>
+          <div class="skeleton" style="height: 44px; width: 90%"></div>
+          <div class="skeleton" style="height: 30px; width: 100px"></div>
+          <div
+            class="skeleton"
+            style="height: 1px; width: 100%; margin: 8px 0"
+          ></div>
+          <div class="skeleton" style="height: 14px; width: 100%"></div>
+          <div class="skeleton" style="height: 14px; width: 85%"></div>
+          <div class="skeleton" style="height: 14px; width: 70%"></div>
+          <div
+            class="skeleton"
+            style="height: 50px; width: 100%; margin-top: 24px"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Contenu réel injecté par JS -->
+      <div class="product-page" id="product-content" style="display: none">
+        <div class="product-gallery">
+          <div class="product-gallery-main">
+            <img id="product-img" src="" alt="" />
+          </div>
+        </div>
+
+        <div class="product-detail">
+          <p class="product-detail-category" id="product-category"></p>
+          <h1 class="product-detail-title" id="product-title"></h1>
+          <p class="product-detail-price" id="product-price"></p>
+          <hr class="product-detail-divider" />
+          <p class="product-detail-desc" id="product-desc">
+            Impression fine art sur papier 300g/m², tirée à la main en édition
+            limitée. Chaque print est signé au verso. Livré dans une pochette de
+            protection rigide.
+          </p>
+
+          <!-- Formats disponibles -->
+          <p class="format-label">Format</p>
+          <div class="format-options">
+            <button class="format-btn selected">A5 — 14×21 cm</button>
+            <button class="format-btn">A4 — 21×29 cm</button>
+            <button class="format-btn">A3 — 30×42 cm</button>
+          </div>
+
+          <!-- Boutons d'action -->
+          <div class="product-cta">
+            <button class="btn-add-cart" id="btn-add-cart">
+              Ajouter au panier
+            </button>
+            <button class="btn-wishlist" aria-label="Ajouter aux favoris">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Infos livraison -->
+          <div class="shipping-info">
+            <div class="shipping-row">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+              Livraison en 3–5 jours ouvrés
+            </div>
+            <div class="shipping-row">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                />
+              </svg>
+              Emballage sécurisé, tube ou pochette rigide
+            </div>
+            <div class="shipping-row">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Impression signée, édition limitée
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message d'erreur -->
+      <div
+        id="product-error"
+        style="
+          display: none;
+          text-align: center;
+          padding: 80px 24px;
+          color: var(--brown-light);
+        "
+      >
+        <p
+          style="
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 12px;
+          "
+        >
+          Illustration introuvable
+        </p>
+        <a href="index.html#galerie" class="btn-outline"
+          >← Retour à la galerie</a
+        >
+      </div>
+
+      <!-- Produits similaires -->
+      <div class="related-section" id="related-section" style="display: none">
+        <hr
+          style="
+            border: none;
+            border-top: 1px solid var(--linen-dark);
+            margin-bottom: 48px;
+          "
+        />
+        <h2>Vous aimerez aussi</h2>
+        <div class="product-grid" id="related-grid"></div>
+      </div>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </div>
+        <nav class="footer-links">
+          <a href="about.html">À propos</a>
+          <a href="contact.html">Contact</a>
+          <a href="commission.html">Commissions</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+        </div>
+      </div>
+      <p class="footer-copy">
+        © 2026 Nymphe Illustration — Tous droits réservés
+      </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <script src="config.js"></script>
+    <script src="cart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        lucide.createIcons();
+        Cart.init();
+
+        // Menu mobile
+        document.getElementById("hamburger").addEventListener("click", () => {
+          document.getElementById("mobile-menu").classList.toggle("open");
+        });
+        // Ouvrir panier
+        document
+          .getElementById("cart-toggle")
+          .addEventListener("click", () => Cart.openPanel());
+
+        // ── Récupérer l'ID depuis l'URL (?id=xxxxx) ─────────────
+        const params = new URLSearchParams(window.location.search);
+        const entryId = params.get("id");
+
+        if (
+          !entryId ||
+          typeof CONTENTFUL_SPACE_ID === "undefined" ||
+          CONTENTFUL_SPACE_ID === "VOTRE_SPACE_ID"
+        ) {
+          document.getElementById("product-skeleton").style.display = "none";
+          document.getElementById("product-error").style.display = "block";
+          return;
+        }
+
+        try {
+          // Charger l'entrée spécifique
+          const url =
+            `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries/${entryId}` +
+            `?access_token=${CONTENTFUL_ACCESS_TOKEN}`;
+          const assetUrl =
+            `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/assets` +
+            `?access_token=${CONTENTFUL_ACCESS_TOKEN}&sys.id[in]=${entryId}`;
+
+          const res = await fetch(url);
+          const item = await res.json();
+
+          if (!item.fields) throw new Error("Entry not found");
+
+          const f = item.fields;
+
+          // Résoudre l'image
+          let imgSrc =
+            "https://placehold.co/800x800/e8e0d0/8a7e62?text=" +
+            encodeURIComponent(f.titre || "");
+          if (f.image?.sys?.id) {
+            const aRes = await fetch(
+              `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/assets/${f.image.sys.id}` +
+                `?access_token=${CONTENTFUL_ACCESS_TOKEN}`,
+            );
+            const asset = await aRes.json();
+            if (asset.fields?.file?.url)
+              imgSrc = "https:" + asset.fields.file.url + "?w=900&fm=webp&q=85";
+          }
+
+          // Mettre à jour la page
+          document.title =
+            (f.titre || "Illustration") + " — Nymphe Illustration";
+          document.getElementById("breadcrumb-title").textContent =
+            f.titre || "";
+          document.getElementById("product-img").src = imgSrc;
+          document.getElementById("product-img").alt = f.titre || "";
+          document.getElementById("product-title").textContent =
+            f.titre || "Sans titre";
+          document.getElementById("product-category").textContent =
+            f.categorie || "";
+          document.getElementById("product-price").textContent = f.prix
+            ? "€ " + Number(f.prix).toFixed(2)
+            : "";
+          if (f.description)
+            document.getElementById("product-desc").textContent = f.description;
+
+          // Bouton "Ajouter au panier"
+          document
+            .getElementById("btn-add-cart")
+            .addEventListener("click", () => {
+              Cart.add({
+                id: item.sys.id,
+                titre: f.titre || "Sans titre",
+                prix: Number(f.prix) || 0,
+                image: imgSrc,
+              });
+              showToast("✦ Ajouté au panier");
+            });
+
+          // Sélecteur de format
+          document.querySelectorAll(".format-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              document
+                .querySelectorAll(".format-btn")
+                .forEach((b) => b.classList.remove("selected"));
+              btn.classList.add("selected");
+            });
+          });
+
+          // Afficher le contenu
+          document.getElementById("product-skeleton").style.display = "none";
+          document.getElementById("product-content").style.display = "grid";
+
+          // Charger des produits similaires
+          loadRelated(item.sys.id, f.categorie);
+        } catch (err) {
+          console.error(err);
+          document.getElementById("product-skeleton").style.display = "none";
+          document.getElementById("product-error").style.display = "block";
+        }
+      });
+
+      // ── Produits similaires ─────────────────────────────────────
+      async function loadRelated(currentId, categorie) {
+        try {
+          let url =
+            `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries` +
+            `?access_token=${CONTENTFUL_ACCESS_TOKEN}&content_type=nympheIllustration&limit=4`;
+          if (categorie)
+            url += `&fields.categorie=${encodeURIComponent(categorie)}`;
+
+          const res = await fetch(url);
+          const data = await res.json();
+          const assets = {};
+          (data.includes?.Asset || []).forEach((a) => {
+            assets[a.sys.id] = "https:" + a.fields.file.url;
+          });
+
+          const others = (data.items || [])
+            .filter((i) => i.sys.id !== currentId)
+            .slice(0, 4);
+          if (others.length === 0) return;
+
+          const grid = document.getElementById("related-grid");
+          others.forEach((item) => {
+            const f = item.fields;
+            const imgId = f.image?.sys?.id;
+            const imgSrc =
+              imgId && assets[imgId]
+                ? assets[imgId] + "?w=600&fm=webp&q=80"
+                : "https://placehold.co/400x400/e8e0d0/8a7e62?text=Illustration";
+            const card = document.createElement("article");
+            card.className = "product-card";
+            card.innerHTML = `
+            <a href="product.html?id=${item.sys.id}" class="product-link">
+              <div class="product-img-wrap">
+                <img src="${imgSrc}" alt="${f.titre || ""}" class="product-img" loading="lazy" />
+                <div class="product-overlay"><span>Voir</span></div>
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">${f.titre || "Sans titre"}</h3>
+                <p class="product-price">${f.prix ? "€ " + f.prix + " EUR" : ""}</p>
+              </div>
+            </a>`;
+            grid.appendChild(card);
+          });
+
+          document.getElementById("related-section").style.display = "block";
+        } catch (e) {
+          /* silencieux */
+        }
+      }
+
+      // ── Toast notification ──────────────────────────────────────
+      function showToast(msg) {
+        const t = document.getElementById("cart-toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2500);
+      }
+    </script>
+  </body>
+</html>

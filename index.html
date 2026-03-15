@@ -1,237 +1,366 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nymphe Illustration</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nymphe Illustration</title>
 
-  <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Lucide Icons CDN -->
-  
+    <!-- Lucide Icons CDN -->
 
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ========== NAVIGATION ========== -->
+    <header class="nav-header">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="index.html" class="logo">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </a>
 
-  <!-- ========== NAVIGATION ========== -->
-  <header class="nav-header">
-    <div class="nav-inner">
-      <!-- Logo -->
-      <a href="index.html" class="logo">
-        <span class="logo-main">Nymphe</span>
-        <span class="logo-sub">Illustration</span>
-      </a>
+        <!-- Nav Links (desktop) -->
+        <nav class="nav-links" id="nav-links">
+          <a href="index.html" class="nav-link active">Illustration</a>
+          <a href="index.html#galerie" class="nav-link">Sticker</a>
+          <a href="about.html" class="nav-link">Bio</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
 
-      <!-- Nav Links (desktop) -->
-      <nav class="nav-links" id="nav-links">
-        <a href="index.html" class="nav-link active">Illustration</a>
-        <a href="index.html#galerie" class="nav-link">Sticker</a>
-        <a href="about.html" class="nav-link">Bio</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
+        <!-- Icons -->
+        <div class="nav-icons">
+          <button class="icon-btn" aria-label="Rechercher">
+            <i data-lucide="search"></i>
+          </button>
+          <button class="icon-btn" aria-label="Mon compte">
+            <i data-lucide="user"></i>
+          </button>
+          <div class="cart-btn-wrap">
+            <button class="icon-btn" id="cart-toggle" aria-label="Panier">
+              <i data-lucide="shopping-bag"></i>
+            </button>
+            <span class="cart-badge">0</span>
+          </div>
+          <!-- Hamburger (mobile) -->
+          <button class="icon-btn hamburger" id="hamburger" aria-label="Menu">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+      </div>
 
-      <!-- Icons -->
-      <div class="nav-icons">
-        <button class="icon-btn" aria-label="Rechercher"><i data-lucide="search"></i></button>
-        <button class="icon-btn" aria-label="Mon compte"><i data-lucide="user"></i></button>
-        <a href="#" class="icon-btn" aria-label="Panier"><i data-lucide="shopping-bag"></i></a>
-        <!-- Hamburger (mobile) -->
-        <button class="icon-btn hamburger" id="hamburger" aria-label="Menu">
-          <i data-lucide="menu"></i>
+      <!-- Mobile menu -->
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Illustration</a>
+        <a href="index.html#galerie" class="mobile-link">Sticker</a>
+        <a href="about.html" class="mobile-link">Bio</a>
+        <a href="contact.html" class="mobile-link">Contact</a>
+        <a href="commission.html" class="mobile-link">Commander</a>
+      </div>
+    </header>
+
+    <!-- ========== CART SIDE PANEL ========== -->
+    <div
+      class="cart-overlay"
+      id="cart-overlay"
+      onclick="Cart.closePanel()"
+    ></div>
+    <aside class="cart-panel" id="cart-panel" role="dialog" aria-label="Panier">
+      <div class="cart-header">
+        <h2>Votre panier</h2>
+        <button
+          class="cart-close"
+          onclick="Cart.closePanel()"
+          aria-label="Fermer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
         </button>
       </div>
-    </div>
-
-    <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html" class="mobile-link">Illustration</a>
-      <a href="index.html#galerie" class="mobile-link">Sticker</a>
-      <a href="about.html" class="mobile-link">Bio</a>
-      <a href="contact.html" class="mobile-link">Contact</a>
-      <a href="commission.html" class="mobile-link">Commander</a>
-    </div>
-  </header>
-
-  <!-- ========== HERO BANNER ========== -->
-  <section class="hero">
-    <!-- Image side -->
-    <div class="hero-image">
-      <img
-        src="https://placehold.co/600x420/d4c9a8/7a6e52?text=Illustration+hero"
-        alt="Illustration mise en avant"
-        class="hero-img"
-      />
-    </div>
-    <!-- Text side -->
-    <div class="hero-text">
-      <p class="hero-tagline">Je vais y réfléchir</p>
-      <p class="hero-quote"><em>"caca"</em> Lilou 2026</p>
-      <a href="#galerie" class="btn-primary">Voir la boutique</a>
-    </div>
-  </section>
-
-  <!-- ========== NOUVEAUTÉS ========== -->
-  <section class="section" id="galerie">
-    <h2 class="section-title">Nouveautés</h2>
-
-    <div class="product-grid">
-
-      <!-- Product card 1 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Cat+Lady" alt="Cat Lady Sunday" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Cat Lady Sunday</h3>
-            <p class="product-price">€ 3 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 2 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Pivoine" alt="Pivoine blanche" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Pivoine blanche</h3>
-            <p class="product-price">€ 2 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 3 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Grenouilles" alt="Grenouilles et champignon" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Grenouilles et champignon</h3>
-            <p class="product-price">€ 2 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 4 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Plants" alt="Plants are friends" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Plants are friends</h3>
-            <p class="product-price">€ 3 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 5 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Stickers" alt="Lot de stickers" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Lot de stickers</h3>
-            <p class="product-price">€ 2 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 6 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Matcha" alt="Matcha" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Matcha</h3>
-            <p class="product-price">€ 2 EUR</p>
-          </div>
-        </a>
-      </article>
-
-      <!-- Product card 7 -->
-      <article class="product-card">
-        <a href="#" class="product-link">
-          <div class="product-img-wrap">
-            <img src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Scarab%C3%A9e" alt="Scarabée lucane" class="product-img" />
-            <div class="product-overlay"><span>Voir</span></div>
-          </div>
-          <div class="product-info">
-            <h3 class="product-name">Scarabée lucane</h3>
-            <p class="product-price">€ 3 EUR</p>
-          </div>
-        </a>
-      </article>
-
-    </div>
-
-    <!-- CTA -->
-    <div class="section-cta">
-      <a href="#" class="btn-outline">Voir toutes les créations</a>
-    </div>
-  </section>
-
-  <!-- ========== COMMISSION BANNER ========== -->
-  <section class="commission-banner">
-    <div class="commission-inner">
-      <div class="commission-text">
-        <h2>Une illustration sur mesure ?</h2>
-        <p>Portraits, illustrations botaniques, projets éditoriaux… Parlons de votre projet.</p>
-        <a href="commission.html" class="btn-primary">Commander une commission</a>
+      <div class="cart-items-list" id="cart-items-list"></div>
+      <div class="cart-footer" id="cart-footer">
+        <div class="cart-subtotal">
+          <span>Total</span>
+          <span id="cart-total">€ 0.00</span>
+        </div>
+        <a href="checkout.html" class="cart-checkout">Commander →</a>
+        <button class="cart-continue" onclick="Cart.closePanel()">
+          Continuer mes achats
+        </button>
       </div>
-      <div class="commission-img">
-        <img src="https://placehold.co/480x340/c8d4b4/6a7e52?text=Commission+art" alt="Exemple de commission" />
+    </aside>
+
+    <!-- Toast notification -->
+    <div class="cart-toast" id="cart-toast"></div>
+
+    <!-- ========== HERO BANNER ========== -->
+    <section class="hero">
+      <!-- Image side -->
+      <div class="hero-image">
+        <img
+          src="https://placehold.co/600x420/d4c9a8/7a6e52?text=Illustration+hero"
+          alt="Illustration mise en avant"
+          class="hero-img"
+        />
       </div>
-    </div>
-  </section>
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="logo-main">Nymphe</span>
-        <span class="logo-sub">Illustration</span>
+      <!-- Text side -->
+      <div class="hero-text">
+        <p class="hero-tagline">Je vais y réfléchir</p>
+        <p class="hero-quote"><em>"caca"</em> Lilou 2026</p>
+        <a href="#galerie" class="btn-primary">Voir la boutique</a>
       </div>
-      <nav class="footer-links">
-        <a href="about.html">À propos</a>
-        <a href="contact.html">Contact</a>
-        <a href="commission.html">Commissions</a>
-      </nav>
-      <div class="footer-socials">
-        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-        <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+    </section>
+
+    <!-- ========== NOUVEAUTÉS (chargées depuis Contentful) ========== -->
+    <section class="section" id="galerie">
+      <h2 class="section-title">Nouveautés</h2>
+
+      <!-- État de chargement -->
+      <div
+        id="grid-loading"
+        style="
+          text-align: center;
+          padding: 48px 0;
+          color: var(--brown-light);
+          font-size: 0.9rem;
+          letter-spacing: 0.06em;
+        "
+      >
+        Chargement des illustrations…
       </div>
-    </div>
-    <p class="footer-copy">© 2026 Nymphe Illustration — Tous droits réservés</p>
-  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-  <script>
-    // Init Lucide icons
-    document.addEventListener("DOMContentLoaded", function() { lucide.createIcons(); });
+      <!-- Grille injectée dynamiquement par JS -->
+      <div class="product-grid" id="product-grid"></div>
 
-    // Mobile menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-    });
-  </script>
+      <!-- Message si Contentful non configuré -->
+      <div id="grid-placeholder" style="display: none">
+        <div class="product-grid">
+          <article class="product-card">
+            <a href="#" class="product-link">
+              <div class="product-img-wrap">
+                <img
+                  src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Illustration+1"
+                  alt="Illustration"
+                  class="product-img"
+                />
+                <div class="product-overlay"><span>Voir</span></div>
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">Exemple illustration</h3>
+                <p class="product-price">€ 3 EUR</p>
+              </div>
+            </a>
+          </article>
+          <article class="product-card">
+            <a href="#" class="product-link">
+              <div class="product-img-wrap">
+                <img
+                  src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Illustration+2"
+                  alt="Illustration"
+                  class="product-img"
+                />
+                <div class="product-overlay"><span>Voir</span></div>
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">Exemple sticker</h3>
+                <p class="product-price">€ 2 EUR</p>
+              </div>
+            </a>
+          </article>
+          <article class="product-card">
+            <a href="#" class="product-link">
+              <div class="product-img-wrap">
+                <img
+                  src="https://placehold.co/400x400/e8e0d0/8a7e62?text=Illustration+3"
+                  alt="Illustration"
+                  class="product-img"
+                />
+                <div class="product-overlay"><span>Voir</span></div>
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">Exemple print</h3>
+                <p class="product-price">€ 4 EUR</p>
+              </div>
+            </a>
+          </article>
+        </div>
+        <p
+          style="
+            text-align: center;
+            color: var(--brown-light);
+            font-size: 0.8rem;
+            margin-top: 16px;
+          "
+        >
+          ⚙️ Configurez Contentful dans <code>config.js</code> pour afficher vos
+          vraies illustrations.
+        </p>
+      </div>
 
-</body>
+      <div class="section-cta">
+        <a href="#" class="btn-outline">Voir toutes les créations</a>
+      </div>
+    </section>
+
+    <!-- ========== COMMISSION BANNER ========== -->
+    <section class="commission-banner">
+      <div class="commission-inner">
+        <div class="commission-text">
+          <h2>Une illustration sur mesure ?</h2>
+          <p>
+            Portraits, illustrations botaniques, projets éditoriaux… Parlons de
+            votre projet.
+          </p>
+          <a href="commission.html" class="btn-primary"
+            >Commander une commission</a
+          >
+        </div>
+        <div class="commission-img">
+          <img
+            src="https://placehold.co/480x340/c8d4b4/6a7e52?text=Commission+art"
+            alt="Exemple de commission"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </div>
+        <nav class="footer-links">
+          <a href="about.html">À propos</a>
+          <a href="contact.html">Contact</a>
+          <a href="commission.html">Commissions</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+        </div>
+      </div>
+      <p class="footer-copy">
+        © 2026 Nymphe Illustration — Tous droits réservés
+      </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <!-- Fichier de configuration Contentful — à remplir une seule fois -->
+    <script src="config.js"></script>
+    <script src="cart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        // ── Icônes Lucide ──────────────────────────────────────────────
+        lucide.createIcons();
+
+        // ── Panier ────────────────────────────────────────────────────
+        Cart.init();
+        document
+          .getElementById("cart-toggle")
+          .addEventListener("click", () => Cart.openPanel());
+
+        // ── Menu mobile ───────────────────────────────────────────────
+        document.getElementById("hamburger").addEventListener("click", () => {
+          document.getElementById("mobile-menu").classList.toggle("open");
+        });
+
+        // ── Chargement Contentful ─────────────────────────────────────
+        const loading = document.getElementById("grid-loading");
+        const grid = document.getElementById("product-grid");
+        const fallback = document.getElementById("grid-placeholder");
+
+        if (
+          typeof CONTENTFUL_SPACE_ID === "undefined" ||
+          CONTENTFUL_SPACE_ID === "VOTRE_SPACE_ID"
+        ) {
+          loading.style.display = "none";
+          fallback.style.display = "block";
+          return;
+        }
+
+        try {
+          const url =
+            `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries` +
+            `?access_token=${CONTENTFUL_ACCESS_TOKEN}` +
+            `&content_type=nympheIllustration` +
+            `&order=sys.createdAt` +
+            `&limit=12`;
+
+          const res = await fetch(url);
+          const data = await res.json();
+
+          if (!data.items || data.items.length === 0) {
+            loading.innerHTML = "Aucune illustration publiée pour l'instant.";
+            return;
+          }
+
+          const assets = {};
+          (data.includes?.Asset || []).forEach((a) => {
+            assets[a.sys.id] = "https:" + a.fields.file.url;
+          });
+
+          console.log(assets);
+
+          loading.style.display = "none";
+          data.items.forEach((item, i) => {
+            const f = item.fields;
+            const imgId = f.image?.sys?.id;
+            const imgSrc =
+              imgId && assets[imgId]
+                ? assets[imgId] + "?w=600&fm=webp&q=80"
+                : "https://placehold.co/400x400/e8e0d0/8a7e62?text=" +
+                  encodeURIComponent(f.titre || "Illustration");
+
+            console.log("id: ", item.sys.id);
+
+            const card = document.createElement("article");
+            card.className = "product-card";
+            card.style.animationDelay = i * 0.06 + "s";
+            // Lien vers la page produit avec l'ID Contentful
+            card.innerHTML = `
+            <a href="product?id=${item.sys.id}" class="product-link">
+              <div class="product-img-wrap">
+                <img src="${imgSrc}" alt="${f.titre || ""}" class="product-img" loading="lazy" />
+                <div class="product-overlay"><span>Voir</span></div>
+              </div>
+              <div class="product-info">
+                <h3 class="product-name">${f.titre || "Sans titre"}</h3>
+                <p class="product-price">${f.prix ? "€ " + f.prix + " EUR" : ""}</p>
+              </div>
+            </a>`;
+            grid.appendChild(card);
+          });
+        } catch (err) {
+          loading.innerHTML =
+            "Impossible de charger les illustrations. Vérifiez votre config Contentful.";
+          console.error("Contentful error:", err);
+        }
+      });
+
+      function showToast(msg) {
+        const t = document.getElementById("cart-toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2500);
+      }
+    </script>
+  </body>
 </html>
