@@ -11,203 +11,12 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="styles.css" />
-
-    <style>
-      /* Commission-specific extras */
-      .commission-intro {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 56px 24px 0;
-        text-align: center;
-      }
-      .commission-intro h2 {
-        font-family: var(--font-display);
-        font-size: 2rem;
-        font-weight: 300;
-        color: var(--text);
-        margin-bottom: 14px;
-      }
-      .commission-intro p {
-        color: var(--brown-light);
-        line-height: 1.8;
-        font-size: 0.9rem;
-      }
-
-      .process-section {
-        max-width: 940px;
-        margin: 0 auto;
-        padding: 52px 24px;
-      }
-      .process-section h2 {
-        font-family: var(--font-display);
-        font-size: 1.6rem;
-        font-weight: 300;
-        color: var(--text);
-        margin-bottom: 32px;
-        text-align: center;
-      }
-
-      /* Tarifs */
-      .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        max-width: 860px;
-        margin: 0 auto 56px;
-        padding: 0 24px;
-      }
-      .pricing-card {
-        background: var(--white);
-        border: 1px solid var(--linen-dark);
-        border-radius: var(--radius);
-        padding: 28px 20px;
-        text-align: center;
-        transition:
-          box-shadow var(--transition),
-          transform var(--transition);
-      }
-      .pricing-card:hover {
-        box-shadow: var(--shadow);
-        transform: translateY(-2px);
-      }
-      .pricing-card.featured {
-        background: var(--sage-light);
-        border-color: var(--sage);
-      }
-      .pricing-label {
-        font-size: 0.72rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--brown-light);
-        margin-bottom: 8px;
-      }
-      .pricing-card.featured .pricing-label {
-        color: var(--sage-dark);
-      }
-      .pricing-name {
-        font-family: var(--font-display);
-        font-size: 1.3rem;
-        font-weight: 400;
-        color: var(--text);
-        margin-bottom: 8px;
-      }
-      .pricing-price {
-        font-family: var(--font-display);
-        font-size: 2rem;
-        font-weight: 300;
-        color: var(--brown);
-        margin-bottom: 16px;
-      }
-      .pricing-price span {
-        font-size: 1rem;
-        color: var(--brown-light);
-      }
-      .pricing-features {
-        list-style: none;
-        font-size: 0.8rem;
-        color: var(--brown-light);
-        line-height: 1.9;
-        text-align: left;
-      }
-      .pricing-features li::before {
-        content: "✦ ";
-        color: var(--sage);
-      }
-
-      /* Form section */
-      .commission-form-wrap {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 0 24px 64px;
-      }
-      .commission-form-wrap h2 {
-        font-family: var(--font-display);
-        font-size: 1.8rem;
-        font-weight: 300;
-        color: var(--text);
-        margin-bottom: 8px;
-      }
-      .commission-form-wrap > p {
-        color: var(--brown-light);
-        font-size: 0.88rem;
-        margin-bottom: 36px;
-      }
-
-      .checkbox-group {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-      }
-      .checkbox-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.83rem;
-        color: var(--brown-light);
-        cursor: pointer;
-      }
-      .checkbox-item input[type="checkbox"] {
-        width: 16px;
-        height: 16px;
-        accent-color: var(--sage-dark);
-        cursor: pointer;
-      }
-
-      .field-note {
-        font-size: 0.72rem;
-        color: var(--brown-light);
-        margin-top: 5px;
-        letter-spacing: 0.02em;
-      }
-
-      @media (max-width: 700px) {
-        .pricing-grid {
-          grid-template-columns: 1fr;
-        }
-        .checkbox-group {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <!-- NAVIGATION -->
-    <header class="nav-header">
-      <div class="nav-inner">
-        <a href="index.html" class="logo">
-          <span class="logo-main">Nymphe</span>
-          <span class="logo-sub">Illustration</span>
-        </a>
-        <nav class="nav-links" id="nav-links">
-          <a href="index.html" class="nav-link">Illustration</a>
-          <a href="index.html#galerie" class="nav-link">Sticker</a>
-          <a href="about.html" class="nav-link">Bio</a>
-          <a href="contact.html" class="nav-link">Contact</a>
-        </nav>
-        <div class="nav-icons">
-          <button class="icon-btn" aria-label="Rechercher">
-            <i data-lucide="search"></i>
-          </button>
-          <button class="icon-btn" aria-label="Mon compte">
-            <i data-lucide="user"></i>
-          </button>
-          <a href="#" class="icon-btn" aria-label="Panier"
-            ><i data-lucide="shopping-bag"></i
-          ></a>
-          <button class="icon-btn hamburger" id="hamburger">
-            <i data-lucide="menu"></i>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-menu" id="mobile-menu">
-        <a href="index.html" class="mobile-link">Illustration</a>
-        <a href="index.html#galerie" class="mobile-link">Sticker</a>
-        <a href="about.html" class="mobile-link">Bio</a>
-        <a href="contact.html" class="mobile-link">Contact</a>
-        <a href="commission.html" class="mobile-link active">Commander</a>
-      </div>
-    </header>
+    <!-- ========== WEB COMPONENTS ========== -->
+    <nymphe-navbar></nymphe-navbar>
+    <nymphe-cart-panel></nymphe-cart-panel>
 
     <!-- PAGE HERO -->
     <div class="page-hero">
@@ -521,43 +330,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        lucide.createIcons();
-      });
-
-      document.getElementById("hamburger").addEventListener("click", () => {
-        document.getElementById("mobile-menu").classList.toggle("open");
-      });
-
-      // Formspree AJAX — Commission form
-      const commForm = document.getElementById("commission-form");
-      commForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const data = new FormData(commForm);
-        const btn = commForm.querySelector('button[type="submit"]');
-        btn.textContent = "Envoi en cours…";
-        btn.disabled = true;
-
-        try {
-          const res = await fetch(commForm.action, {
-            method: "POST",
-            body: data,
-            headers: { Accept: "application/json" },
-          });
-          if (res.ok) {
-            commForm.style.display = "none";
-            document.getElementById("commission-success").style.display =
-              "block";
-          } else {
-            btn.textContent = "Erreur — Réessayez";
-            btn.disabled = false;
-          }
-        } catch {
-          btn.textContent = "Erreur réseau — Réessayez";
-          btn.disabled = false;
-        }
-      });
-    </script>
+    <!-- Web Components -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/cart-panel.js"></script>
+    <!-- Variables d'environnement (à charger EN PREMIER) -->
+    <script src="js/.env.js"></script>
+    <!-- Modules -->
+    <script src="js/modules/ui.js"></script>
+    <!-- Page-specific script -->
+    <script src="js/commission-page.js"></script>
   </body>
 </html>

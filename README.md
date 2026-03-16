@@ -17,15 +17,38 @@ nymphe/
 
 ## Mise en route
 
-### 1. Remplacez les placeholders d'images
+### 1. Configuration des variables d'environnement
+
+Pour accéder aux contenus depuis Contentful, créez un fichier `js/.env.js` à la racine du dossier `js/` :
+
+```javascript
+// js/.env.js
+window.ENV = {
+  CONTENTFUL_SPACE_ID: "votre_space_id_ici",
+  CONTENTFUL_ACCESS_TOKEN: "votre_access_token_ici",
+};
+```
+
+**Où trouver ces valeurs :**
+
+1. Connectez-vous à [Contentful](https://www.contentful.com)
+2. Allez dans **Settings > API keys**
+3. Copiez votre Space ID et Content Delivery API token
+4. Collez-les dans `js/.env.js`
+
+**⚠️ Important :** Ne commitez JAMAIS `js/.env.js` dans git (il est déjà dans `.gitignore`). Cette ligne charge vos clés secrètes — gardez-les privées !
+
+### 2. Remplacez les placeholders d'images
 
 Cherchez dans chaque HTML les balises :
+
 ```html
 <img src="https://placehold.co/..." />
 ```
+
 Et remplacez-les par vos vraies illustrations.
 
-### 2. Configurez Formspree (formulaires de contact)
+### 3. Configurez Formspree (formulaires de contact)
 
 1. Créez un compte gratuit sur [formspree.io](https://formspree.io)
 2. Créez **deux formulaires** : un pour Contact, un pour Commission
@@ -35,12 +58,12 @@ Et remplacez-les par vos vraies illustrations.
 ```html
 <!-- contact.html -->
 <form action="https://formspree.io/f/xpwzABCD" method="POST">
-
-<!-- commission.html -->
-<form action="https://formspree.io/f/xyzXYZab" method="POST">
+  <!-- commission.html -->
+  <form action="https://formspree.io/f/xyzXYZab" method="POST"></form>
+</form>
 ```
 
-### 3. Personnalisez le contenu
+### 4. Personnalisez le contenu
 
 - **`about.html`** : remplacez `[Votre Prénom]` et les textes de présentation
 - **Liens réseaux sociaux** : cherchez `href="#"` sur les icônes Instagram/Pinterest

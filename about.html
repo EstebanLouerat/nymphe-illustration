@@ -1,137 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bio — Nymphe Illustration</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bio — Nymphe Illustration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- NAVIGATION -->
-  <header class="nav-header">
-    <div class="nav-inner">
-      <a href="index.html" class="logo">
-        <span class="logo-main">Nymphe</span>
-        <span class="logo-sub">Illustration</span>
-      </a>
-      <nav class="nav-links" id="nav-links">
-        <a href="index.html" class="nav-link">Illustration</a>
-        <a href="index.html#galerie" class="nav-link">Sticker</a>
-        <a href="about.html" class="nav-link active">Bio</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-      <div class="nav-icons">
-        <button class="icon-btn" aria-label="Rechercher"><i data-lucide="search"></i></button>
-        <button class="icon-btn" aria-label="Mon compte"><i data-lucide="user"></i></button>
-        <a href="#" class="icon-btn" aria-label="Panier"><i data-lucide="shopping-bag"></i></a>
-        <button class="icon-btn hamburger" id="hamburger"><i data-lucide="menu"></i></button>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- ========== WEB COMPONENTS ========== -->
+    <nymphe-navbar></nymphe-navbar>
+    <nymphe-cart-panel></nymphe-cart-panel>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <h1>À propos</h1>
+      <p>L'univers derrière les illustrations</p>
+    </div>
+    <hr class="divider" />
+
+    <!-- ABOUT CONTENT -->
+    <div class="about-grid">
+      <!-- Photo de profil -->
+      <aside class="about-photo">
+        <img
+          src="https://placehold.co/680x900/d4dcbf/6a7e52?text=Photo+portrait"
+          alt="Portrait de l'artiste"
+        />
+      </aside>
+
+      <!-- Texte -->
+      <div class="about-body">
+        <h2>Bonjour, je suis Lilou Mauron</h2>
+
+        <p>
+          Je suis illustratrice indépendante basée en France, passionnée par la
+          nature, les petites créatures et les instants suspendus. Mon travail
+          oscille entre la tendresse du dessin botanique et la poésie du monde
+          animal.
+        </p>
+
+        <p>
+          Formée aux Beaux-Arts de [Ville], j'ai développé un style à
+          l'aquarelle qui mêle délicatesse des lavis et précision du trait — une
+          esthétique douce, terreuse, ancrée dans le vivant.
+        </p>
+
+        <p>
+          Sous le nom <strong>Nymphe Illustration</strong>, je crée des prints,
+          des stickers et des commissions sur mesure pour des particuliers et
+          des éditeurs. Chaque illustration est pensée comme une petite fenêtre
+          ouverte sur un monde parallèle, à la fois familier et féerique.
+        </p>
+
+        <p>
+          Quand je ne dessine pas, je jardine, je collectionne les livres de
+          botanique anciens et je passe trop de temps à observer les insectes
+          dans le jardin.
+        </p>
+
+        <!-- Tags / disciplines -->
+        <div class="about-tags">
+          <span class="tag">Aquarelle</span>
+          <span class="tag">Botanique</span>
+          <span class="tag">Illustration éditoriale</span>
+          <span class="tag">Stickers</span>
+          <span class="tag">Portraits</span>
+          <span class="tag">Entomologie</span>
+          <span class="tag">Nature</span>
+        </div>
+
+        <!-- CTA -->
+        <div
+          style="margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap"
+        >
+          <a href="commission.html" class="btn-primary"
+            >Commander une illustration</a
+          >
+          <a href="contact.html" class="btn-outline">Me contacter</a>
+        </div>
       </div>
     </div>
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html" class="mobile-link">Illustration</a>
-      <a href="index.html#galerie" class="mobile-link">Sticker</a>
-      <a href="about.html" class="mobile-link">Bio</a>
-      <a href="contact.html" class="mobile-link">Contact</a>
-      <a href="commission.html" class="mobile-link">Commander</a>
-    </div>
-  </header>
 
-  <!-- PAGE HERO -->
-  <div class="page-hero">
-    <h1>À propos</h1>
-    <p>L'univers derrière les illustrations</p>
-  </div>
-  <hr class="divider" />
-
-  <!-- ABOUT CONTENT -->
-  <div class="about-grid">
-    <!-- Photo de profil -->
-    <aside class="about-photo">
-      <img
-        src="https://placehold.co/680x900/d4dcbf/6a7e52?text=Photo+portrait"
-        alt="Portrait de l'artiste"
-      />
-    </aside>
-
-    <!-- Texte -->
-    <div class="about-body">
-      <h2>Bonjour, je suis Lilou Mauron</h2>
-
-      <p>
-        Je suis illustratrice indépendante basée en France, passionnée par la nature,
-        les petites créatures et les instants suspendus. Mon travail oscille entre la
-        tendresse du dessin botanique et la poésie du monde animal.
-      </p>
-
-      <p>
-        Formée aux Beaux-Arts de [Ville], j'ai développé un style à l'aquarelle qui
-        mêle délicatesse des lavis et précision du trait — une esthétique douce,
-        terreuse, ancrée dans le vivant.
-      </p>
-
-      <p>
-        Sous le nom <strong>Nymphe Illustration</strong>, je crée des prints,
-        des stickers et des commissions sur mesure pour des particuliers et
-        des éditeurs. Chaque illustration est pensée comme une petite fenêtre
-        ouverte sur un monde parallèle, à la fois familier et féerique.
-      </p>
-
-      <p>
-        Quand je ne dessine pas, je jardine, je collectionne les livres de botanique
-        anciens et je passe trop de temps à observer les insectes dans le jardin.
-      </p>
-
-      <!-- Tags / disciplines -->
-      <div class="about-tags">
-        <span class="tag">Aquarelle</span>
-        <span class="tag">Botanique</span>
-        <span class="tag">Illustration éditoriale</span>
-        <span class="tag">Stickers</span>
-        <span class="tag">Portraits</span>
-        <span class="tag">Entomologie</span>
-        <span class="tag">Nature</span>
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-main">Nymphe</span>
+          <span class="logo-sub">Illustration</span>
+        </div>
+        <nav class="footer-links">
+          <a href="about.html">À propos</a>
+          <a href="contact.html">Contact</a>
+          <a href="commission.html">Commissions</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
+        </div>
       </div>
+      <p class="footer-copy">
+        © 2026 Nymphe Illustration — Tous droits réservés
+      </p>
+    </footer>
 
-      <!-- CTA -->
-      <div style="margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="commission.html" class="btn-primary">Commander une illustration</a>
-        <a href="contact.html" class="btn-outline">Me contacter</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="logo-main">Nymphe</span>
-        <span class="logo-sub">Illustration</span>
-      </div>
-      <nav class="footer-links">
-        <a href="about.html">À propos</a>
-        <a href="contact.html">Contact</a>
-        <a href="commission.html">Commissions</a>
-      </nav>
-      <div class="footer-socials">
-        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-        <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
-      </div>
-    </div>
-    <p class="footer-copy">© 2026 Nymphe Illustration — Tous droits réservés</p>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() { lucide.createIcons(); });
-    document.getElementById('hamburger').addEventListener('click', () => {
-      document.getElementById('mobile-menu').classList.toggle('open');
-    });
-  </script>
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+    <!-- Web Components -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/cart-panel.js"></script>
+    <!-- Variables d'environnement (à charger EN PREMIER) -->
+    <script src="js/.env.js"></script>
+    <!-- Modules -->
+    <script src="js/modules/ui.js"></script>
+    <!-- Page-specific script -->
+    <script src="js/about-page.js"></script>
+  </body>
 </html>

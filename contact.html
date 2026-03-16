@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 
     <!-- Extra style for contact info cards -->
     <style>
@@ -52,42 +52,9 @@
     </style>
   </head>
   <body>
-    <!-- NAVIGATION -->
-    <header class="nav-header">
-      <div class="nav-inner">
-        <a href="index.html" class="logo">
-          <span class="logo-main">Nymphe</span>
-          <span class="logo-sub">Illustration</span>
-        </a>
-        <nav class="nav-links" id="nav-links">
-          <a href="index.html" class="nav-link">Illustration</a>
-          <a href="index.html#galerie" class="nav-link">Sticker</a>
-          <a href="about.html" class="nav-link">Bio</a>
-          <a href="contact.html" class="nav-link active">Contact</a>
-        </nav>
-        <div class="nav-icons">
-          <button class="icon-btn" aria-label="Rechercher">
-            <i data-lucide="search"></i>
-          </button>
-          <button class="icon-btn" aria-label="Mon compte">
-            <i data-lucide="user"></i>
-          </button>
-          <a href="#" class="icon-btn" aria-label="Panier"
-            ><i data-lucide="shopping-bag"></i
-          ></a>
-          <button class="icon-btn hamburger" id="hamburger">
-            <i data-lucide="menu"></i>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-menu" id="mobile-menu">
-        <a href="index.html" class="mobile-link">Illustration</a>
-        <a href="index.html#galerie" class="mobile-link">Sticker</a>
-        <a href="about.html" class="mobile-link">Bio</a>
-        <a href="contact.html" class="mobile-link">Contact</a>
-        <a href="commission.html" class="mobile-link">Commander</a>
-      </div>
-    </header>
+    <!-- ========== WEB COMPONENTS ========== -->
+    <nymphe-navbar></nymphe-navbar>
+    <nymphe-cart-panel></nymphe-cart-panel>
 
     <!-- PAGE HERO -->
     <div class="page-hero">
@@ -234,43 +201,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        lucide.createIcons();
-      });
-
-      // Hamburger
-      document.getElementById("hamburger").addEventListener("click", () => {
-        document.getElementById("mobile-menu").classList.toggle("open");
-      });
-
-      // Formspree AJAX submission — affichage du message de succès sans rechargement
-      const form = document.getElementById("contact-form");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const data = new FormData(form);
-        const btn = form.querySelector('button[type="submit"]');
-        btn.textContent = "Envoi en cours…";
-        btn.disabled = true;
-
-        try {
-          const res = await fetch(form.action, {
-            method: "POST",
-            body: data,
-            headers: { Accept: "application/json" },
-          });
-          if (res.ok) {
-            form.style.display = "none";
-            document.getElementById("form-success").style.display = "block";
-          } else {
-            btn.textContent = "Erreur — Réessayez";
-            btn.disabled = false;
-          }
-        } catch {
-          btn.textContent = "Erreur réseau — Réessayez";
-          btn.disabled = false;
-        }
-      });
-    </script>
+    <!-- Web Components -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/cart-panel.js"></script>
+    <!-- Variables d'environnement (à charger EN PREMIER) -->
+    <script src="js/.env.js"></script>
+    <!-- Modules -->
+    <script src="js/modules/ui.js"></script>
+    <!-- Page-specific script -->
+    <script src="js/contact-page.js"></script>
   </body>
 </html>

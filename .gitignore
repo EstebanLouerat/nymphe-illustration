@@ -1,2 +1,8 @@
 # Local Netlify folder
 .netlify
+
+# Environment variables (API keys, secrets)
+.env
+.env.local
+.env.*.local
+js/.env.js  # ← Ne pas committer les credentials

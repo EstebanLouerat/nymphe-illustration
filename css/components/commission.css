@@ -1,0 +1,182 @@
+/* =============================================
+   Commission Page Styles
+   ============================================= */
+
+/* Commission intro */
+.commission-intro {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 56px 24px 0;
+  text-align: center;
+}
+
+.commission-intro h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.commission-intro p {
+  color: var(--brown-light);
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+/* Process section */
+.process-section {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 52px 24px;
+}
+
+.process-section h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* Pricing grid */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 860px;
+  margin: 0 auto 56px;
+  padding: 0 24px;
+}
+
+.pricing-card {
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.pricing-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.pricing-card.featured {
+  background: var(--sage-light);
+  border-color: var(--sage);
+}
+
+.pricing-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin-bottom: 8px;
+}
+
+.pricing-card.featured .pricing-label {
+  color: var(--sage-dark);
+}
+
+.pricing-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--brown);
+  margin-bottom: 16px;
+}
+
+.pricing-price span {
+  font-size: 1rem;
+  color: var(--brown-light);
+}
+
+.pricing-features {
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--brown-light);
+  line-height: 1.9;
+  text-align: left;
+}
+
+.pricing-features li::before {
+  content: "✦ ";
+  color: var(--sage);
+}
+
+/* Commission form */
+.commission-form-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.commission-form-wrap h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.commission-form-wrap > p {
+  color: var(--brown-light);
+  font-size: 0.88rem;
+  margin-bottom: 36px;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.83rem;
+  color: var(--brown-light);
+  cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.field-note {
+  font-size: 0.72rem;
+  color: var(--brown-light);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkbox-group {
+    grid-template-columns: 1fr;
+  }
+}
