@@ -11,7 +11,7 @@ class NympheNavbar extends HTMLElement {
           <!-- Logo -->
           <a href="index.html" class="logo">
             <img
-                src="https://placehold.co/100x200/d4c9a8/7a6e52?text=Logo"
+                src="https://placehold.co/100x50/d4c9a8/7a6e52?text=Logo"
                 alt="Logo"
                 class="logo-img"
             />

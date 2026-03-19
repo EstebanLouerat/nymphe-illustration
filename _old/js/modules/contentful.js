@@ -9,20 +9,29 @@ const ContentfulAPI = {
    * @returns {Promise<{label: string, image: string|null, text: string|null}|null>} Objet contenu ou null
    */
   async fetchContent(label) {
-    if (!CONTENTFUL_SPACE_ID || CONTENTFUL_SPACE_ID === "VOTRE_SPACE_ID") {
+    if (
+      !process.env.CONTENTFUL_SPACE_ID ||
+      process.env.CONTENTFUL_SPACE_ID === "VOTRE_SPACE_ID"
+    ) {
       console.warn(
         "⚠️ Configuration Contentful incomplète. Consultez config.js",
       );
       return null;
     }
 
+    console.log(`apikey: ${process.env.CONTENTFUL_ACCESS_TOKEN}`);
+    console.log(`space_id: ${process.env.CONTENTFUL_SPACE_ID}`);
+
     try {
       const url =
-        `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries` +
-        `?access_token=${CONTENTFUL_ACCESS_TOKEN}` +
+        `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries` +
+        `?access_token=${process.env.CONTENTFUL_ACCESS_TOKEN}` +
         `&content_type=content`;
 
-      const response = await fetch(url);
+      //   const response = await fetch(url);
+      const response = await fetch(
+        "/.netlify/functions/content?contentType=article",
+      );
       if (!response.ok) throw new Error(`API error: ${response.status}`);
 
       const data = await response.json();

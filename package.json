@@ -1,5 +1,24 @@
 {
-  "dependencies": {
-    "dotenv": "^17.3.1"
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Palette : vert sauge · lin chaud · tons terreux   Fonts : Cormorant Garamond (display) + Jost (body)",
+  "main": "main.jsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "axios": "^1.13.6",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.1",
+    "vite": "^6.4.1",
+    "zustand": "^5.0.12"
   }
 }

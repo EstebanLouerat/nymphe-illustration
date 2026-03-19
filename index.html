@@ -4,131 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nymphe Illustration</title>
-
-    <!-- Google Fonts: Cormorant Garamond (display) + Jost (body) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Lucide Icons CDN -->
-    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <!-- ========== WEB COMPONENTS ========== -->
-    <nymphe-navbar></nymphe-navbar>
-    <nymphe-cart-panel></nymphe-cart-panel>
-
-    <!-- ========== HERO BANNER ========== -->
-    <section class="hero">
-      <!-- Image side -->
-      <div class="hero-image">
-        <img
-          src="https://placehold.co/600x420/d4c9a8/7a6e52?text=Illustration+hero"
-          alt="Illustration mise en avant"
-          class="hero-img"
-        />
-      </div>
-      <!-- Text side -->
-      <div class="hero-text">
-        <p class="hero-tagline">Je vais y réfléchir</p>
-        <p class="hero-quote"><em>"caca"</em> Lilou 2026</p>
-        <a href="#galerie" class="btn-primary">Voir la boutique</a>
-      </div>
-    </section>
-
-    <!-- ========== NOUVEAUTÉS (chargées depuis Contentful) ========== -->
-    <section class="section" id="galerie">
-      <h2 class="section-title">Nouveautés</h2>
-
-      <!-- État de chargement -->
-      <div
-        id="grid-loading"
-        style="
-          text-align: center;
-          padding: 48px 0;
-          color: var(--brown-light);
-          font-size: 0.9rem;
-          letter-spacing: 0.06em;
-        "
-      >
-        Chargement des illustrations…
-      </div>
-
-      <!-- Grille injectée dynamiquement par JS -->
-      <div class="product-grid" id="product-grid"></div>
-
-      <!-- Message si Contentful non configuré -->
-      <div id="grid-placeholder" style="display: none">
-          ⚙️ Configurez Contentful dans <code>config.js</code> pour afficher vos
-          vraies illustrations.
-        </p>
-      </div>
-
-      <div class="section-cta">
-        <a href="#" class="btn-outline">Voir toutes les créations</a> 
-      </div>
-    </section>
-
-    <!-- ========== COMMISSION BANNER ========== -->
-    <section class="commission-banner">
-      <div class="commission-inner">
-        <div class="commission-text">
-          <h2>Une illustration sur mesure ?</h2>
-          <p>
-            Portraits, illustrations botaniques, projets éditoriaux… Parlons de
-            votre projet.
-          </p>
-          <a href="commission.html" class="btn-primary"
-            >Commander une commission</a
-          >
-        </div>
-        <div class="commission-img">
-          <img
-            src="https://placehold.co/480x340/c8d4b4/6a7e52?text=Commission+art"
-            alt="Exemple de commission"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <span class="logo-main">Nymphe</span>
-          <span class="logo-sub">Illustration</span>
-        </div>
-        <nav class="footer-links">
-          <a href="about.html">À propos</a>
-          <a href="contact.html">Contact</a>
-          <a href="commission.html">Commissions</a>
-        </nav>
-        <div class="footer-socials">
-          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-          <a href="#" aria-label="Pinterest"><i data-lucide="pinterest"></i></a>
-        </div>
-      </div>
-      <p class="footer-copy">
-        © 2026 Nymphe Illustration — Tous droits réservés
-      </p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-    <!-- Web Components -->
-    <script src="js/components/navbar.js"></script>
-    <script src="js/components/cart-panel.js"></script>
-    <!-- Variables d'environnement (à charger EN PREMIER) -->
-    <script src="js/.env.js"></script>
-    <!-- Configuration -->
-    <script src="js/config.js"></script>
-    <!-- Modules -->
-    <script src="js/modules/cart.js"></script>
-    <script src="js/modules/contentful.js"></script>
-    <script src="js/modules/ui.js"></script>
-    <!-- Point d'entrée -->
-    <script src="js/main.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
