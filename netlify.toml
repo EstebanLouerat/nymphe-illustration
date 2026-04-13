@@ -1,27 +1,62 @@
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
+# [[headers]]
+#   for = "/*.js"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
 
-[[headers]]
-  for = "/*.jsx"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
+# [[headers]]
+#   for = "/*.jsx"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
 
-[[headers]]
-  for = "/*.mjs"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
+# [[headers]]
+#   for = "/*.mjs"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
 
-[[headers]]
-  for = "/*.wasm"
-  [headers.values]
-    Content-Type = "application/wasm"
+# [[headers]]
+#   for = "/*.wasm"
+#   [headers.values]
+#     Content-Type = "application/wasm"
 
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
 
+# [dev]
+#   command = "npm run dev"
+#   targetPort = 3000
+#   port = 8888  
+
+[[redirects]]
+  from = "/api/checkout"
+  to = "/.netlify/functions/checkout"
+  status = 200
+
+[[redirects]]
+  from = "/api/webhook"
+  to = "/.netlify/functions/webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/orders"
+  to = "/.netlify/functions/orders"
+  status = 200
+
+## Exclure les assets Vite de la redirection SPA
+# [[redirects]]
+#   from = "/@*"
+#   to = "/@:splat"
+#   status = 200
+#   force = true
+
+# [[redirects]]
+#   from = "/node_modules/*"
+#   to = "/node_modules/:splat"
+#   status = 200
+#   force = true
+
+## SPA fallback — doit rester en dernier
 [[redirects]]
   from = "/*"
   to = "/index.html"

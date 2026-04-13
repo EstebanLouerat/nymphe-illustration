@@ -22,16 +22,19 @@ function Navbar() {
         {/* Desktop Links */}
         <nav className="nav-links">
           <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
-            Illustration
+            Shop
           </Link>
-          <a href="/#galerie" className="nav-link">
-            Sticker
-          </a>
           <Link
             to="/about"
             className={`nav-link ${isActive("/about") ? "active" : ""}`}
           >
             Bio
+          </Link>
+          <Link
+            to="/commission"
+            className={`nav-link ${isActive("/commission") ? "active" : ""}`}
+          >
+            Commission
           </Link>
           <Link
             to="/contact"
@@ -82,21 +85,21 @@ function Navbar() {
           className="mobile-link"
           onClick={() => setMobileMenuOpen(false)}
         >
-          Illustration
+          Shop
         </Link>
-        <a
-          href="/#galerie"
-          className="mobile-link"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          Sticker
-        </a>
         <Link
           to="/about"
           className="mobile-link"
           onClick={() => setMobileMenuOpen(false)}
         >
           Bio
+        </Link>
+        <Link
+          to="/commission"
+          className="mobile-link"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          Commission
         </Link>
         <Link
           to="/contact"

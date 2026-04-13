@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Commission from "./pages/Commission";
 import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutCancel from "./pages/CheckoutCancel";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/commission" element={<Commission />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 
