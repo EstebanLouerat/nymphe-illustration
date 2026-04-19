@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { FormService } from "../services/api";
 import { useStore } from "../services/store";
 import { Mail, Instagram, Clock } from "lucide-react";
 import "../styles/Commission.css";
+
+// Ajoute temporairement une classe CSS pour déclencher l'animation,
+// puis la retire pour permettre de la rejouer au prochain toggle.
+function triggerAnimation(elements, className, duration = 500) {
+  elements.forEach((el) => {
+    if (!el) return;
+    el.classList.remove(className);
+    // Force le reflow pour réinitialiser l'animation
+    void el.offsetWidth;
+    el.classList.add(className);
+    setTimeout(() => el.classList.remove(className), duration);
+  });
+}
 
 function Commission() {
   const [formData, setFormData] = useState({
@@ -19,6 +32,16 @@ function Commission() {
   const [loading, setLoading] = useState(false);
   const [isPhysical, setIsPhysical] = useState(false);
   const { showSuccess, showError } = useStore();
+
+  // Refs pour cibler les éléments à animer
+  const priceRefs = useRef([]);
+  const featuresRefs = useRef([]);
+
+  const handleToggle = () => {
+    setIsPhysical((prev) => !prev);
+    triggerAnimation(priceRefs.current, "is-animating", 400);
+    triggerAnimation(featuresRefs.current, "is-animating", 500);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -60,6 +83,53 @@ function Commission() {
     setLoading(false);
   };
 
+  const CARDS = [
+    {
+      name: "Simple",
+      featured: false,
+      digital: {
+        price: 35,
+        features: [
+          "1 sujet simple coupé à la taille",
+          "Idéal pour les photos de profil ou les petits budgets",
+          "Délai : 3 à 4 semaines",
+        ],
+      },
+      physical: {
+        price: 50,
+        features: [
+          "1 sujet simple coupé à la taille",
+          "Idéal pour les photos de profil ou les petits budgets",
+          "Délai : 3 à 4 semaines",
+          "Frais de livraison inclus",
+        ],
+      },
+    },
+    {
+      name: "Complet",
+      featured: true,
+      digital: {
+        price: 50,
+        features: [
+          "1 ou plusieurs sujets en entier",
+          "Fond plus travaillé",
+          "Idéal pour les projets plus ambitieux",
+          "Délai : 3 à 4 semaines",
+        ],
+      },
+      physical: {
+        price: 65,
+        features: [
+          "1 ou plusieurs sujets en entier",
+          "Fond plus travaillé",
+          "Idéal pour les projets plus ambitieux",
+          "Délai : 3 à 4 semaines",
+          "Frais de livraison inclus",
+        ],
+      },
+    },
+  ];
+
   return (
     <main>
       <div className="page-hero">
@@ -95,7 +165,7 @@ function Commission() {
             {
               n: 3,
               t: "Esquisse",
-              p: "À chaque étape de la création, je vous partage le travail et je ferais tous les changements nécessaires pour votre satisfaction.",
+              p: "À chaque étape de la création, je vous partage le travail et je ferai tous les changements nécessaires pour votre satisfaction.",
             },
             {
               n: 4,
@@ -118,47 +188,49 @@ function Commission() {
         <h2>Tarifs indicatifs</h2>
 
         <div className="offer-toggle-container">
+          <p>Reçu final: </p>
           <span className={`toggle-label ${!isPhysical ? "active" : ""}`}>
-            Offre numérique
+            Digital
           </span>
           <button
             className={`offer-toggle ${isPhysical ? "physical" : "digital"}`}
-            onClick={() => setIsPhysical(!isPhysical)}
-            aria-label="Toggle entre offre numérique et offre physique"
+            onClick={handleToggle}
+            aria-label="Toggle entre livrable digital et livrable physique"
           >
             <span className="toggle-indicator"></span>
           </button>
           <span className={`toggle-label ${isPhysical ? "active" : ""}`}>
-            Offre réelle
+            Physique
           </span>
         </div>
       </div>
+
       <div className="pricing-grid">
-        <div className="pricing-card">
-          <p className="pricing-name">Simple</p>
-          <p className="pricing-price">
-            À partir de {isPhysical ? 50 : 35} <span>€</span>
-          </p>
-          <ul className="pricing-features">
-            <li>1 sujet simple coupé à la taille</li>
-            <li>Idéeal pour les photos de profil ou les petits budgets</li>
-            <li>Délai : 3 à 4 semaines</li>
-            {isPhysical && <li>+ Frais de livraison inclus</li>}
-          </ul>
-        </div>
-        <div className="pricing-card featured">
-          <p className="pricing-name">Complet</p>
-          <p className="pricing-price">
-            À partir de {isPhysical ? 65 : 50} <span>€</span>
-          </p>
-          <ul className="pricing-features">
-            <li>1 ou plus sujets en entier</li>
-            <li>Fond plus travaillé</li>
-            <li>Idéal pour les projets plus ambitieux</li>
-            <li>Délai : 3 à 4 semaines</li>
-            {isPhysical && <li>+ Frais de livraison inclus</li>}
-          </ul>
-        </div>
+        {CARDS.map((card, i) => {
+          const offer = isPhysical ? card.physical : card.digital;
+          return (
+            <div
+              key={card.name}
+              className={`pricing-card ${card.featured ? "featured" : ""}`}
+            >
+              <p className="pricing-name">{card.name}</p>
+              <p
+                className="pricing-price"
+                ref={(el) => (priceRefs.current[i] = el)}
+              >
+                À partir de {offer.price} <span>€</span>
+              </p>
+              <ul
+                className="pricing-features"
+                ref={(el) => (featuresRefs.current[i] = el)}
+              >
+                {offer.features.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </div>
 
       <hr className="divider" />
@@ -201,167 +273,6 @@ function Commission() {
             <p>48 heures</p>
           </div>
         </div>
-
-        {/* <form id="commission-form" onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="c-name">Prénom & Nom *</label>
-              <input
-                type="text"
-                id="c-name"
-                name="name"
-                className="form-input"
-                placeholder="Marie Dupont"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="c-email">Email *</label>
-              <input
-                type="email"
-                id="c-email"
-                name="email"
-                className="form-input"
-                placeholder="marie@example.com"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="c-type">Type de projet *</label>
-            <select
-              id="c-type"
-              name="project_type"
-              value={formData.project_type}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Sélectionnez un type</option>
-              <option value="portrait">Portrait personnel</option>
-              <option value="portrait_animal">Portrait d'animal</option>
-              <option value="botanique">Illustration botanique</option>
-              <option value="editorial">Illustration éditoriale / livre</option>
-              <option value="sticker">Set de stickers personnalisés</option>
-              <option value="branding">
-                Identité visuelle / Logo illustré
-              </option>
-              <option value="autre">Autre (préciser dans le message)</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Usage prévu (plusieurs choix possibles)</label>
-            <div className="checkbox-group">
-              {[
-                { v: "usage_perso", l: "Usage personnel" },
-                { v: "impression", l: "Impression / tirage" },
-                { v: "commercial", l: "Usage commercial" },
-                { v: "web", l: "Web / réseaux sociaux" },
-                { v: "editorial", l: "Publication / livre" },
-                { v: "cadeau", l: "Cadeau" },
-              ].map(({ v, l }) => (
-                <label key={v} className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    name="usage"
-                    value={v}
-                    checked={formData.usage.includes(v)}
-                    onChange={handleChange}
-                  />
-                  {l}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="c-budget">Budget estimé</label>
-            <select
-              id="c-budget"
-              name="budget"
-              value={formData.budget}
-              onChange={handleChange}
-            >
-              <option value="">Sélectionnez une fourchette</option>
-              <option value="60-100">60 – 100 €</option>
-              <option value="100-200">100 – 200 €</option>
-              <option value="200-400">200 – 400 €</option>
-              <option value="400+">400 € et plus</option>
-              <option value="à définir">À définir ensemble</option>
-            </select>
-            <p className="field-note">
-              Le budget est indicatif et sans engagement.
-            </p>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="c-deadline">Date limite souhaitée</label>
-              <input
-                type="date"
-                id="c-deadline"
-                name="deadline"
-                value={formData.deadline}
-                onChange={handleChange}
-              />
-              <p className="field-note">Minimum 3 semaines conseillé.</p>
-            </div>
-            <div className="form-group">
-              <label htmlFor="c-format">Format / support final</label>
-              <input
-                type="text"
-                id="c-format"
-                name="format"
-                className="form-input"
-                placeholder="Ex : A4, fichier numérique…"
-                value={formData.format}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="c-desc">Description du projet *</label>
-            <textarea
-              id="c-desc"
-              name="description"
-              className="form-input"
-              placeholder="Décrivez votre projet : sujet principal, ambiance souhaitée, couleurs préférées…"
-              style={{ minHeight: "160px" }}
-              value={formData.description}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="c-refs">Liens de références (optionnel)</label>
-            <input
-              type="url"
-              id="c-refs"
-              name="references"
-              className="form-input"
-              placeholder="https://pinterest.com/votre-tableau"
-              value={formData.references}
-              onChange={handleChange}
-            />
-            <p className="field-note">
-              Pinterest, Instagram, URL d'images — tout aide à visualiser votre
-              idée.
-            </p>
-          </div>
-
-          <div className="form-submit">
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? "Envoi..." : "Envoyer ma demande de commission"}
-            </button>
-          </div>
-        </form> */}
       </div>
     </main>
   );

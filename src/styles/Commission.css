@@ -1,55 +1,61 @@
 /* =============================================
-   Commission Page Styles — Spécifique Commission
-   =============================================
-   Note: Les styles génériques (process-steps, step,
-   pricing-grid, contact-info, etc.) sont définis
-   dans index.css pour éviter la redondance.
-   Ce fichier ne contient que les overrides et
-   adaptations spécifiques à la page Commission.
+   Commission.css — Page Commission
+   ─────────────────────────────────────────────
+   1. Animations (keyframes)
+   2. Intro
+   3. Section processus
+   4. Tarifs — header & toggle
+   5. Tarifs — grille de cartes
+   6. Formulaire
+   7. Éléments de formulaire spécifiques
+   8. Responsive
    ============================================= */
 
-/* Animations */
+/* ─────────────────────────────────────────────
+   1. Animations
+   ───────────────────────────────────────────── */
+
 @keyframes priceFlip {
-  0% {
+  from {
     opacity: 0;
-    transform: rotateX(-90deg);
+    transform: translateY(-6px);
   }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-    transform: rotateX(0deg);
-  }
-}
-
-@keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Commission intro */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   2. Intro
+   ───────────────────────────────────────────── */
+
 .commission-intro {
   max-width: 700px;
   margin: 0 auto;
-  padding: 56px 24px 0;
+  padding: 56px 24px 70px;
   text-align: center;
 }
 
@@ -67,11 +73,17 @@
   font-size: 0.9rem;
 }
 
-/* Process section container */
+/* ─────────────────────────────────────────────
+   3. Section processus
+   ───────────────────────────────────────────── */
+
 .process-section {
-  max-width: 940px;
   margin: 0 auto;
   padding: 52px 24px;
+  background-image:
+    linear-gradient(90deg, rgba(225, 229, 212, 0.5) 50%, transparent 50%),
+    linear-gradient(rgba(225, 229, 212, 0.5) 50%, transparent 50%);
+  background-size: 20px 20px;
 }
 
 .process-section h2 {
@@ -83,7 +95,10 @@
   text-align: center;
 }
 
-/* Pricing section header */
+/* ─────────────────────────────────────────────
+   4. Tarifs — header & toggle
+   ───────────────────────────────────────────── */
+
 .pricing-header {
   padding: 52px 24px 8px;
   text-align: center;
@@ -97,41 +112,14 @@
   color: var(--text);
 }
 
-/* Commission form wrapper */
-.commission-form-wrap {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 24px 64px;
-}
-
-.commission-form-wrap h2 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.commission-form-wrap > p {
-  color: var(--brown-light);
-  font-size: 0.88rem;
-  margin-bottom: 36px;
-}
-
-/* Contact card hover effect specific to Commission */
-.contact-link:hover .contact-card {
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
-}
-
-/* Offer Toggle */
+/* Toggle digital / physique */
 .offer-toggle-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   margin-top: 24px;
-  animation: fadeInScale 0.4s ease;
+  animation: fadeInScale 0.4s ease both;
 }
 
 .toggle-label {
@@ -183,7 +171,131 @@
   opacity: 0.85;
 }
 
-/* Checkbox group (used in commission form) */
+/* ─────────────────────────────────────────────
+   5. Tarifs — grille de cartes
+   ───────────────────────────────────────────── */
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 860px;
+  margin: 32px auto 56px;
+  padding: 0 24px;
+}
+
+.pricing-card {
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.pricing-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.pricing-card.featured {
+  background: var(--sage-light);
+  border-color: var(--sage);
+}
+
+.pricing-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  margin-bottom: 8px;
+}
+
+.pricing-card.featured .pricing-label {
+  color: var(--sage-dark);
+}
+
+.pricing-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* Prix — animation déclenchée via classe JS */
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--brown);
+  margin-bottom: 16px;
+}
+
+.pricing-price.is-animating {
+  animation: priceFlip 0.35s ease both;
+}
+
+.pricing-price span {
+  font-size: 1rem;
+  color: var(--brown-light);
+}
+
+/* Features — animation déclenchée via classe JS */
+.pricing-features {
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--brown-light);
+  line-height: 1.9;
+  text-align: left;
+}
+
+.pricing-features.is-animating {
+  animation: slideInUp 0.4s ease 0.05s both;
+}
+
+.pricing-features li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.pricing-features li::before {
+  content: "✦";
+  color: var(--sage);
+  flex-shrink: 0;
+  font-size: 0.6rem;
+}
+
+/* ─────────────────────────────────────────────
+   6. Formulaire
+   ───────────────────────────────────────────── */
+
+.commission-form-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 64px;
+}
+
+.commission-form-wrap h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.commission-form-wrap > p {
+  color: var(--brown-light);
+  font-size: 0.88rem;
+  margin-bottom: 36px;
+}
+
+/* ─────────────────────────────────────────────
+   7. Éléments de formulaire spécifiques
+   ───────────────────────────────────────────── */
+
 .checkbox-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -210,33 +322,10 @@
   font-style: italic;
 }
 
-/* Pricing animation on toggle */
-.pricing-card {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
+/* ─────────────────────────────────────────────
+   8. Responsive
+   ───────────────────────────────────────────── */
 
-.pricing-price {
-  animation: priceFlip 0.5s ease;
-  perspective: 1000px;
-  transition: color 0.3s ease;
-}
-
-.pricing-features {
-  list-style: none;
-  font-size: 0.8rem;
-  color: var(--brown-light);
-  line-height: 1.9;
-  text-align: left;
-  animation: slideIn 0.5s ease 0.1s backwards;
-}
-
-/* =============================================
-   Responsive Design — Commission Page Overrides
-   ============================================= */
-
-/* Tablets (960px and below) */
 @media (max-width: 960px) {
   .commission-intro {
     padding: 48px 24px 0;
@@ -260,9 +349,12 @@
     margin-bottom: 24px;
   }
 
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .offer-toggle-container {
     gap: 10px;
-    animation: fadeInScale 0.4s ease;
   }
 
   .toggle-label {
@@ -278,13 +370,8 @@
   }
 }
 
-/* Small tablets and large phones (768px and below) */
 @media (max-width: 768px) {
-  .process-section h2 {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-  }
-
+  .process-section h2,
   .pricing-header h2 {
     font-size: 1.3rem;
     margin-bottom: 20px;
@@ -293,7 +380,6 @@
   .offer-toggle-container {
     margin-top: 18px;
     gap: 8px;
-    animation: fadeInScale 0.4s ease;
   }
 
   .toggle-label {
@@ -309,7 +395,6 @@
   }
 }
 
-/* Phones (640px and below) */
 @media (max-width: 640px) {
   .commission-intro {
     padding: 40px 16px 0;
@@ -326,7 +411,6 @@
 
   .process-section {
     padding: 32px 16px;
-    max-width: 100%;
   }
 
   .process-section h2 {
@@ -343,11 +427,14 @@
     margin-bottom: 16px;
   }
 
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
   .offer-toggle-container {
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
     margin-top: 16px;
-    animation: fadeInScale 0.4s ease;
   }
 
   .toggle-label {
@@ -370,7 +457,6 @@
 
   .commission-form-wrap {
     padding: 0 16px 32px;
-    max-width: 100%;
   }
 
   .commission-form-wrap h2 {
@@ -393,7 +479,6 @@
   }
 }
 
-/* Very small phones (480px and below) */
 @media (max-width: 480px) {
   .commission-intro {
     padding: 32px 12px 0;
@@ -419,15 +504,6 @@
   .pricing-header h2 {
     font-size: 1.1rem;
     margin-bottom: 12px;
-  }
-
-  .offer-toggle-container {
-    margin-top: 12px;
-    animation: fadeInScale 0.4s ease;
-  }
-
-  .toggle-label {
-    font-size: 0.75rem;
   }
 
   .commission-form-wrap {

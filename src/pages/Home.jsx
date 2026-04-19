@@ -29,115 +29,41 @@ function Home() {
 
 function CommissionBanner() {
   return (
-    <section className="commission-banner" style={{ padding: "80px 24px" }}>
-      <div
-        style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "72px",
-          alignItems: "center",
-        }}
-      >
-        {/* Colonne gauche */}
-        <div>
-          <p
-            style={{
-              fontSize: "0.68rem",
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              color: "var(--sage-dark)",
-              marginBottom: "18px",
-            }}
-          >
-            Commissions sur mesure
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "2.6rem",
-              fontWeight: 300,
-              color: "var(--text)",
-              lineHeight: 1.2,
-              marginBottom: "20px",
-            }}
-          >
+    <section className="commission-banner">
+      <div className="commission-banner-inner">
+
+        {/* Colonne gauche — texte */}
+        <div className="commission-banner-text">
+          <p className="commission-banner-eyebrow">Commissions sur mesure</p>
+
+          <h2 className="commission-banner-title">
             Une illustration <em>rien que</em>
-            <br />
+            <br className="commission-banner-br" />
             pour vous
           </h2>
-          <p
-            style={{
-              fontSize: "0.88rem",
-              color: "var(--brown-light)",
-              lineHeight: 1.85,
-              marginBottom: "36px",
-              maxWidth: "380px",
-            }}
-          >
+
+          <p className="commission-banner-desc">
             Chaque commande est pensée dans un dialogue constant avec vous, de
             l'esquisse à la livraison.
           </p>
 
           {/* Étapes */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "14px",
-              marginBottom: "40px",
-            }}
-          >
+          <ol className="commission-banner-steps">
             {[
-              {
-                n: "1",
-                title: "Brief",
-                desc: "remplissez le formulaire, je reviens sous 48h",
-              },
-              {
-                n: "2",
-                title: "Esquisse",
-                desc: "validation & retouches incluses",
-              },
-              {
-                n: "3",
-                title: "Livraison",
-                desc: "fichier haute résolution signé",
-              },
+              { n: "1", title: "Brief",     desc: "remplissez le formulaire, je reviens sous 48h" },
+              { n: "2", title: "Esquisse",  desc: "validation & retouches incluses" },
+              { n: "3", title: "Livraison", desc: "fichier haute résolution signé" },
             ].map(({ n, title, desc }) => (
-              <div
-                key={n}
-                style={{ display: "flex", alignItems: "center", gap: "14px" }}
-              >
-                <div
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "50%",
-                    background: "var(--sage-light)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                    fontFamily: "var(--font-display)",
-                    fontSize: "0.85rem",
-                    color: "var(--green-dark)",
-                  }}
-                >
-                  {n}
-                </div>
-                <p style={{ fontSize: "0.82rem", color: "var(--brown-light)" }}>
-                  <strong style={{ color: "var(--text)", fontWeight: 400 }}>
-                    {title}
-                  </strong>{" "}
-                  — {desc}
+              <li key={n} className="commission-banner-step">
+                <span className="commission-banner-step-num">{n}</span>
+                <p className="commission-banner-step-text">
+                  <strong>{title}</strong> — {desc}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
 
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <div className="commission-banner-ctas">
             <a href="/commission" className="btn-primary">
               Commander une commission
             </a>
@@ -147,78 +73,17 @@ function CommissionBanner() {
           </div>
         </div>
 
-        {/* Colonne droite — carte exemple */}
-        <div
-          style={{
-            background: "var(--white)",
-            border: "1px solid var(--linen-dark)",
-            borderRadius: "var(--radius)",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              height: "280px",
-              background:
-                "linear-gradient(135deg, var(--sage-light) 0%, var(--tan) 60%, var(--sage) 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.1rem",
-                fontStyle: "italic",
-                color: "var(--sage-dark)",
-                opacity: 0.6,
-              }}
-            >
-              illustration sur mesure
-            </span>
-            <span
-              style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "var(--linen)",
-                border: "1px solid var(--linen-dark)",
-                borderRadius: "99px",
-                padding: "5px 14px",
-                fontSize: "0.65rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--sage-dark)",
-              }}
-            >
-              ⭑ Le plus demandé
-            </span>
+        <div className="commission-banner-card">
+          <div className="commission-banner-card-img">
+            <span className="commission-banner-card-watermark">illustration sur mesure</span>
+            <span className="commission-banner-card-badge">⭑ Le plus demandé</span>
           </div>
-          <div style={{ padding: "20px 22px" }}>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.4rem",
-                fontWeight: 300,
-                color: "var(--text)",
-                marginBottom: "4px",
-              }}
-            >
-              Illustration personnalisée
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.1rem",
-                color: "var(--brown)",
-              }}
-            >
-              À partir de 120 €
-            </p>
+          <div className="commission-banner-card-body">
+            <p className="commission-banner-card-title">Illustration personnalisée</p>
+            <p className="commission-banner-card-price">À partir de 35 €</p>
           </div>
         </div>
+
       </div>
     </section>
   );

@@ -1,9 +1,27 @@
 /* =============================================
-   CSS Variables — Thème et configuration
-   ============================================= */
+   index.css — Styles globaux Nymphe Illustration
+   ─────────────────────────────────────────────
+   1. Variables CSS
+   2. Reset
+   3. Animations globales
+   4. Navigation
+   5. Panier (Cart Panel)
+   6. Boutons
+   7. Hero
+   8. Grille produits (Product Grid)
+   9. Formulaires
+  10. Layouts de pages (About, Contact)
+  11. Page Produit Détail
+  12. Commission Banner (composant homepage)
+  13. Utilitaires & Layout
+  ============================================= */
+
+/* ─────────────────────────────────────────────
+   1. Variables CSS
+   ───────────────────────────────────────────── */
 
 :root {
-  /* ── Couleurs ── */
+  /* Couleurs */
   --sage: #b8c4a0;
   --sage-light: #d4dcbf;
   --sage-dark: #7a8f64;
@@ -17,22 +35,22 @@
   --white: #ffffff;
   --green-dark: #57634c;
 
-  /* ── Typographie ── */
+  /* Typographie */
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Jost", sans-serif;
 
-  /* ── Dimensions ── */
+  /* Dimensions */
   --nav-h: 68px;
   --radius: 4px;
 
-  /* ── Effets ── */
+  /* Effets */
   --shadow: 0 2px 16px rgba(58, 50, 40, 0.07);
   --transition: 0.25s ease;
 }
 
-/* =============================================
-   Reset CSS
-   ============================================= */
+/* ─────────────────────────────────────────────
+   2. Reset
+   ───────────────────────────────────────────── */
 
 *,
 *::before,
@@ -77,9 +95,9 @@ ul {
   list-style: none;
 }
 
-/* =============================================
-   Animations
-   ============================================= */
+/* ─────────────────────────────────────────────
+   3. Animations globales
+   ───────────────────────────────────────────── */
 
 @keyframes fadeUp {
   from {
@@ -92,9 +110,9 @@ ul {
   }
 }
 
-/* =============================================
-   Navigation
-   ============================================= */
+/* ─────────────────────────────────────────────
+   4. Navigation
+   ───────────────────────────────────────────── */
 
 .nav-header {
   position: sticky;
@@ -183,7 +201,7 @@ ul {
   width: 100%;
 }
 
-/* Icons */
+/* Icônes nav */
 .nav-icons {
   display: flex;
   gap: 12px;
@@ -199,9 +217,7 @@ ul {
   justify-content: center;
   color: var(--brown-light);
   border-radius: 50%;
-  transition:
-    color var(--transition),
-    background var(--transition);
+  transition: color var(--transition), background var(--transition);
 }
 
 .icon-btn:hover {
@@ -219,48 +235,7 @@ ul {
   display: none;
 }
 
-/* Mobile menu */
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  background: var(--white);
-  border-top: 1px solid var(--linen-dark);
-  padding: 8px 0 16px;
-}
-
-.mobile-menu.open {
-  display: flex;
-}
-
-.mobile-link {
-  padding: 10px 24px;
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
-  color: var(--brown-light);
-  transition:
-    color var(--transition),
-    background var(--transition);
-}
-
-.mobile-link:hover {
-  color: var(--text);
-  background: var(--linen);
-}
-
-/* ── Responsive ── */
-@media (max-width: 640px) {
-  .nav-links {
-    display: none;
-  }
-  .hamburger {
-    display: flex;
-  }
-}
-
-/* =============================================
-   Shopping Cart Panel
-   ============================================= */
-
+/* Badge panier */
 .cart-btn-wrap {
   position: relative;
 }
@@ -281,7 +256,45 @@ ul {
   font-weight: 500;
 }
 
-/* Overlay */
+/* Menu mobile */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--white);
+  border-top: 1px solid var(--linen-dark);
+  padding: 8px 0 16px;
+}
+
+.mobile-menu.open {
+  display: flex;
+}
+
+.mobile-link {
+  padding: 10px 24px;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--brown-light);
+  transition: color var(--transition), background var(--transition);
+}
+
+.mobile-link:hover {
+  color: var(--text);
+  background: var(--linen);
+}
+
+@media (max-width: 640px) {
+  .nav-links {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   5. Panier (Cart Panel)
+   ───────────────────────────────────────────── */
+
 .cart-overlay {
   display: none;
   position: fixed;
@@ -298,7 +311,6 @@ ul {
   opacity: 1;
 }
 
-/* Panel */
 .cart-panel {
   position: fixed;
   top: 0;
@@ -344,9 +356,7 @@ ul {
   justify-content: center;
   color: var(--brown-light);
   border-radius: 50%;
-  transition:
-    background var(--transition),
-    color var(--transition);
+  transition: background var(--transition), color var(--transition);
 }
 
 .cart-close:hover {
@@ -359,7 +369,6 @@ ul {
   height: 18px;
 }
 
-/* Items list */
 .cart-items-list {
   flex: 1;
   overflow-y: auto;
@@ -379,7 +388,6 @@ ul {
   border-radius: 4px;
 }
 
-/* Empty state */
 .cart-empty {
   display: flex;
   flex-direction: column;
@@ -408,7 +416,6 @@ ul {
   text-underline-offset: 3px;
 }
 
-/* Item */
 .cart-item {
   display: flex;
   align-items: flex-start;
@@ -491,7 +498,6 @@ ul {
   color: var(--brown);
 }
 
-/* Footer */
 .cart-footer {
   border-top: 1px solid var(--linen-dark);
   padding: 20px 24px;
@@ -526,9 +532,7 @@ ul {
   font-size: 0.78rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition:
-    background var(--transition),
-    transform var(--transition);
+  transition: background var(--transition), transform var(--transition);
   font-family: var(--font-body);
 }
 
@@ -537,9 +541,9 @@ ul {
   transform: translateY(-1px);
 }
 
-/* =============================================
-   Buttons
-   ============================================= */
+/* ─────────────────────────────────────────────
+   6. Boutons
+   ───────────────────────────────────────────── */
 
 .btn-primary {
   display: inline-block;
@@ -553,9 +557,7 @@ ul {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: var(--radius);
-  transition:
-    background var(--transition),
-    transform var(--transition);
+  transition: background var(--transition), transform var(--transition);
 }
 
 .btn-primary:hover {
@@ -573,10 +575,7 @@ ul {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: var(--radius);
-  transition:
-    border-color var(--transition),
-    background var(--transition),
-    color var(--transition);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
 }
 
 .btn-outline:hover {
@@ -585,9 +584,9 @@ ul {
   color: var(--white);
 }
 
-/* =============================================
-   Product Cards & Grid
-   ============================================= */
+/* ─────────────────────────────────────────────
+   7. Hero
+   ───────────────────────────────────────────── */
 
 .hero {
   display: flex;
@@ -656,7 +655,57 @@ ul {
   letter-spacing: 0.04em;
 }
 
-/* ── Product Grid ── */
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+    max-height: none;
+    min-height: auto;
+  }
+
+  .hero-image {
+    flex: 0 0 360px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .lilou-img {
+    width: 40%;
+    height: auto;
+  }
+
+  .hero-tagline {
+    font-size: 1.25rem;
+    flex-direction: row;
+    margin: auto;
+  }
+
+  .hero-text {
+    flex: 1;
+    padding: 32px 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-image {
+    flex: 0 0 300px;
+  }
+
+  .hero-text {
+    min-height: 200px;
+    padding: 22px 24px;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    flex-direction: row;
+    margin: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   8. Grille produits (Product Grid)
+   ───────────────────────────────────────────── */
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -667,31 +716,13 @@ ul {
   animation: fadeUp 0.4s ease both;
 }
 
-.product-card:nth-child(1) {
-  animation-delay: 0.05s;
-}
-.product-card:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.product-card:nth-child(3) {
-  animation-delay: 0.15s;
-}
-.product-card:nth-child(4) {
-  animation-delay: 0.2s;
-}
-.product-card:nth-child(5) {
-  animation-delay: 0.25s;
-}
-.product-card:nth-child(6) {
-  animation-delay: 0.3s;
-}
-.product-card:nth-child(7) {
-  animation-delay: 0.35s;
-}
-
-.product-link {
-  display: block;
-}
+.product-card:nth-child(1) { animation-delay: 0.05s; }
+.product-card:nth-child(2) { animation-delay: 0.1s; }
+.product-card:nth-child(3) { animation-delay: 0.15s; }
+.product-card:nth-child(4) { animation-delay: 0.2s; }
+.product-card:nth-child(5) { animation-delay: 0.25s; }
+.product-card:nth-child(6) { animation-delay: 0.3s; }
+.product-card:nth-child(7) { animation-delay: 0.35s; }
 
 .product-img-wrap {
   position: relative;
@@ -755,7 +786,14 @@ ul {
   margin-top: 3px;
 }
 
-/* ── Responsive ── */
+.product-category {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  margin-bottom: 3px;
+}
+
 @media (max-width: 960px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -763,66 +801,15 @@ ul {
 }
 
 @media (max-width: 640px) {
-  .hero {
-    flex-direction: column;
-    max-height: none;
-    min-height: auto;
-  }
-
-  .hero-image {
-    flex: 0 0 360px;
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .lilou-img {
-    width: 40%;
-    height: auto;
-  }
-
-  .hero-tagline {
-    font-size: 1.25rem;
-    flex-direction: row;
-    margin: auto;
-  }
-
-  .hero-text {
-    flex: 1;
-    padding: 32px 24px;
-    /* max-height: 180px; */
-  }
-
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 }
 
-@media (max-width: 400px) {
-  .hero-image {
-    flex: 0 0 300px;
-  }
-
-  .lilou-img {
-    width: 40%;
-    height: auto;
-  }
-
-  .hero-text {
-    min-height: 200px;
-    padding: 22px 24px;
-  }
-
-  .hero-tagline {
-    font-size: 1rem;
-    flex-direction: row;
-    margin: auto;
-  }
-}
-
-/* =============================================
-   Forms
-   ============================================= */
+/* ─────────────────────────────────────────────
+   9. Formulaires
+   ───────────────────────────────────────────── */
 
 .form-group {
   margin-bottom: 22px;
@@ -848,9 +835,7 @@ ul {
   font-family: var(--font-body);
   font-size: 0.88rem;
   color: var(--text);
-  transition:
-    border-color var(--transition),
-    box-shadow var(--transition);
+  transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
   appearance: none;
 }
@@ -885,29 +870,17 @@ ul {
   margin-top: 0;
 }
 
-.form-success {
-  display: none;
-  text-align: center;
-  padding: 24px;
-  background: var(--sage-light);
-  border-radius: var(--radius);
-  color: var(--sage-dark);
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-}
-
-/* ── Responsive ── */
 @media (max-width: 640px) {
   .form-row {
     grid-template-columns: 1fr;
   }
 }
 
-/* =============================================
-   Page Layouts (About, Contact, Commission)
-   ============================================= */
+/* ─────────────────────────────────────────────
+   10. Layouts de pages (About, Contact)
+   ───────────────────────────────────────────── */
 
-/* ── Sections ── */
+/* Sections génériques */
 .section {
   max-width: 1140px;
   margin: 0 auto;
@@ -924,12 +897,7 @@ ul {
   margin-bottom: 40px;
 }
 
-.section-cta {
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* ── Page Hero ── */
+/* Page Hero */
 .page-hero {
   background: var(--sage-light);
   padding: 56px 24px 48px;
@@ -951,7 +919,15 @@ ul {
   letter-spacing: 0.04em;
 }
 
-/* ── About Grid ── */
+/* Divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--linen-dark);
+  margin: 0;
+  height: 0;
+}
+
+/* About */
 .about-grid {
   display: grid;
   grid-template-columns: 340px 1fr;
@@ -1006,7 +982,7 @@ ul {
   letter-spacing: 0.06em;
 }
 
-/* ── Contact ── */
+/* Contact */
 .contact-wrap {
   max-width: 600px;
   margin: 0 auto;
@@ -1039,6 +1015,12 @@ ul {
   border-radius: var(--radius);
   padding: 20px 16px;
   text-align: center;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.contact-link:hover .contact-card {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
 }
 
 .contact-card svg {
@@ -1071,7 +1053,6 @@ ul {
   filter: brightness(105%);
 }
 
-/* ── Responsive ── */
 @media (max-width: 960px) {
   .contact-info {
     grid-template-columns: 1fr;
@@ -1079,10 +1060,6 @@ ul {
 }
 
 @media (max-width: 640px) {
-  .contact-info {
-    grid-template-columns: 1fr;
-  }
-
   .contact-card {
     padding: 16px 12px;
   }
@@ -1101,54 +1078,10 @@ ul {
   }
 }
 
-/* ── Commission ── */
-.commission-banner {
-  background: var(--linen-dark);
-  padding: 56px 24px;
-}
+/* ─────────────────────────────────────────────
+   11. Page Produit Détail
+   ───────────────────────────────────────────── */
 
-.commission-inner {
-  max-width: 1140px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.commission-text h2 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-
-.commission-text p {
-  color: var(--brown-light);
-  margin-bottom: 24px;
-  max-width: 360px;
-  line-height: 1.7;
-}
-
-.commission-img img {
-  width: 100%;
-  border-radius: var(--radius);
-  object-fit: cover;
-  box-shadow: var(--shadow);
-}
-
-.commission-page {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 64px 24px;
-}
-
-/* =============================================
-   Product Detail Page
-   ============================================= */
-
-/* Page layout */
 .product-page {
   max-width: 1100px;
   margin: 0 auto;
@@ -1159,7 +1092,6 @@ ul {
   align-items: start;
 }
 
-/* Gallery */
 .product-gallery {
   position: sticky;
   top: calc(var(--nav-h) + 20px);
@@ -1183,7 +1115,6 @@ ul {
   transform: scale(1.04);
 }
 
-/* Product detail */
 .product-detail {
   padding-top: 8px;
 }
@@ -1225,7 +1156,6 @@ ul {
   margin-bottom: 28px;
 }
 
-/* Format selector */
 .format-label {
   font-size: 0.72rem;
   letter-spacing: 0.1em;
@@ -1248,10 +1178,7 @@ ul {
   font-size: 0.78rem;
   color: var(--brown-light);
   cursor: pointer;
-  transition:
-    border-color var(--transition),
-    color var(--transition),
-    background var(--transition);
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
   font-family: var(--font-body);
   background: none;
 }
@@ -1263,7 +1190,6 @@ ul {
   background: var(--linen);
 }
 
-/* CTAs */
 .product-cta {
   display: flex;
   gap: 12px;
@@ -1281,9 +1207,7 @@ ul {
   text-transform: uppercase;
   border-radius: var(--radius);
   text-align: center;
-  transition:
-    background var(--transition),
-    transform var(--transition);
+  transition: background var(--transition), transform var(--transition);
   font-family: var(--font-body);
   cursor: pointer;
   border: none;
@@ -1292,10 +1216,6 @@ ul {
 .btn-add-cart:hover {
   background: var(--text);
   transform: translateY(-1px);
-}
-
-.btn-add-cart:active {
-  transform: translateY(0);
 }
 
 .btn-wishlist {
@@ -1308,9 +1228,7 @@ ul {
   justify-content: center;
   color: var(--brown-light);
   cursor: pointer;
-  transition:
-    border-color var(--transition),
-    color var(--transition);
+  transition: border-color var(--transition), color var(--transition);
   flex-shrink: 0;
   background: none;
 }
@@ -1325,7 +1243,6 @@ ul {
   height: 18px;
 }
 
-/* Shipping info */
 .shipping-info {
   margin-top: 28px;
   display: flex;
@@ -1346,180 +1263,288 @@ ul {
   height: 16px;
 }
 
-/* =============================================
-   Commission Page Styles
-   ============================================= */
+/* ─────────────────────────────────────────────
+   12. Commission Banner (composant homepage)
+   ───────────────────────────────────────────── */
 
-/* Commission intro */
-.commission-intro {
-  max-width: 700px;
+.commission-banner {
+  background: var(--linen-dark);
+  padding: 80px 24px;
+}
+
+.commission-banner-inner {
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 56px 24px 70px;
-  text-align: center;
-}
-
-.commission-intro h2 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 14px;
-}
-
-.commission-intro p {
-  color: var(--brown-light);
-  line-height: 1.8;
-  font-size: 0.9rem;
-}
-
-/* Process section */
-.process-section {
-  /* max-width: 940px; */
-  margin: 0 auto;
-  padding: 52px 24px;
-  background-image:
-    linear-gradient(90deg, rgba(225, 229, 212, 0.5) 50%, transparent 50%),
-    linear-gradient(rgba(225, 229, 212, 0.5) 50%, transparent 50%);
-  background-size: 20px 20px;
-}
-
-.process-section h2 {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-/* Pricing grid */
-.pricing-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 860px;
-  margin: 0 auto 56px;
-  padding: 0 24px;
-}
-
-.pricing-card {
-  background: var(--white);
-  border: 1px solid var(--linen-dark);
-  border-radius: var(--radius);
-  padding: 28px 20px;
-  text-align: center;
-  transition:
-    box-shadow var(--transition),
-    transform var(--transition);
-}
-
-.pricing-card:hover {
-  box-shadow: var(--shadow);
-  transform: translateY(-2px);
-}
-
-.pricing-card.featured {
-  background: var(--sage-light);
-  border-color: var(--sage);
-}
-
-.pricing-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--brown-light);
-  margin-bottom: 8px;
-}
-
-.pricing-card.featured .pricing-label {
-  color: var(--sage-dark);
-}
-
-.pricing-name {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.pricing-price span {
-  font-size: 1rem;
-  color: var(--brown-light);
-}
-
-.pricing-features li::before {
-  content: "✦ ";
-  color: var(--sage);
-}
-
-/* Commission form */
-.commission-form-wrap {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 24px 64px;
-}
-
-.commission-form-wrap h2 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 300;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.commission-form-wrap > p {
-  color: var(--brown-light);
-  font-size: 0.88rem;
-  margin-bottom: 36px;
-}
-
-.checkbox-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.checkbox-item {
-  display: flex;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
   align-items: center;
-  gap: 8px;
-  font-size: 0.83rem;
-  color: var(--brown-light);
-  cursor: pointer;
 }
 
-.checkbox-item input[type="checkbox"] {
-  cursor: pointer;
+/* ── Colonne gauche — texte ── */
+
+.commission-banner-text {
+  display: flex;
+  flex-direction: column;
 }
 
-.field-note {
-  font-size: 0.72rem;
-  color: var(--brown-light);
-  margin-top: 4px;
+.commission-banner-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  margin-bottom: 18px;
+}
+
+.commission-banner-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.commission-banner-title em {
   font-style: italic;
 }
 
+.commission-banner-desc {
+  font-size: 0.88rem;
+  color: var(--brown-light);
+  line-height: 1.85;
+  margin-bottom: 36px;
+  max-width: 380px;
+}
+
+/* Étapes */
+.commission-banner-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.commission-banner-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.commission-banner-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--green-dark);
+}
+
+.commission-banner-step-text {
+  font-size: 0.82rem;
+  color: var(--brown-light);
+  margin: 0;
+}
+
+.commission-banner-step-text strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* CTAs */
+.commission-banner-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.commission-banner-ctas .btn-primary {
+  margin-top: 0;
+}
+
+/* ── Colonne droite — carte ── */
+
+.commission-banner-card {
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.commission-banner-card-img {
+  height: 280px;
+  background: linear-gradient(
+    135deg,
+    var(--sage-light) 0%,
+    var(--tan) 60%,
+    var(--sage) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.commission-banner-card-watermark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--sage-dark);
+  opacity: 0.6;
+}
+
+.commission-banner-card-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--linen);
+  border: 1px solid var(--linen-dark);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+}
+
+.commission-banner-card-body {
+  padding: 20px 22px;
+}
+
+.commission-banner-card-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.commission-banner-card-price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--brown);
+}
+
 /* ── Responsive ── */
+
+/* Tablette : colonne unique, carte après le texte */
 @media (max-width: 960px) {
-  .pricing-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .commission-banner {
+    padding: 60px 24px;
+  }
+
+  .commission-banner-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 600px;
+  }
+
+  .commission-banner-title {
+    font-size: 2.2rem;
+  }
+
+  .commission-banner-desc {
+    max-width: 100%;
+  }
+
+  .commission-banner-card-img {
+    height: 220px;
   }
 }
 
+/* Mobile */
 @media (max-width: 640px) {
-  .pricing-grid {
-    grid-template-columns: 1fr;
+  .commission-banner {
+    padding: 48px 16px;
   }
 
-  .checkbox-group {
-    grid-template-columns: 1fr;
+  .commission-banner-inner {
+    gap: 32px;
+  }
+
+  .commission-banner-title {
+    font-size: 1.9rem;
+    margin-bottom: 16px;
+  }
+
+  /* Masque le <br> pour un titre plus fluide sur mobile */
+  .commission-banner-br {
+    display: none;
+  }
+
+  .commission-banner-desc {
+    font-size: 0.84rem;
+    margin-bottom: 28px;
+  }
+
+  .commission-banner-steps {
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .commission-banner-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .commission-banner-ctas .btn-primary,
+  .commission-banner-ctas .btn-outline {
+    text-align: center;
+    width: 100%;
+  }
+
+  .commission-banner-card-img {
+    height: 160px;
+  }
+
+  .commission-banner-card-watermark {
+    font-size: 0.95rem;
+  }
+
+  .commission-banner-card-body {
+    padding: 16px 18px;
+  }
+
+  .commission-banner-card-title {
+    font-size: 1.2rem;
+  }
+
+  .commission-banner-card-price {
+    font-size: 1rem;
   }
 }
 
-/* =============================================
-   Utilities & Layout
-   ============================================= */
+/* Très petits écrans */
+@media (max-width: 400px) {
+  .commission-banner {
+    padding: 40px 12px;
+  }
+
+  .commission-banner-title {
+    font-size: 1.7rem;
+  }
+
+  .commission-banner-step-num {
+    width: 24px;
+    height: 24px;
+    font-size: 0.78rem;
+  }
+
+  .commission-banner-card-img {
+    height: 130px;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   13. Utilitaires & Layout
+   ───────────────────────────────────────────── */
 
 #root {
   display: flex;
@@ -1537,15 +1562,7 @@ main {
   min-height: 100vh;
 }
 
-/* Divider */
-.divider {
-  border: none;
-  border-top: 1px solid var(--linen-dark);
-  margin: 0;
-  height: 0;
-}
-
-/* Process Steps */
+/* Process Steps (partagé entre homepage et commission) */
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1561,9 +1578,7 @@ main {
   background: var(--white);
   border: 1px solid var(--linen-dark);
   border-radius: var(--radius);
-  transition:
-    box-shadow var(--transition),
-    transform var(--transition);
+  transition: box-shadow var(--transition), transform var(--transition);
 }
 
 .step:hover {
@@ -1600,7 +1615,6 @@ main {
   line-height: 1.7;
 }
 
-/* ── Responsive ── */
 @media (max-width: 960px) {
   .process-steps {
     grid-template-columns: repeat(2, 1fr);
