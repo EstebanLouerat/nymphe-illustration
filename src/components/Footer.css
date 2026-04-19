@@ -55,6 +55,12 @@
   transition: color var(--transition);
 }
 
+.footer-lilou-img {
+  width: 80px;
+  height: auto;
+  margin-top: 16px;
+}
+
 .footer-socials a:hover {
   color: var(--white);
 }

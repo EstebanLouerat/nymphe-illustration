@@ -43,6 +43,11 @@
   to = "/.netlify/functions/orders"
   status = 200
 
+[[redirects]]
+  from = "/api/popularity"
+  to = "/.netlify/functions/popularity"
+  status = 200
+
 ## Exclure les assets Vite de la redirection SPA
 # [[redirects]]
 #   from = "/@*"

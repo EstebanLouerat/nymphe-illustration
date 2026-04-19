@@ -18,7 +18,7 @@ export const handler = async (event) => {
     stripeEvent = stripe.webhooks.constructEvent(
       event.body,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET
+      process.env.STRIPE_WEBHOOK_SECRET,
     );
   } catch (err) {
     console.error("Webhook signature error:", err.message);
@@ -29,9 +29,28 @@ export const handler = async (event) => {
     const session = stripeEvent.data.object;
     console.log("✅ Paiement confirmé:", session.id);
     console.log("   Email:", session.customer_details?.email);
-    console.log("   Montant:", session.amount_total / 100, session.currency?.toUpperCase());
+    console.log(
+      "   Montant:",
+      session.amount_total / 100,
+      session.currency?.toUpperCase(),
+    );
 
-    // TODO : envoyer un email de confirmation, mettre à jour une base de données, etc.
+    // Récupère les line items pour identifier les produits achetés
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+
+    // Appel interne à la fonction popularity
+    const store = getStore("popularity");
+    const existing = (await store.get("counts", { type: "json" }))?.value ?? {};
+
+    for (const item of lineItems.data) {
+      // L'id Contentful est passé en metadata de chaque product
+      const contentfulId = item.price?.product_metadata?.contentful_id;
+      if (contentfulId) {
+        existing[contentfulId] =
+          (existing[contentfulId] ?? 0) + (item.quantity ?? 1);
+      }
+    }
+    await store.set("counts", JSON.stringify(existing));
   }
 
   return {

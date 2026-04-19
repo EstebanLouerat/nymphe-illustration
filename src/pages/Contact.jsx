@@ -51,11 +51,18 @@ function Contact() {
 
       <div className="contact-wrap">
         <div className="contact-info">
-          <div className="contact-card">
-            <Mail size={22} />
-            <h4>Email</h4>
-            <p>nympheillustration@gmail.com</p>
-          </div>
+          <a
+            className="contact-link"
+            href="mailto:nympheillustration@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="contact-card">
+              <Mail size={22} />
+              <h4>Email</h4>
+              <p>nympheillustration@gmail.com</p>
+            </div>
+          </a>
           <a
             className="contact-link"
             href="https://www.instagram.com/nympheillustration/"

@@ -23,6 +23,7 @@ function Footer() {
             <Pinterest size={20} />
           </a> */}
         </div>
+        <img src="img\snail.png" alt="snail" className="footer-lilou-img" />
       </div>
       <p className="footer-copy">
         © 2026 Nymphe Illustration — Tous droits réservés

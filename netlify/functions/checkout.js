@@ -18,10 +18,16 @@ export const handler = async (event) => {
   }
 
   if (!items || items.length === 0) {
-    return { statusCode: 400, body: JSON.stringify({ error: "No items provided" }) };
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: "No items provided" }),
+    };
   }
 
-  const origin = event.headers.origin || process.env.URL || "https://nympheillustration.netlify.app";
+  const origin =
+    event.headers.origin ||
+    process.env.URL ||
+    "https://nympheillustration.netlify.app";
 
   try {
     const lineItems = items.map((item) => ({
@@ -29,7 +35,10 @@ export const handler = async (event) => {
         currency: "eur",
         product_data: {
           name: item.titre,
-          description: item.selectedFormat ? `Format : ${item.selectedFormat}` : undefined,
+          metadata: { contentful_id: item.id },
+          description: item.selectedFormat
+            ? `Format : ${item.selectedFormat}`
+            : undefined,
           images: item.image ? [item.image] : [],
         },
         unit_amount: Math.round((item.prix || 0) * 100),
