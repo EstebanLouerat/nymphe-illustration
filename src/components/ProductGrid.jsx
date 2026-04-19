@@ -26,15 +26,16 @@ function ProductGrid({ products = null, showTitle = true }) {
       return;
     }
     const load = async () => {
-      const [items, pop] = await Promise.all([
-        ContentfulService.fetchIllustrations(),
-        axios
-          .get("/api/popularity")
-          .then((r) => r.data)
-          .catch(() => ({})),
-      ]);
+      const items = await ContentfulService.fetchIllustrations();
+      // const [items, pop] = await Promise.all([
+      //   ContentfulService.fetchIllustrations(),
+      //   axios
+      //     .get("/api/popularity")
+      //     .then((r) => r.data)
+      //     .catch(() => ({})),
+      // ]);
       setIllustrations(items);
-      setPopularity(pop);
+      // setPopularity(pop);
       setLoading(false);
     };
     load();

@@ -14,16 +14,26 @@ function Product() {
   const [error, setError] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("A5");
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const { addToCart, openCart, showSuccess, showInfo } = useStore();
+  const [heartAnim, setHeartAnim] = useState(false); // animation cœur
+  const [isZoomOpen, setIsZoomOpen] = useState(false); // zoom modal
+
+  const { addToCart, openCart, toggleFavorite, isFavorite, favorites } =
+    useStore();
+
+  // isFav est recalculé à chaque changement du store favorites
+  const isFav = product ? isFavorite(product.id) : false;
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
+      setIsZoomOpen(false); // Fermer le zoom si on change de produit
       try {
         const item = await ContentfulService.fetchIllustrationById(id);
         if (item) {
           setProduct(item);
           setError(false);
+          // Scroll en haut de la page
+          window.scrollTo(0, 0);
           const allProducts = await ContentfulService.fetchIllustrations();
           setRelatedProducts(
             allProducts.filter((p) => p.id !== id).slice(0, 4),
@@ -44,8 +54,17 @@ function Product() {
   const handleAddToCart = () => {
     if (product) {
       addToCart({ ...product, selectedFormat });
-      // showSuccess(`${product.titre} ajouté au panier !`);
       openCart();
+    }
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!product) return;
+    const result = await toggleFavorite(product.id);
+    // Animation uniquement si l'article vient d'être AJOUTÉ avec succès en BDD
+    if (result?.success && result?.added) {
+      setHeartAnim(true);
+      setTimeout(() => setHeartAnim(false), 700);
     }
   };
 
@@ -132,7 +151,10 @@ function Product() {
 
       <div className="product-page">
         <div className="product-gallery">
-          <div className="product-gallery-main">
+          <div
+            className="product-gallery-main"
+            onClick={() => setIsZoomOpen(true)}
+          >
             {product.image && (
               <img
                 src={product.image}
@@ -157,7 +179,7 @@ function Product() {
             </div>
           )}
 
-          <p className="format-label">Format</p>
+          {/* <p className="format-label">Format</p>
           <div className="format-options">
             {formats.map((fmt) => (
               <button
@@ -168,7 +190,7 @@ function Product() {
                 {fmt.label}
               </button>
             ))}
-          </div>
+          </div> */}
 
           <div className="product-cta">
             <button
@@ -178,12 +200,17 @@ function Product() {
             >
               Ajouter au panier
             </button>
+
             <button
-              className="btn-wishlist"
-              aria-label="Ajouter aux favoris"
-              onClick={() => showInfo("Ajouté aux favoris !")}
+              className={`btn-wishlist ${isFav ? "btn-wishlist--active" : ""} ${heartAnim ? "btn-wishlist--pop" : ""}`}
+              aria-label={isFav ? "Retirer des favoris" : "Ajouter aux favoris"}
+              onClick={handleToggleFavorite}
             >
-              <Heart size={20} />
+              <Heart
+                size={20}
+                fill={isFav ? "currentColor" : "none"}
+                className={heartAnim ? "heart-icon--pop" : ""}
+              />
             </button>
           </div>
 
@@ -209,6 +236,25 @@ function Product() {
           <hr className="section-divider" />
           <h2>Vous aimerez aussi</h2>
           <ProductGrid products={relatedProducts} />
+        </div>
+      )}
+
+      {/* Modal de zoom */}
+      {isZoomOpen && product.image && (
+        <div className="zoom-modal" onClick={() => setIsZoomOpen(false)}>
+          <div
+            className="zoom-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="zoom-close-btn"
+              onClick={() => setIsZoomOpen(false)}
+              aria-label="Fermer le zoom"
+            >
+              ✕
+            </button>
+            <img src={product.image} alt={product.titre} className="zoom-img" />
+          </div>
         </div>
       )}
     </main>

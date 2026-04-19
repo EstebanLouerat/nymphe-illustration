@@ -1,0 +1,141 @@
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(41, 45, 37, 0.5);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.auth-modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brown-light);
+  transition: color var(--transition);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.auth-modal-close:hover {
+  color: var(--text);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--linen-dark);
+  margin-bottom: 28px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-bottom: -1px;
+}
+.auth-tab.active {
+  color: var(--text);
+  border-bottom-color: var(--sage-dark);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 44px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--brown-light);
+  transition: color var(--transition);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: var(--text);
+}
+
+.auth-submit {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+}
+
+.auth-message {
+  font-size: 0.8rem;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin-top: 8px;
+}
+.auth-message--error {
+  background: #fef2f2;
+  color: #c0392b;
+  border: 1px solid #fecaca;
+}
+.auth-message--success {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  border: 1px solid var(--sage);
+}
+
+@media (max-width: 480px) {
+  .auth-modal {
+    padding: 32px 20px;
+    margin: 16px;
+  }
+}

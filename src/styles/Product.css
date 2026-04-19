@@ -20,11 +20,9 @@
   text-decoration: none;
   transition: color var(--transition);
 }
-
 .breadcrumb a:hover {
   color: var(--text);
 }
-
 .breadcrumb span {
   color: var(--linen-dark);
 }
@@ -77,30 +75,24 @@
   gap: 16px;
   padding-top: 8px;
 }
-
 .skeleton-text .skeleton {
   width: 100%;
 }
-
 .skeleton-text .skeleton:nth-child(1) {
   height: 14px;
   width: 80px;
 }
-
 .skeleton-text .skeleton:nth-child(2) {
   height: 44px;
 }
-
 .skeleton-text .skeleton:nth-child(3) {
   height: 30px;
   width: 100px;
 }
-
 .skeleton-text .skeleton:nth-child(4) {
   height: 1px;
   margin: 8px 0;
 }
-
 .skeleton-text .skeleton:nth-child(n + 5) {
   height: 14px;
 }
@@ -116,6 +108,7 @@
   overflow: hidden;
   background: var(--linen-dark);
   aspect-ratio: 1;
+  cursor: pointer;
 }
 
 .product-gallery-main img,
@@ -229,6 +222,7 @@
   margin-bottom: 28px;
 }
 
+/* ─── Bouton Wishlist ─────────────────────────── */
 .btn-wishlist {
   width: 50px;
   height: 50px;
@@ -246,6 +240,8 @@
   flex-shrink: 0;
   background: transparent;
   font-size: 0;
+  position: relative;
+  overflow: visible;
 }
 
 .btn-wishlist:hover {
@@ -254,10 +250,56 @@
   background: var(--linen);
 }
 
-.btn-wishlist svg {
-  width: 18px;
-  height: 18px;
-  font-size: 18px;
+/* État actif (favori) */
+.btn-wishlist--active {
+  border-color: #e05f5f;
+  color: #e05f5f;
+  background: #fdf2f2;
+}
+
+.btn-wishlist--active:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+  background: #fde8e8;
+}
+
+/* Animation pop au moment de l'ajout réussi en BDD */
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.45);
+  }
+  50% {
+    transform: scale(0.88);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes heart-ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 95, 95, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(224, 95, 95, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(224, 95, 95, 0);
+  }
+}
+
+.btn-wishlist--pop {
+  animation: heart-ripple 0.65s ease forwards;
+}
+
+.heart-icon--pop {
+  animation: heart-pop 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
 }
 
 /* Shipping Info */
@@ -311,13 +353,87 @@
   padding: 80px 24px;
   color: var(--brown-light);
 }
-
 .product-error p {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 300;
   margin-bottom: 12px;
   color: var(--text);
+}
+
+/* Zoom Modal */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.zoom-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoom-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--radius);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.zoom-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  z-index: 1001;
+}
+
+.zoom-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Responsive Design */
@@ -327,24 +443,19 @@
     gap: 40px;
     padding: 40px 24px 60px;
   }
-
   .product-skeleton {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-
   .product-gallery {
     position: static;
   }
-
   .product-detail-title {
     font-size: 2rem;
   }
-
   .product-detail-price {
     font-size: 1.5rem;
   }
-
   .related-section {
     padding: 0 24px 60px;
   }
@@ -355,46 +466,36 @@
     padding: 12px 16px;
     font-size: 0.75rem;
   }
-
   .product-page {
     padding: 28px 16px 48px;
   }
-
   .product-skeleton {
     padding: 28px 16px;
   }
-
   .product-detail-title {
     font-size: 1.6rem;
     margin-bottom: 12px;
   }
-
   .product-detail-price {
     font-size: 1.2rem;
     margin-bottom: 20px;
   }
-
   .format-options {
     flex-direction: column;
   }
-
   .format-btn {
     width: 100%;
     text-align: center;
   }
-
   .product-cta {
     gap: 8px;
   }
-
   .shipping-row {
     font-size: 0.75rem;
   }
-
   .related-section {
     padding: 0 16px 48px;
   }
-
   .related-section h2 {
     font-size: 1.4rem;
   }

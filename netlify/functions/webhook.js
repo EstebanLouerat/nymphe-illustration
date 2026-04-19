@@ -1,9 +1,13 @@
-// netlify/functions/webhook.js
-// POST /api/webhook → reçoit les événements Stripe
-
 import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Service role key pour bypasser RLS côté serveur
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
 
 export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -14,7 +18,6 @@ export const handler = async (event) => {
   let stripeEvent;
 
   try {
-    // event.body est une string — Netlify Functions le gère automatiquement
     stripeEvent = stripe.webhooks.constructEvent(
       event.body,
       sig,
@@ -27,24 +30,43 @@ export const handler = async (event) => {
 
   if (stripeEvent.type === "checkout.session.completed") {
     const session = stripeEvent.data.object;
-    console.log("✅ Paiement confirmé:", session.id);
-    console.log("   Email:", session.customer_details?.email);
-    console.log(
-      "   Montant:",
-      session.amount_total / 100,
-      session.currency?.toUpperCase(),
-    );
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+      expand: ["data.price.product"],
+    });
 
-    // Récupère les line items pour identifier les produits achetés
-    const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+    const email = session.customer_details?.email;
 
-    // Appel interne à la fonction popularity
+    // Trouver le user Supabase par email
+    let userId = null;
+    if (email) {
+      const { data: users } = await supabase.auth.admin.listUsers();
+      const match = users?.users?.find((u) => u.email === email);
+      userId = match?.id ?? null;
+    }
+
+    // Formater les items pour la DB
+    const items = lineItems.data.map((item) => ({
+      titre: item.description,
+      prix: (item.price?.unit_amount ?? 0) / 100,
+      quantity: item.quantity,
+      contentful_id: item.price?.product?.metadata?.contentful_id ?? null,
+    }));
+
+    // Sauvegarder la commande
+    await supabase.from("orders").insert({
+      user_id: userId,
+      stripe_session_id: session.id,
+      customer_email: email,
+      items,
+      amount_total: session.amount_total,
+      currency: session.currency,
+    });
+
+    // Popularité (logique existante conservée)
     const store = getStore("popularity");
     const existing = (await store.get("counts", { type: "json" }))?.value ?? {};
-
     for (const item of lineItems.data) {
-      // L'id Contentful est passé en metadata de chaque product
-      const contentfulId = item.price?.product_metadata?.contentful_id;
+      const contentfulId = item.price?.product?.metadata?.contentful_id;
       if (contentfulId) {
         existing[contentfulId] =
           (existing[contentfulId] ?? 0) + (item.quantity ?? 1);
@@ -53,8 +75,5 @@ export const handler = async (event) => {
     await store.set("counts", JSON.stringify(existing));
   }
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ received: true }),
-  };
+  return { statusCode: 200, body: JSON.stringify({ received: true }) };
 };

@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ShoppingBag, Search, User } from "lucide-react";
 import { useState, useEffect } from "react";
+import AuthModal from "./AuthModal";
 import { useStore } from "../services/store";
 import "./Navbar.css";
 import Logo from "./Logo";
@@ -10,6 +11,8 @@ function Navbar() {
   const { toggleCart, cart } = useStore();
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const location = useLocation();
+  const [authOpen, setAuthOpen] = useState(false);
+  const { user } = useStore();
 
   const isActive = (path) => location.pathname === path;
 
@@ -46,12 +49,20 @@ function Navbar() {
 
         {/* Icons */}
         <div className="nav-icons">
-          {/* <button className="icon-btn" aria-label="Rechercher">
-            <Search size={20} />
-          </button>
-          <button className="icon-btn" aria-label="Mon compte">
-            <User size={20} />
-          </button> */}
+          {user ? (
+            <Link to="/account" className="icon-btn" aria-label="Mon compte">
+              <User size={20} />
+            </Link>
+          ) : (
+            <button
+              className="icon-btn"
+              onClick={() => setAuthOpen(true)}
+              aria-label="Se connecter"
+            >
+              <User size={20} />
+            </button>
+          )}
+
           <div className="cart-btn-wrap">
             <button
               className="icon-btn"
@@ -76,6 +87,8 @@ function Navbar() {
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
+
+        {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
       </div>
 
       {/* Mobile Menu */}
