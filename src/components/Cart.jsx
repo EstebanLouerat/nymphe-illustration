@@ -12,8 +12,6 @@ function Cart() {
     0,
   );
 
-  //   console.log("Cart contents:", cart);
-
   return (
     <>
       {/* Overlay */}

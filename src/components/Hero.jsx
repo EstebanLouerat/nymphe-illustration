@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
+import { ContentfulService } from "../services/api";
 
 function Hero({ content }) {
+  const [lilouMatcha, setLilouMatcha] = useState(null);
   if (!content || !content.image) return null;
+
+  useEffect(() => {
+    const loadLilouMatcha = async () => {
+      const content = await ContentfulService.fetchContent("Lilou Matcha");
+      if (content?.image) {
+        setLilouMatcha(content.image);
+      }
+    };
+    loadLilouMatcha();
+  }, []);
 
   return (
     <section className="hero">
@@ -10,11 +22,13 @@ function Hero({ content }) {
       </div>
       <div className="hero-text">
         <p className="hero-tagline">
-          <img
-            src="img\Lilou et la tasse.png"
-            alt={content.label}
-            className="lilou-img"
-          />
+          {lilouMatcha && (
+            <img
+              src={lilouMatcha}
+              alt={lilouMatcha.label}
+              className="lilou-img"
+            />
+          )}
           Si tu veux découvrir mes illustrations, c'est ici que ça se passe !
         </p>
         {/* <p

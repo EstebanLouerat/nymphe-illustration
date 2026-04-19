@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
 import { Filter, Instagram } from "lucide-react";
+import { useState, useEffect } from "react";
 import "./Footer.css";
 import Logo from "./Logo";
+import { ContentfulService } from "../services/api";
 
 function Footer() {
+  const [snailImage, setSnailImage] = useState(null);
+
+  useEffect(() => {
+    const loadSnailImage = async () => {
+      const content = await ContentfulService.fetchContent("Snail");
+      if (content?.image) {
+        setSnailImage(content.image);
+      }
+    };
+    loadSnailImage();
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -23,7 +37,13 @@ function Footer() {
             <Pinterest size={20} />
           </a> */}
         </div>
-        <img src="img\snail.png" alt="snail" className="footer-lilou-img" />
+        {snailImage && (
+          <img
+            src={snailImage}
+            alt={snailImage.label}
+            className="footer-lilou-img"
+          />
+        )}
       </div>
       <p className="footer-copy">
         © 2026 Nymphe Illustration — Tous droits réservés

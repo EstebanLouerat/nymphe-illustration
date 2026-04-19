@@ -21,7 +21,6 @@ export const ContentfulService = {
       });
 
       const entry = data.items.find((item) => item.fields.label === label);
-      console.log(label, data, entry);
       if (!entry) return null;
       const imageField = entry.fields.image || entry.fields.media;
       let imageUrl = null;
@@ -62,7 +61,6 @@ export const ContentfulService = {
         const imgId = f.image?.sys?.id;
         const imgSrc =
           imgId && assets[imgId] ? `${assets[imgId]}?w=600&fm=webp&q=80` : null;
-        console.log("fetchIllustrations - image", item);
         return {
           id: item.sys.id,
           titre: f.titre || "Sans titre",

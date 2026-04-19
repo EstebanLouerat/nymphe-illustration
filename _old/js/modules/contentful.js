@@ -19,9 +19,6 @@ const ContentfulAPI = {
       return null;
     }
 
-    console.log(`apikey: ${process.env.CONTENTFUL_ACCESS_TOKEN}`);
-    console.log(`space_id: ${process.env.CONTENTFUL_SPACE_ID}`);
-
     try {
       const url =
         `https://cdn.contentful.com/spaces/${process.env.CONTENTFUL_SPACE_ID}/entries` +

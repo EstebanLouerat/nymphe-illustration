@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormService } from "../services/api";
 import { useStore } from "../services/store";
 import { Mail, Instagram, Clock } from "lucide-react";
+import "../styles/Commission.css";
 
 function Commission() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ function Commission() {
     references: "",
   });
   const [loading, setLoading] = useState(false);
+  const [isPhysical, setIsPhysical] = useState(false);
   const { showSuccess, showError } = useStore();
 
   const handleChange = (e) => {
@@ -83,22 +85,22 @@ function Commission() {
             {
               n: 1,
               t: "Brief",
-              p: "Vous remplissez le formulaire ci-dessous. Je reviens vers vous sous 48h pour affiner le projet.",
+              p: "Contactez moi par email ou sur Instagram pour me parler de votre projet. Je reviens vers vous sous 48h.",
             },
             {
               n: 2,
-              t: "Devis & acompte",
-              p: "J'envoie un devis personnalisé. Après validation, un acompte de 50 % lance la création.",
+              t: "Devis",
+              p: "J'envoie un devis personnalisé. Seulement une fois le paiement effectué, la création peut commencer.",
             },
             {
               n: 3,
               t: "Esquisse",
-              p: "Je partage une ou deux esquisses. Vous validez ou demandez des ajustements (2 révisions incluses).",
+              p: "À chaque étape de la création, je vous partage le travail et je ferais tous les changements nécessaires pour votre satisfaction.",
             },
             {
               n: 4,
               t: "Livraison",
-              p: "L'illustration finale est envoyée en haute résolution. Solde payé à la livraison.",
+              p: "L'illustration finale est disponible en version numérique ou physique à la demande :)",
             },
           ].map(({ n, t, p }) => (
             <div key={n} className="step">
@@ -112,59 +114,49 @@ function Commission() {
 
       <hr className="divider" />
 
-      <div
-        id="tarifs"
-        style={{ padding: "52px 24px 8px", textAlign: "center" }}
-      >
-        <h2
-          style={{
-            fontSize: "1.6rem",
-            fontWeight: "300",
-            marginBottom: "32px",
-          }}
-        >
-          Tarifs indicatifs
-        </h2>
+      <div id="tarifs" className="pricing-header">
+        <h2>Tarifs indicatifs</h2>
+
+        <div className="offer-toggle-container">
+          <span className={`toggle-label ${!isPhysical ? "active" : ""}`}>
+            Offre numérique
+          </span>
+          <button
+            className={`offer-toggle ${isPhysical ? "physical" : "digital"}`}
+            onClick={() => setIsPhysical(!isPhysical)}
+            aria-label="Toggle entre offre numérique et offre physique"
+          >
+            <span className="toggle-indicator"></span>
+          </button>
+          <span className={`toggle-label ${isPhysical ? "active" : ""}`}>
+            Offre réelle
+          </span>
+        </div>
       </div>
       <div className="pricing-grid">
         <div className="pricing-card">
-          <p className="pricing-label">Petite illustration</p>
-          <p className="pricing-name">Vignette</p>
+          <p className="pricing-name">Simple</p>
           <p className="pricing-price">
-            À partir de 60 <span>€</span>
+            À partir de {isPhysical ? 50 : 35} <span>€</span>
           </p>
           <ul className="pricing-features">
-            <li>Format A6 ou équivalent digital</li>
-            <li>1 sujet simple</li>
-            <li>Fond uni ou transparent</li>
-            <li>2 allers-retours inclus</li>
-            <li>Délai : 1–2 semaines</li>
+            <li>1 sujet simple coupé à la taille</li>
+            <li>Idéeal pour les photos de profil ou les petits budgets</li>
+            <li>Délai : 3 à 4 semaines</li>
+            {isPhysical && <li>+ Frais de livraison inclus</li>}
           </ul>
         </div>
         <div className="pricing-card featured">
-          <p className="pricing-label">⭑ Le plus demandé</p>
-          <p className="pricing-name">Portrait</p>
+          <p className="pricing-name">Complet</p>
           <p className="pricing-price">
-            À partir de 120 <span>€</span>
+            À partir de {isPhysical ? 65 : 50} <span>€</span>
           </p>
           <ul className="pricing-features">
-            <li>Format A5 ou équivalent digital</li>
-            <li>Portrait + éléments botaniques</li>
-            <li>Ambiance sur mesure</li>
-            <li>2 allers-retours inclus</li>
-            <li>Délai : 2–3 semaines</li>
-          </ul>
-        </div>
-        <div className="pricing-card">
-          <p className="pricing-label">Projet éditorial</p>
-          <p className="pricing-name">Illustration</p>
-          <p className="pricing-price">Sur devis</p>
-          <ul className="pricing-features">
-            <li>Format A4+ ou double page</li>
-            <li>Scène complexe / plusieurs sujets</li>
-            <li>Droits d'exploitation inclus</li>
-            <li>3 allers-retours inclus</li>
-            <li>Délai : 3–5 semaines</li>
+            <li>1 ou plus sujets en entier</li>
+            <li>Fond plus travaillé</li>
+            <li>Idéal pour les projets plus ambitieux</li>
+            <li>Délai : 3 à 4 semaines</li>
+            {isPhysical && <li>+ Frais de livraison inclus</li>}
           </ul>
         </div>
       </div>

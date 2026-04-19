@@ -1071,6 +1071,36 @@ ul {
   filter: brightness(105%);
 }
 
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    padding: 16px 12px;
+  }
+
+  .contact-card svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .contact-card h4 {
+    font-size: 0.8rem;
+  }
+
+  .contact-card p {
+    font-size: 0.7rem;
+  }
+}
+
 /* ── Commission ── */
 .commission-banner {
   background: var(--linen-dark);
@@ -1324,7 +1354,7 @@ ul {
 .commission-intro {
   max-width: 700px;
   margin: 0 auto;
-  padding: 56px 24px 0;
+  padding: 56px 24px 70px;
   text-align: center;
 }
 
@@ -1344,9 +1374,13 @@ ul {
 
 /* Process section */
 .process-section {
-  max-width: 940px;
+  /* max-width: 940px; */
   margin: 0 auto;
   padding: 52px 24px;
+  background-image:
+    linear-gradient(90deg, rgba(225, 229, 212, 0.5) 50%, transparent 50%),
+    linear-gradient(rgba(225, 229, 212, 0.5) 50%, transparent 50%);
+  background-size: 20px 20px;
 }
 
 .process-section h2 {
@@ -1361,7 +1395,7 @@ ul {
 /* Pricing grid */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   max-width: 860px;
   margin: 0 auto 56px;
@@ -1409,25 +1443,9 @@ ul {
   margin-bottom: 8px;
 }
 
-.pricing-price {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--brown);
-  margin-bottom: 16px;
-}
-
 .pricing-price span {
   font-size: 1rem;
   color: var(--brown-light);
-}
-
-.pricing-features {
-  list-style: none;
-  font-size: 0.8rem;
-  color: var(--brown-light);
-  line-height: 1.9;
-  text-align: left;
 }
 
 .pricing-features li::before {
