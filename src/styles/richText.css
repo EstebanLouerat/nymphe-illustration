@@ -1,0 +1,203 @@
+/* ============================================================
+   Styles pour le texte riche formaté depuis Contentful
+   ============================================================ */
+
+/* Conteneur général du texte riche */
+.about-text,
+.product-detail-desc {
+  line-height: 1.7;
+  color: inherit;
+}
+
+/* Paragraphes */
+.about-text p,
+.product-detail-desc p {
+  margin-bottom: 1.25em;
+  line-height: 1.7;
+}
+
+.about-text p:last-child,
+.product-detail-desc p:last-child {
+  margin-bottom: 0;
+}
+
+/* Titres */
+.about-text h1,
+.product-detail-desc h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.about-text h2,
+.product-detail-desc h2 {
+  font-size: 1.6em;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.about-text h3,
+.product-detail-desc h3 {
+  font-size: 1.3em;
+  font-weight: 600;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+}
+
+.about-text h4,
+.about-text h5,
+.about-text h6,
+.product-detail-desc h4,
+.product-detail-desc h5,
+.product-detail-desc h6 {
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+
+/* Formatage du texte inline */
+.about-text strong,
+.product-detail-desc strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.about-text em,
+.product-detail-desc em {
+  font-style: italic;
+  color: inherit;
+}
+
+.about-text u,
+.product-detail-desc u {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-underline-offset: 3px;
+}
+
+.about-text code,
+.product-detail-desc code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "Monaco", "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+.about-text s,
+.product-detail-desc s {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Listes */
+.about-text ul,
+.product-detail-desc ul {
+  list-style-type: disc;
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+
+.about-text ol,
+.product-detail-desc ol {
+  list-style-type: decimal;
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+
+.about-text li,
+.product-detail-desc li {
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+.about-text ul ul,
+.about-text ul ol,
+.about-text ol ul,
+.about-text ol ol,
+.product-detail-desc ul ul,
+.product-detail-desc ul ol,
+.product-detail-desc ol ul,
+.product-detail-desc ol ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Citations */
+.about-text blockquote,
+.product-detail-desc blockquote {
+  border-left: 3px solid #d4dcbf;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+/* Séparateurs */
+.about-text hr,
+.product-detail-desc hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 2em 0;
+}
+
+/* Liens */
+.about-text a,
+.product-detail-desc a {
+  color: #6a7e52;
+  text-decoration: none;
+  border-bottom: 1px solid #d4dcbf;
+  transition: color 0.2s ease;
+}
+
+.about-text a:hover,
+.product-detail-desc a:hover {
+  color: #4d5a3a;
+  border-bottom-color: #4d5a3a;
+}
+
+/* Images intégrées */
+.about-text img,
+.product-detail-desc img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 1.5em 0;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-text h1,
+  .product-detail-desc h1 {
+    font-size: 1.5em;
+  }
+
+  .about-text h2,
+  .product-detail-desc h2 {
+    font-size: 1.3em;
+  }
+
+  .about-text h3,
+  .product-detail-desc h3 {
+    font-size: 1.1em;
+  }
+
+  .about-text ul,
+  .about-text ol,
+  .product-detail-desc ul,
+  .product-detail-desc ol {
+    margin-left: 1.5em;
+  }
+
+  .about-text blockquote,
+  .product-detail-desc blockquote {
+    padding-left: 1em;
+    border-left-width: 2px;
+  }
+}

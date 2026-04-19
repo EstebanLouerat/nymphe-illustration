@@ -1,0 +1,422 @@
+/* =============================================
+   Checkout Page — Nymphe Illustration
+   ============================================= */
+
+/* ── Layout ── */
+.checkout-root {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  min-height: calc(100vh - var(--nav-h));
+  align-items: start;
+}
+
+/* ── Left column ── */
+.checkout-left {
+  padding: 52px 64px 80px 48px;
+  max-width: 640px;
+  margin-left: auto;
+  width: 100%;
+}
+
+.checkout-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--brown-light);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color var(--transition);
+}
+
+.checkout-back:hover {
+  color: var(--text);
+}
+
+.checkout-brand {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  margin-bottom: 12px;
+}
+
+.checkout-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+  line-height: 1.2;
+}
+
+/* ── Form ── */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.checkout-fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.checkout-legend {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  font-weight: 500;
+  margin-bottom: 16px;
+  font-family: var(--font-body);
+}
+
+.checkout-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0;
+}
+
+/* ── Floating label fields ── */
+.checkout-field {
+  position: relative;
+  border-bottom: 1px solid var(--linen-dark);
+  transition: border-color var(--transition);
+}
+
+.checkout-field:first-of-type {
+  border-top: 1px solid var(--linen-dark);
+}
+
+.checkout-row .checkout-field:first-of-type {
+  border-right: 1px solid var(--linen-dark);
+}
+
+.checkout-field label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--brown-light);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+.checkout-field input {
+  width: 100%;
+  padding: 24px 16px 10px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  font-weight: 300;
+}
+
+/* Float label when active or filled */
+.checkout-field.active label,
+.checkout-field.filled label {
+  top: 14px;
+  transform: translateY(0);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--sage-dark);
+}
+
+.checkout-field.active {
+  border-color: var(--sage);
+}
+
+.checkout-field.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--sage-dark);
+  animation: lineIn 0.2s ease forwards;
+}
+
+@keyframes lineIn {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* ── Submit button ── */
+.checkout-submit {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--text);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background var(--transition), transform var(--transition);
+  margin-top: 8px;
+}
+
+.checkout-submit:hover:not(:disabled) {
+  background: var(--brown);
+  transform: translateY(-1px);
+}
+
+.checkout-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.checkout-submit-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.checkout-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.checkout-secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--brown-light);
+  text-align: center;
+  letter-spacing: 0.04em;
+  margin-top: -12px;
+}
+
+/* ── Right column ── */
+.checkout-right {
+  background: var(--linen-dark);
+  min-height: calc(100vh - var(--nav-h));
+  padding: 52px 48px 80px;
+  border-left: 1px solid color-mix(in srgb, var(--linen-dark) 60%, var(--tan));
+}
+
+.checkout-summary {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+}
+
+.checkout-summary-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  margin-bottom: 28px;
+}
+
+/* ── Items ── */
+.checkout-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid color-mix(in srgb, var(--linen-dark) 60%, var(--tan));
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.checkout-item-img-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkout-item-img-wrap img,
+.checkout-item-img-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: var(--linen);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.checkout-item-qty {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  background: var(--brown);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.checkout-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.checkout-item-name {
+  font-size: 0.85rem;
+  color: var(--text);
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.checkout-item-format {
+  font-size: 0.72rem;
+  color: var(--brown-light);
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+.checkout-item-price {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--brown);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Totals ── */
+.checkout-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.checkout-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--brown-light);
+}
+
+.checkout-total-final {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 400;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--linen-dark) 60%, var(--tan));
+  margin-top: 4px;
+}
+
+.checkout-summary-note {
+  font-size: 0.72rem;
+  color: var(--brown-light);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  border-top: 1px solid color-mix(in srgb, var(--linen-dark) 60%, var(--tan));
+  padding-top: 20px;
+  margin-top: 4px;
+}
+
+/* ── Empty state ── */
+.checkout-empty-wrap {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkout-empty {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--brown-light);
+}
+
+.checkout-empty svg {
+  opacity: 0.4;
+}
+
+.checkout-empty h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text);
+}
+
+.checkout-empty p {
+  font-size: 0.88rem;
+  color: var(--brown-light);
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .checkout-root {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-right {
+    min-height: auto;
+    border-left: none;
+    border-top: 1px solid var(--linen-dark);
+    padding: 32px 24px;
+    order: -1; /* Résumé en premier sur mobile */
+  }
+
+  .checkout-summary {
+    position: static;
+  }
+
+  .checkout-left {
+    padding: 40px 24px 60px;
+    margin-left: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-title {
+    font-size: 1.6rem;
+  }
+
+  .checkout-row {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-row .checkout-field:first-of-type {
+    border-right: none;
+  }
+}

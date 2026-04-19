@@ -1061,6 +1061,16 @@ ul {
   color: var(--brown-light);
 }
 
+.contact-link {
+  color: var(--sage-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-link:hover {
+  filter: brightness(105%);
+}
+
 /* ── Commission ── */
 .commission-banner {
   background: var(--linen-dark);

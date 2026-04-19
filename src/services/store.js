@@ -1,12 +1,13 @@
 // ============================================================
 //  services/store.js — Zustand State Management
-//  Gère l'état global (panier, UI, etc)
+//  Gère l'état global (panier, UI, toasts)
 // ============================================================
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Charger le panier depuis localStorage
+let toastId = 0;
+
 const loadCart = () => {
   try {
     const saved = localStorage.getItem("nymphe_cart");
@@ -19,7 +20,7 @@ const loadCart = () => {
 export const useStore = create(
   persist(
     (set, get) => ({
-      // ── Panier ──
+      // ── Panier ──────────────────────────────────────────
       cart: loadCart(),
       cartOpen: false,
 
@@ -63,29 +64,57 @@ export const useStore = create(
       openCart: () => set({ cartOpen: true }),
       closeCart: () => set({ cartOpen: false }),
 
-      // ── Calculs ──
+      // ── Calculs ─────────────────────────────────────────
       get cartTotal() {
-        const state = get();
-        return state.cart.reduce(
+        return get().cart.reduce(
           (sum, item) => sum + (item.prix || 0) * item.quantity,
           0,
         );
       },
 
       get cartCount() {
-        const state = get();
-        return state.cart.reduce((sum, item) => sum + item.quantity, 0);
+        return get().cart.reduce((sum, item) => sum + item.quantity, 0);
       },
 
-      // ── Chargement ──
+      // ── Chargement ──────────────────────────────────────
       loading: false,
       setLoading: (loading) => set({ loading }),
 
-      // ── Notifications ──
-      toast: null,
-      showToast: (message, type = "success") =>
-        set({ toast: { message, type } }),
-      hideToast: () => set({ toast: null }),
+      // ── Toasts (pile) ───────────────────────────────────
+      // types: "success" | "error" | "info" | "warning"
+      toasts: [],
+
+      showToast: (message, type = "success", duration = 4000) => {
+        const id = ++toastId;
+        set((state) => ({
+          toasts: [...state.toasts, { id, message, type }],
+        }));
+        // Auto-dismiss
+        setTimeout(() => {
+          get().dismissToast(id);
+        }, duration);
+        return id;
+      },
+
+      dismissToast: (id) =>
+        set((state) => ({
+          toasts: state.toasts.filter((t) => t.id !== id),
+        })),
+
+      clearToasts: () => set({ toasts: [] }),
+
+      // Raccourcis sémantiques
+      showSuccess: (message, duration) =>
+        get().showToast(message, "success", duration),
+
+      showError: (message, duration = 6000) =>
+        get().showToast(message, "error", duration),
+
+      showInfo: (message, duration) =>
+        get().showToast(message, "info", duration),
+
+      showWarning: (message, duration) =>
+        get().showToast(message, "warning", duration),
     }),
     {
       name: "nymphe-store",

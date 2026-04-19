@@ -1,12 +1,15 @@
 import { useStore } from "../services/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { PaymentService } from "../services/api";
 import { useState } from "react";
+import { Lock, ChevronRight, ShoppingBag, ArrowLeft } from "lucide-react";
+import "../styles/Checkout.css";
 
 function Checkout() {
-  const { cart, cartTotal, clearCart } = useStore();
+  const { cart, cartTotal, showError, showInfo } = useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [activeField, setActiveField] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -24,15 +27,12 @@ function Checkout() {
   const handleCheckout = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      // Appel à la création de session Stripe
       const result = await PaymentService.createCheckoutSession(cart, formData);
-      // Rediriger vers Stripe Checkout
       window.location.href = result.checkoutUrl;
     } catch (err) {
       console.error("Erreur paiement:", err);
-      alert("Erreur lors du paiement");
+      showError("Une erreur est survenue lors du paiement. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -40,220 +40,155 @@ function Checkout() {
 
   if (cart.length === 0) {
     return (
-      <main
-        style={{ minHeight: "60vh", display: "flex", alignItems: "center" }}
-      >
-        <div className="container" style={{ textAlign: "center" }}>
-          <h1>Panier vide</h1>
+      <main className="checkout-empty-wrap">
+        <div className="checkout-empty">
+          <ShoppingBag size={40} strokeWidth={1} />
+          <h2>Votre panier est vide</h2>
           <p>Vous n'avez aucun article dans votre panier.</p>
-          <a href="/" className="btn-primary">
-            Retour à la boutique
-          </a>
+          <Link to="/" className="btn-primary">Retour à la boutique</Link>
         </div>
       </main>
     );
   }
 
+  const shipping = 4.90;
+  const total = cartTotal + shipping;
+
   return (
-    <main style={{ minHeight: "100vh" }}>
-      <section className="section">
-        <div className="container" style={{ maxWidth: "800px" }}>
-          <h1>Paiement</h1>
+    <main className="checkout-root">
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "48px",
-            }}
-          >
-            {/* Formulaire */}
-            <form onSubmit={handleCheckout}>
-              <div style={{ marginBottom: "24px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  style={{ width: "100%" }}
-                />
+      {/* ── Colonne gauche : formulaire ── */}
+      <div className="checkout-left">
+        <Link to="/" className="checkout-back">
+          <ArrowLeft size={14} />
+          Retour à la boutique
+        </Link>
+
+        <div className="checkout-brand">Nymphe Illustration</div>
+        <h1 className="checkout-title">Finaliser la commande</h1>
+
+        <form onSubmit={handleCheckout} className="checkout-form">
+
+          <fieldset className="checkout-fieldset">
+            <legend className="checkout-legend">Contact</legend>
+            <div className={`checkout-field ${activeField === "email" ? "active" : ""} ${formData.email ? "filled" : ""}`}>
+              <label htmlFor="email">Adresse e-mail</label>
+              <input type="email" id="email" name="email" value={formData.email}
+                onChange={handleChange} onFocus={() => setActiveField("email")}
+                onBlur={() => setActiveField(null)} required autoComplete="email" />
+            </div>
+          </fieldset>
+
+          <fieldset className="checkout-fieldset">
+            <legend className="checkout-legend">Livraison</legend>
+
+            <div className={`checkout-field ${activeField === "name" ? "active" : ""} ${formData.name ? "filled" : ""}`}>
+              <label htmlFor="name">Nom complet</label>
+              <input type="text" id="name" name="name" value={formData.name}
+                onChange={handleChange} onFocus={() => setActiveField("name")}
+                onBlur={() => setActiveField(null)} required autoComplete="name" />
+            </div>
+
+            <div className={`checkout-field ${activeField === "address" ? "active" : ""} ${formData.address ? "filled" : ""}`}>
+              <label htmlFor="address">Adresse</label>
+              <input type="text" id="address" name="address" value={formData.address}
+                onChange={handleChange} onFocus={() => setActiveField("address")}
+                onBlur={() => setActiveField(null)} required autoComplete="street-address" />
+            </div>
+
+            <div className="checkout-row">
+              <div className={`checkout-field ${activeField === "zip" ? "active" : ""} ${formData.zip ? "filled" : ""}`}>
+                <label htmlFor="zip">Code postal</label>
+                <input type="text" id="zip" name="zip" value={formData.zip}
+                  onChange={handleChange} onFocus={() => setActiveField("zip")}
+                  onBlur={() => setActiveField(null)} required autoComplete="postal-code" />
               </div>
-
-              <div style={{ marginBottom: "24px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  style={{ width: "100%" }}
-                />
-              </div>
-
-              <div style={{ marginBottom: "24px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Adresse
-                </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                  style={{ width: "100%" }}
-                />
-              </div>
-
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "16px",
-                  marginBottom: "24px",
-                }}
-              >
-                <div>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "8px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Ville
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-                <div>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "8px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Code postal
-                  </label>
-                  <input
-                    type="text"
-                    name="zip"
-                    value={formData.zip}
-                    onChange={handleChange}
-                    required
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </div>
-
-              <div style={{ marginBottom: "32px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    marginBottom: "8px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Pays
-                </label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  required
-                  style={{ width: "100%" }}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={loading}
-                style={{ width: "100%" }}
-              >
-                {loading ? "Traitement..." : "Payer maintenant"}
-              </button>
-            </form>
-
-            {/* Résumé */}
-            <div>
-              <h3>Résumé de la commande</h3>
-              <div
-                style={{
-                  border: "1px solid var(--linen-dark)",
-                  borderRadius: "var(--radius)",
-                  padding: "24px",
-                }}
-              >
-                {cart.map((item) => (
-                  <div
-                    key={item.id}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBottom: "12px",
-                      paddingBottom: "12px",
-                      borderBottom: "1px solid var(--linen-dark)",
-                    }}
-                  >
-                    <span>
-                      {item.titre} × {item.quantity}
-                    </span>
-                    <span>€ {(item.prix * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.2rem",
-                    marginTop: "16px",
-                    paddingTop: "16px",
-                    borderTop: "2px solid var(--text)",
-                  }}
-                >
-                  <span>Total</span>
-                  <span>€ {cartTotal.toFixed(2)}</span>
-                </div>
+              <div className={`checkout-field ${activeField === "city" ? "active" : ""} ${formData.city ? "filled" : ""}`}>
+                <label htmlFor="city">Ville</label>
+                <input type="text" id="city" name="city" value={formData.city}
+                  onChange={handleChange} onFocus={() => setActiveField("city")}
+                  onBlur={() => setActiveField(null)} required autoComplete="address-level2" />
               </div>
             </div>
+
+            <div className={`checkout-field ${activeField === "country" ? "active" : ""} ${formData.country ? "filled" : ""}`}>
+              <label htmlFor="country">Pays</label>
+              <input type="text" id="country" name="country" value={formData.country}
+                onChange={handleChange} onFocus={() => setActiveField("country")}
+                onBlur={() => setActiveField(null)} required autoComplete="country-name" />
+            </div>
+          </fieldset>
+
+          <button type="submit" className={`checkout-submit ${loading ? "loading" : ""}`} disabled={loading}>
+            {loading ? (
+              <span className="checkout-submit-inner">
+                <span className="checkout-spinner" />
+                Redirection vers Stripe…
+              </span>
+            ) : (
+              <span className="checkout-submit-inner">
+                <Lock size={14} />
+                Payer · € {total.toFixed(2)}
+                <ChevronRight size={16} />
+              </span>
+            )}
+          </button>
+
+          <p className="checkout-secure-note">
+            <Lock size={11} />
+            Paiement sécurisé via Stripe — vos données ne transitent pas par nos serveurs
+          </p>
+        </form>
+      </div>
+
+      {/* ── Colonne droite : résumé ── */}
+      <aside className="checkout-right">
+        <div className="checkout-summary">
+          <h2 className="checkout-summary-title">Votre commande</h2>
+
+          <ul className="checkout-items">
+            {cart.map((item) => (
+              <li key={item.id} className="checkout-item">
+                <div className="checkout-item-img-wrap">
+                  {item.image
+                    ? <img src={item.image} alt={item.titre} />
+                    : <div className="checkout-item-img-placeholder" />
+                  }
+                  {item.quantity > 1 && (
+                    <span className="checkout-item-qty">{item.quantity}</span>
+                  )}
+                </div>
+                <div className="checkout-item-info">
+                  <p className="checkout-item-name">{item.titre}</p>
+                  {item.selectedFormat && (
+                    <p className="checkout-item-format">Format {item.selectedFormat}</p>
+                  )}
+                </div>
+                <p className="checkout-item-price">€ {(item.prix * item.quantity).toFixed(2)}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="checkout-totals">
+            <div className="checkout-total-row">
+              <span>Sous-total</span>
+              <span>€ {cartTotal.toFixed(2)}</span>
+            </div>
+            <div className="checkout-total-row">
+              <span>Livraison</span>
+              <span>€ {shipping.toFixed(2)}</span>
+            </div>
+            <div className="checkout-total-row checkout-total-final">
+              <span>Total</span>
+              <span>€ {total.toFixed(2)}</span>
+            </div>
           </div>
+
+          <p className="checkout-summary-note">
+            Impression signée · Emballage sécurisé · Livraison 3–5 jours
+          </p>
         </div>
-      </section>
+      </aside>
     </main>
   );
 }

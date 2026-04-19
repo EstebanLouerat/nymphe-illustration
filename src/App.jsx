@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
+import ToastStack from "./components/ToastStack";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import About from "./pages/About";
@@ -18,6 +19,7 @@ function App() {
       <div className="app">
         <Navbar />
         <Cart />
+        <ToastStack />
 
         <Routes>
           <Route path="/" element={<Home />} />

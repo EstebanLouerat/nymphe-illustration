@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Heart, Truck, Package, CheckCircle } from "lucide-react";
 import { ContentfulService } from "../services/api";
 import { useStore } from "../services/store";
+import { formatRichText } from "../services/richTextFormatter";
 import ProductGrid from "../components/ProductGrid";
 import "../styles/Product.css";
 
@@ -13,7 +14,7 @@ function Product() {
   const [error, setError] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("A5");
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const { addToCart, openCart, showToast } = useStore();
+  const { addToCart, openCart, showSuccess, showInfo } = useStore();
 
   useEffect(() => {
     const load = async () => {
@@ -23,11 +24,10 @@ function Product() {
         if (item) {
           setProduct(item);
           setError(false);
-
-          // Charger les produits similaires
           const allProducts = await ContentfulService.fetchIllustrations();
-          const similar = allProducts.filter((p) => p.id !== id).slice(0, 4);
-          setRelatedProducts(similar);
+          setRelatedProducts(
+            allProducts.filter((p) => p.id !== id).slice(0, 4),
+          );
         } else {
           setError(true);
         }
@@ -43,12 +43,8 @@ function Product() {
 
   const handleAddToCart = () => {
     if (product) {
-      const itemToAdd = {
-        ...product,
-        selectedFormat,
-      };
-      addToCart(itemToAdd);
-      showToast(`${product.titre} ajouté au panier !`);
+      addToCart({ ...product, selectedFormat });
+      // showSuccess(`${product.titre} ajouté au panier !`);
       openCart();
     }
   };
@@ -126,7 +122,6 @@ function Product() {
 
   return (
     <main>
-      {/* Breadcrumb */}
       <nav className="breadcrumb">
         <Link to="/">Accueil</Link>
         <span>›</span>
@@ -135,18 +130,12 @@ function Product() {
         <span>{product.titre}</span>
       </nav>
 
-      {/* Contenu Produit */}
       <div className="product-page">
-        {/* Galerie */}
         <div className="product-gallery">
           <div className="product-gallery-main">
             {product.image && (
               <img
-                src={
-                  product.image ||
-                  "https://placehold.co/400x400/e8e0d0/8a7e62?text=" +
-                    encodeURIComponent(item.titre)
-                }
+                src={product.image}
                 alt={product.titre}
                 className="product-img"
               />
@@ -154,7 +143,6 @@ function Product() {
           </div>
         </div>
 
-        {/* Détails */}
         <div className="product-detail">
           {product.category && (
             <p className="product-detail-category">{product.category}</p>
@@ -164,10 +152,11 @@ function Product() {
           <hr className="product-detail-divider" />
 
           {product.description && (
-            <p className="product-detail-desc">{product.description}</p>
+            <div className="product-detail-desc">
+              {formatRichText(product.description)}
+            </div>
           )}
 
-          {/* Formats disponibles */}
           <p className="format-label">Format</p>
           <div className="format-options">
             {formats.map((fmt) => (
@@ -181,7 +170,6 @@ function Product() {
             ))}
           </div>
 
-          {/* Boutons d'action */}
           <div className="product-cta">
             <button
               className="btn-primary"
@@ -193,13 +181,12 @@ function Product() {
             <button
               className="btn-wishlist"
               aria-label="Ajouter aux favoris"
-              onClick={() => showToast("Ajouté aux favoris !", "info")}
+              onClick={() => showInfo("Ajouté aux favoris !")}
             >
               <Heart size={20} />
             </button>
           </div>
 
-          {/* Infos livraison */}
           <div className="shipping-info">
             <div className="shipping-row">
               <Truck size={20} />
@@ -217,7 +204,6 @@ function Product() {
         </div>
       </div>
 
-      {/* Produits similaires */}
       {relatedProducts.length > 0 && (
         <div className="related-section">
           <hr className="section-divider" />

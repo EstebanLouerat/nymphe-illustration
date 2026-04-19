@@ -1,6 +1,23 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { ContentfulService } from "../services/api";
+import { useStore } from "../services/store";
+import { formatRichText } from "../services/richTextFormatter";
 
 function About() {
+  const [aboutContent, setAboutContent] = useState(null);
+  const { setLoading } = useStore();
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      const about = await ContentfulService.fetchContent("About Section");
+      setAboutContent(about);
+      setLoading(false);
+    };
+    load();
+  }, [setLoading]);
+
   return (
     <main>
       {/* PAGE HERO */}
@@ -15,16 +32,20 @@ function About() {
         {/* Photo de profil */}
         <aside className="about-photo">
           <img
-            src="https://placehold.co/680x900/d4dcbf/6a7e52?text=Photo+portrait"
+            src={
+              aboutContent
+                ? aboutContent.image
+                : "https://placehold.co/680x900/d4dcbf/6a7e52?text=Photo+portrait"
+            }
             alt="Portrait de l'artiste"
           />
         </aside>
 
         {/* Texte */}
         <div className="about-body">
-          <h2>Bonjour, je suis Lilou Mauron</h2>
+          <h2>{aboutContent && aboutContent.title}</h2>
 
-          <p>
+          {/* <p>
             Je suis illustratrice indépendante basée en France, passionnée par
             la nature, les petites créatures et les instants suspendus. Mon
             travail oscille entre la tendresse du dessin botanique et la poésie
@@ -49,7 +70,10 @@ function About() {
             Quand je ne dessine pas, je jardine, je collectionne les livres de
             botanique anciens et je passe trop de temps à observer les insectes
             dans le jardin.
-          </p>
+          </p> */}
+          <div className="about-text">
+            {aboutContent && formatRichText(aboutContent.text)}
+          </div>
 
           {/* Tags / disciplines */}
           <div className="about-tags">

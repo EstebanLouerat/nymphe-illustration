@@ -19,7 +19,9 @@ export const ContentfulService = {
       const { data } = await contentfulAPI.get("/entries", {
         params: { content_type: "content" },
       });
+
       const entry = data.items.find((item) => item.fields.label === label);
+      console.log(label, data, entry)
       if (!entry) return null;
       const imageField = entry.fields.image || entry.fields.media;
       let imageUrl = null;
@@ -33,6 +35,7 @@ export const ContentfulService = {
       return {
         label,
         image: imageUrl,
+        title: entry.fields.title || null,
         text: entry.fields.text || entry.fields.description || null,
       };
     } catch (err) {

@@ -12,8 +12,7 @@ function Contact() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const [successVisible, setSuccessVisible] = useState(false);
-  const { showToast } = useStore();
+  const { showSuccess, showError } = useStore();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +22,12 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const result = await FormService.submitContact(formData);
-    showToast(result.message);
 
     if (result.ok) {
+      showSuccess(
+        "✦ Votre message a bien été envoyé ! Je vous réponds sous 48h.",
+      );
       setFormData({
         first_name: "",
         last_name: "",
@@ -35,35 +35,39 @@ function Contact() {
         subject: "",
         message: "",
       });
-      setSuccessVisible(true);
-      setTimeout(() => setSuccessVisible(false), 5000);
+    } else {
+      showError("Une erreur est survenue lors de l'envoi. Veuillez réessayer.");
     }
     setLoading(false);
   };
 
   return (
     <main>
-      {/* PAGE HERO */}
       <div className="page-hero">
         <h1>Contact</h1>
         <p>Une question, une collaboration ? Écrivez-moi.</p>
       </div>
       <hr className="divider" />
 
-      {/* CONTACT CONTENT */}
       <div className="contact-wrap">
-        {/* Infos rapides */}
         <div className="contact-info">
           <div className="contact-card">
             <Mail size={22} />
             <h4>Email</h4>
-            <p>hello@nymphe-illustration.fr</p>
+            <p>nympheillustration@gmail.com</p>
           </div>
-          <div className="contact-card">
-            <Instagram size={22} />
-            <h4>Instagram</h4>
-            <p>@nymphe.illustration</p>
-          </div>
+          <a
+            className="contact-link"
+            href="https://www.instagram.com/nympheillustration/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="contact-card">
+              <Instagram size={22} />
+              <h4>Instagram</h4>
+              <p>@nympheillustration</p>
+            </div>
+          </a>
           <div className="contact-card">
             <Clock size={22} />
             <h4>Réponse sous</h4>
@@ -151,17 +155,6 @@ function Contact() {
             </button>
           </div>
         </form>
-
-        {/* Message de succès */}
-        {successVisible && (
-          <div className="form-success" style={{ display: "block" }}>
-            ✦ Merci ! Votre message a bien été envoyé.
-            <br />
-            <small style={{ fontSize: "0.8rem", color: "var(--sage-dark)" }}>
-              Je vous répondrai dans les 48 heures.
-            </small>
-          </div>
-        )}
       </div>
     </main>
   );
