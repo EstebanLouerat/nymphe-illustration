@@ -1,0 +1,40 @@
+/* =============================================
+   main.css — Point d'entrée CSS
+   Nymphe Illustration
+   ─────────────────────────────────────────────
+   L'ordre d'import est intentionnel :
+   les tokens doivent précéder tout le reste,
+   le reset vient ensuite, puis les couches
+   de plus en plus spécifiques.
+   ============================================= */
+
+/* ── Fondations ── */
+@import "./_tokens.css";
+@import "./_reset.css";
+@import "./_animations.css";
+
+/* ── Système de design partagé ── */
+@import "./_layout.css";
+@import "./_buttons.css";
+@import "./_forms.css";
+
+/* ── Composants globaux ── */
+@import "./_nav.css";
+@import "./_cart.css";
+
+/* ── Pages & sections ── */
+@import "./_hero.css";
+@import "./_product-grid.css";
+@import "./_product-page.css";
+@import "./_about.css";
+@import "./_contact.css";
+@import "./_commission.css";
+@import "./_commission-banner.css";
+
+/* ── Pages standalone (leurs propres fichiers CSS) ── */
+/* Checkout  → src/styles/Checkout.css  (inchangé) */
+/* Account   → src/styles/Account.css   (inchangé) */
+/* RichText  → src/styles/richText.css  (inchangé) */
+
+/* ── Feedback UI ── */
+/* Toast     → src/components/ToastStack.css (inchangé, co-localisé avec le composant) */

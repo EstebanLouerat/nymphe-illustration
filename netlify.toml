@@ -61,7 +61,7 @@
 #   status = 200
 #   force = true
 
-## SPA fallback — doit rester en dernier
+## SPA fallback - doit rester en dernier
 [[redirects]]
   from = "/*"
   to = "/index.html"

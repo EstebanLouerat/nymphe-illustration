@@ -1,0 +1,112 @@
+/* =============================================
+   About — Page à propos
+   ============================================= */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 60px;
+  align-items: start;
+  padding: 64px 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.about-photo {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+}
+
+.about-photo img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.about-body h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.about-body p {
+  color: var(--brown-light);
+  line-height: 1.85;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+}
+
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.tag {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  padding: 4px 14px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 960px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 40px 24px;
+  }
+
+  .about-photo {
+    position: static;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .about-photo img {
+    aspect-ratio: 4/3;
+  }
+
+  .about-body h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-grid {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+
+  .about-photo {
+    max-width: 100%;
+  }
+
+  .about-body h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .about-body p {
+    font-size: 0.85rem;
+  }
+
+  .about-tags {
+    gap: 6px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+  }
+}

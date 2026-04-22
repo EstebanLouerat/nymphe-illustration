@@ -1,19 +1,8 @@
 /* =============================================
-   Commission.css - Page Commission
-   ─────────────────────────────────────────────
-   1. Animations (keyframes)
-   2. Intro
-   3. Section processus
-   4. Tarifs - header & toggle
-   5. Tarifs - grille de cartes
-   6. Formulaire
-   7. Éléments de formulaire spécifiques
-   8. Responsive
+   Commission — Page commissions
    ============================================= */
 
-/* ─────────────────────────────────────────────
-   1. Animations
-   ───────────────────────────────────────────── */
+/* ── Animations spécifiques ── */
 
 @keyframes priceFlip {
   from {
@@ -48,9 +37,7 @@
   }
 }
 
-/* ─────────────────────────────────────────────
-   2. Intro
-   ───────────────────────────────────────────── */
+/* ── Intro ── */
 
 .commission-intro {
   max-width: 700px;
@@ -73,9 +60,7 @@
   font-size: 0.9rem;
 }
 
-/* ─────────────────────────────────────────────
-   3. Section processus
-   ───────────────────────────────────────────── */
+/* ── Section processus ── */
 
 .process-section {
   margin: 0 auto;
@@ -95,9 +80,7 @@
   text-align: center;
 }
 
-/* ─────────────────────────────────────────────
-   4. Tarifs - header & toggle
-   ───────────────────────────────────────────── */
+/* ── Tarifs — header & toggle ── */
 
 .pricing-header {
   padding: 52px 24px 8px;
@@ -112,7 +95,6 @@
   color: var(--text);
 }
 
-/* Toggle digital / physique */
 .offer-toggle-container {
   display: flex;
   align-items: center;
@@ -171,9 +153,7 @@
   opacity: 0.85;
 }
 
-/* ─────────────────────────────────────────────
-   5. Tarifs - grille de cartes
-   ───────────────────────────────────────────── */
+/* ── Tarifs — grille de cartes ── */
 
 .pricing-grid {
   display: grid;
@@ -205,18 +185,6 @@
   border-color: var(--sage);
 }
 
-.pricing-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--brown-light);
-  margin-bottom: 8px;
-}
-
-.pricing-card.featured .pricing-label {
-  color: var(--sage-dark);
-}
-
 .pricing-name {
   font-family: var(--font-display);
   font-size: 1.3rem;
@@ -225,7 +193,6 @@
   margin-bottom: 8px;
 }
 
-/* Prix - animation déclenchée via classe JS */
 .pricing-price {
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -242,7 +209,6 @@
   color: var(--brown-light);
 }
 
-/* Features - animation déclenchée via classe JS */
 .pricing-features {
   list-style: none;
   font-size: 0.8rem;
@@ -268,9 +234,7 @@
   font-size: 0.6rem;
 }
 
-/* ─────────────────────────────────────────────
-   6. Formulaire
-   ───────────────────────────────────────────── */
+/* ── Formulaire ── */
 
 .commission-form-wrap {
   max-width: 720px;
@@ -292,9 +256,7 @@
   margin-bottom: 36px;
 }
 
-/* ─────────────────────────────────────────────
-   7. Éléments de formulaire spécifiques
-   ───────────────────────────────────────────── */
+/* ── Éléments spécifiques au formulaire commission ── */
 
 .checkbox-group {
   display: grid;
@@ -322,9 +284,7 @@
   font-style: italic;
 }
 
-/* ─────────────────────────────────────────────
-   8. Responsive
-   ───────────────────────────────────────────── */
+/* ── Responsive ── */
 
 @media (max-width: 960px) {
   .commission-intro {

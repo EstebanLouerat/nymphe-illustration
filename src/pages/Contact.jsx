@@ -84,7 +84,7 @@ function Contact() {
 
         <h2>Envoyez-moi un message</h2>
         <p>
-          Pour une commande, une collaboration ou juste dire bonjour — je suis
+          Pour une commande, une collaboration ou juste dire bonjour - je suis
           ravie de lire vos messages.
         </p>
 

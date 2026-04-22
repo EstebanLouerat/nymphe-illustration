@@ -1,8 +1,8 @@
-- [ ] Enlever "Commander" de la navbar mobile
-- [ ] Réparer le responsive de la page About
-- [ ] Améliorer le responsive des pages product
+- [x] Enlever "Commander" de la navbar mobile
+- [x] Réparer le responsive de la page About
+- [x] Améliorer le responsive des pages product
 - [ ] Ajouter une image Contentfull dans le placeholder du composant CommissionBanner de la page d'accueil
-- [ ] Trier la section  "Vous aimerez aussi" des pages products en fonction des tag contentfull + enlever "Nouveautés"
-- [ ] Réparer le bouton icon insta du footer
-- [ ] Faire en sorte que le bouton "Voir les tarifs ->" ouvre la page commission au niveau des prix
-- [ ] Enlever les — 
+- [ ] Trier la section "Vous aimerez aussi" des pages products en fonction des tag contentfull + enlever "Nouveautés"
+- [x] Réparer le bouton icon insta du footer
+- [x] Faire en sorte que le bouton "Voir les tarifs ->" ouvre la page commission au niveau des prix
+- [x] Ajouter des transitions de page stylé

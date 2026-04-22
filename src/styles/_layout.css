@@ -1,0 +1,135 @@
+/* =============================================
+   Layout — Utilitaires partagés
+   ============================================= */
+
+/* ── Conteneurs ── */
+
+.section {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Section title ── */
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* ── Page hero ── */
+
+.page-hero {
+  background: var(--sage-light);
+  padding: 56px 24px 48px;
+  text-align: center;
+}
+
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.page-hero p {
+  margin-top: 10px;
+  color: var(--brown-light);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Divider ── */
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--linen-dark);
+  margin: 0;
+  height: 0;
+}
+
+/* ── Process steps (partagé entre homepage et commission) ── */
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.step {
+  text-align: center;
+  padding: 28px 24px;
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.step:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--sage-light);
+  color: var(--sage-dark);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin: 0 auto 16px;
+}
+
+.step h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.step p {
+  font-size: 0.85rem;
+  color: var(--brown-light);
+  line-height: 1.7;
+}
+
+@media (max-width: 960px) {
+  .process-steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .process-steps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .page-hero h1 {
+    font-size: 2.2rem;
+  }
+}

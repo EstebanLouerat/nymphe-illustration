@@ -74,11 +74,11 @@ function ProductGrid({ products = null, showTitle = true }) {
   const showFilters = !products; // filtres uniquement sur la homepage, pas dans "vous aimerez aussi"
 
   const content = (
-    <>
+    <section id="shop">
       {showFilters && (
         <div className="filter-bar">
           {showTitle && (
-            <h2 className="section-title filter-bar-title">Nouveautés</h2>
+            <h2 className="section-title filter-bar-title">Boutique</h2>
           )}
 
           <div className="filter-bar-controls">
@@ -126,7 +126,7 @@ function ProductGrid({ products = null, showTitle = true }) {
       )}
 
       {!showFilters && showTitle && (
-        <h2 className="section-title">Nouveautés</h2>
+        <h2 className="section-title">Boutique </h2>
       )}
 
       {loading && (
@@ -186,7 +186,7 @@ function ProductGrid({ products = null, showTitle = true }) {
           </Link>
         ))}
       </div>
-    </>
+    </section>
   );
 
   if (products) return <div className="product-grid-container">{content}</div>;

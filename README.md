@@ -1,20 +1,20 @@
 # Nymphe Illustration WebSite
 
-Stack : React + Vite · Netlify Functions · Contentful CMS · Supabase · Stripe  
+Stack : React + Vite · Netlify Functions · Contentful CMS · Supabase · Stripe
 
 ---
 
 ## Stack technique
 
-| Couche | Outil |
-|---|---|
-| Frontend | React 19, Vite 6, React Router 7 |
-| Hébergement | Netlify (CI/CD via GitHub) |
-| Backend | Netlify Functions (`checkout`, `webhook`, `orders`, `popularity`) |
-| CMS | Contentful (images, bio, produits) |
-| Auth & BDD | Supabase (commandes, favoris, panier) |
-| Paiement | Stripe Checkout |
-| Formulaires | Formspree |
+| Couche      | Outil                                                             |
+| ----------- | ----------------------------------------------------------------- |
+| Frontend    | React 19, Vite 6, React Router 7                                  |
+| Hébergement | Netlify (CI/CD via GitHub)                                        |
+| Backend     | Netlify Functions (`checkout`, `webhook`, `orders`, `popularity`) |
+| CMS         | Contentful (images, bio, produits)                                |
+| Auth & BDD  | Supabase (commandes, favoris, panier)                             |
+| Paiement    | Stripe Checkout                                                   |
+| Formulaires | Formspree                                                         |
 
 ---
 
@@ -47,10 +47,10 @@ STRIPE_WEBHOOK_SECRET=xxx
 Vite et les Netlify Functions tournent en deux processus séparés :
 
 ```bash
-# Terminal 1 — frontend
+# Terminal 1 - frontend
 npm run dev
 
-# Terminal 2 — fonctions serverless
+# Terminal 2 - fonctions serverless
 npx netlify functions:serve --port 9999
 ```
 

@@ -48,11 +48,18 @@ function CheckoutCancel() {
             lineHeight: 1.7,
           }}
         >
-          Vous avez annulé le paiement. Votre panier a été conservé — vous
+          Vous avez annulé le paiement. Votre panier a été conservé - vous
           pouvez reprendre votre commande quand vous le souhaitez.
         </p>
 
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "16px",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <Link to="/checkout" className="btn-primary">
             Réessayer le paiement
           </Link>

@@ -3,6 +3,7 @@ import { useStore } from "../services/store";
 import { Link } from "react-router-dom";
 import { ContentfulService } from "../services/api";
 import "./Logo.css";
+import ScrollLink from "./ScrollLink";
 
 function Logo({ inverted = false }) {
   const [logo, setLogo] = useState(null);
@@ -19,7 +20,7 @@ function Logo({ inverted = false }) {
   }, [setLoading]);
 
   return (
-    <Link to="/" className="logo">
+    <ScrollLink to="/" className="logo">
       {logo && (
         <img
           src={logo.image}
@@ -28,7 +29,7 @@ function Logo({ inverted = false }) {
           style={inverted ? { filter: "brightness(0.2) invert(1)" } : {}}
         />
       )}
-    </Link>
+    </ScrollLink>
   );
 }
 

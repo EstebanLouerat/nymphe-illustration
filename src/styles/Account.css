@@ -1,5 +1,5 @@
 /* =============================================
-   Account Page — Nymphe Illustration
+   Account Page - Nymphe Illustration
    ============================================= */
 
 .account-page {
@@ -48,7 +48,9 @@
   flex-shrink: 0;
 }
 
-.account-identity { min-width: 0; }
+.account-identity {
+  min-width: 0;
+}
 
 .account-name {
   font-size: 0.82rem;
@@ -85,12 +87,16 @@
   background: none;
   border: none;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition);
   text-align: left;
   width: 100%;
 }
 
-.account-nav-item span:first-of-type { flex: 1; }
+.account-nav-item span:first-of-type {
+  flex: 1;
+}
 
 .account-nav-item:hover {
   background: var(--linen);
@@ -117,7 +123,7 @@
   padding: 0 6px;
 }
 
-/* Bouton déconnexion — en bas, rouge */
+/* Bouton déconnexion - en bas, rouge */
 .account-signout {
   display: flex;
   align-items: center;
@@ -133,7 +139,10 @@
   background: #fef2f2;
   border: 1px solid #fecaca;
   cursor: pointer;
-  transition: background var(--transition), border-color var(--transition), color var(--transition);
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
 }
 
 .account-signout:hover:not(:disabled) {
@@ -149,7 +158,9 @@
 
 /* ─── Contenu principal ────────────────────── */
 
-.account-content { min-width: 0; }
+.account-content {
+  min-width: 0;
+}
 
 .account-section-title {
   font-family: var(--font-display);
@@ -181,12 +192,23 @@
   background: var(--sage);
   animation: dotPulse 1.2s ease-in-out infinite;
 }
-.account-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.account-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+.account-loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.account-loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes dotPulse {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50%       { opacity: 1;   transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 /* Empty state */
@@ -201,13 +223,23 @@
   border: 1px dashed var(--linen-dark);
   border-radius: var(--radius);
 }
-.account-empty svg { opacity: 0.25; }
-.account-empty p  { font-size: 0.9rem; }
-.account-empty .btn-outline { margin-top: 8px; }
+.account-empty svg {
+  opacity: 0.25;
+}
+.account-empty p {
+  font-size: 0.9rem;
+}
+.account-empty .btn-outline {
+  margin-top: 8px;
+}
 
 /* ─── Commandes ────────────────────────────── */
 
-.orders-list { display: flex; flex-direction: column; gap: 16px; }
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .order-card {
   border: 1px solid var(--linen-dark);
@@ -215,7 +247,9 @@
   overflow: hidden;
   transition: box-shadow var(--transition);
 }
-.order-card:hover { box-shadow: var(--shadow); }
+.order-card:hover {
+  box-shadow: var(--shadow);
+}
 
 .order-card-header {
   display: flex;
@@ -273,7 +307,11 @@
   gap: 14px;
 }
 
-.order-item { display: flex; gap: 16px; align-items: center; }
+.order-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 
 .order-item-img-wrap {
   position: relative;
@@ -308,7 +346,10 @@
   font-weight: 600;
 }
 
-.order-item-info { flex: 1; min-width: 0; }
+.order-item-info {
+  flex: 1;
+  min-width: 0;
+}
 
 .order-item-name {
   font-size: 0.85rem;
@@ -319,7 +360,11 @@
   text-overflow: ellipsis;
 }
 
-.order-item-meta { font-size: 0.72rem; color: var(--brown-light); margin-bottom: 2px; }
+.order-item-meta {
+  font-size: 0.72rem;
+  color: var(--brown-light);
+  margin-bottom: 2px;
+}
 
 .order-item-price {
   font-family: var(--font-display);
@@ -340,7 +385,9 @@
   border: 1px solid var(--linen-dark);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: box-shadow var(--transition), transform var(--transition);
+  transition:
+    box-shadow var(--transition),
+    transform var(--transition);
 }
 .fav-card:hover {
   box-shadow: var(--shadow);
@@ -362,7 +409,9 @@
   transition: transform 0.4s ease;
   display: block;
 }
-.fav-card:hover .fav-card-img-wrap img { transform: scale(1.05); }
+.fav-card:hover .fav-card-img-wrap img {
+  transform: scale(1.05);
+}
 
 .fav-card-overlay {
   position: absolute;
@@ -374,14 +423,16 @@
   opacity: 0;
   transition: opacity var(--transition);
 }
-.fav-card:hover .fav-card-overlay { opacity: 1; }
+.fav-card:hover .fav-card-overlay {
+  opacity: 1;
+}
 
 .fav-card-overlay span {
   color: var(--white);
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  border: 1px solid rgba(255,255,255,0.7);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   padding: 5px 14px;
   border-radius: var(--radius);
 }
@@ -394,7 +445,10 @@
   gap: 8px;
 }
 
-.fav-card-info { min-width: 0; flex: 1; }
+.fav-card-info {
+  min-width: 0;
+  flex: 1;
+}
 
 .fav-card-name {
   font-size: 0.8rem;
@@ -422,7 +476,9 @@
   cursor: pointer;
   color: #e05f5f;
   border-radius: 50%;
-  transition: background var(--transition), color var(--transition);
+  transition:
+    background var(--transition),
+    color var(--transition);
 }
 .fav-card-remove:hover {
   background: #fef2f2;
@@ -443,7 +499,9 @@
     /* Sidebar en ligne sur tablette */
   }
 
-  .account-sidebar-top { padding: 20px 16px; }
+  .account-sidebar-top {
+    padding: 20px 16px;
+  }
 
   .account-nav {
     flex-direction: row;
@@ -451,16 +509,37 @@
     border-bottom: 1px solid var(--linen-dark);
   }
 
-  .account-nav-item { justify-content: center; }
+  .account-nav-item {
+    justify-content: center;
+  }
 
-  .fav-grid { grid-template-columns: repeat(2, 1fr); }
+  .fav-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
-  .account-page { padding: 24px 12px 48px; }
-  .account-section-title { font-size: 1.3rem; margin-bottom: 20px; }
-  .order-card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .order-total-wrap { flex-direction: row; align-items: center; }
-  .fav-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .account-signout { margin: 8px; }
+  .account-page {
+    padding: 24px 12px 48px;
+  }
+  .account-section-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+  .order-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .order-total-wrap {
+    flex-direction: row;
+    align-items: center;
+  }
+  .fav-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .account-signout {
+    margin: 8px;
+  }
 }

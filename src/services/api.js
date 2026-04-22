@@ -68,6 +68,7 @@ export const ContentfulService = {
           description: f.description || "",
           image: imgSrc,
           category: f.categorie || "",
+          tag: f.tag || [],
         };
       });
     } catch (err) {

@@ -5,6 +5,7 @@ import AuthModal from "./AuthModal";
 import { useStore } from "../services/store";
 import "./Navbar.css";
 import Logo from "./Logo";
+import ScrollLink from "./ScrollLink";
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,35 +25,42 @@ function Navbar() {
 
         {/* Desktop Links */}
         <nav className="nav-links">
-          <Link to="/" className={`nav-link ${isActive("/") ? "active" : ""}`}>
+          <ScrollLink
+            to="/"
+            className={`nav-link ${isActive("/") ? "active" : ""}`}
+          >
             Shop
-          </Link>
-          <Link
+          </ScrollLink>
+          <ScrollLink
             to="/about"
             className={`nav-link ${isActive("/about") ? "active" : ""}`}
           >
             Bio
-          </Link>
-          <Link
+          </ScrollLink>
+          <ScrollLink
             to="/commission"
             className={`nav-link ${isActive("/commission") ? "active" : ""}`}
           >
             Commission
-          </Link>
-          <Link
+          </ScrollLink>
+          <ScrollLink
             to="/contact"
             className={`nav-link ${isActive("/contact") ? "active" : ""}`}
           >
             Contact
-          </Link>
+          </ScrollLink>
         </nav>
 
         {/* Icons */}
         <div className="nav-icons">
           {user ? (
-            <Link to="/account" className="icon-btn" aria-label="Mon compte">
+            <ScrollLink
+              to="/account"
+              className="icon-btn"
+              aria-label="Mon compte"
+            >
               <User size={20} />
-            </Link>
+            </ScrollLink>
           ) : (
             <button
               className="icon-btn"
@@ -94,40 +102,53 @@ function Navbar() {
       {/* Mobile Menu */}
       <div className={`mobile-menu ${mobileMenuOpen ? "open" : ""}`}>
         <Link
-          to="/"
+          to="/#shop"
           className="mobile-link"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => {
+            // const shopSection = document.getElementById("shop");
+            setMobileMenuOpen(false);
+            // window.scrollTo(0, shopSection ? shopSection.offsetTop - 80 : 0);
+          }}
         >
           Shop
         </Link>
         <Link
           to="/about"
           className="mobile-link"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => {
+            setMobileMenuOpen(false);
+            window.scrollTo(0, 0);
+          }}
         >
           Bio
         </Link>
         <Link
           to="/commission"
           className="mobile-link"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => {
+            setMobileMenuOpen(false);
+            window.scrollTo(0, 0);
+          }}
         >
           Commission
         </Link>
         <Link
           to="/contact"
           className="mobile-link"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => {
+            setMobileMenuOpen(false);
+            window.scrollTo(0, 0);
+          }}
         >
           Contact
         </Link>
-        <Link
+        {/* <Link
           to="/commission"
           className="mobile-link"
           onClick={() => setMobileMenuOpen(false)}
         >
           Commander
-        </Link>
+        </Link> */}
       </div>
     </header>
   );

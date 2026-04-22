@@ -1,5 +1,5 @@
 /* =============================================
-   index.css — Styles globaux Nymphe Illustration
+   index.css - Styles globaux Nymphe Illustration
    ─────────────────────────────────────────────
    1. Variables CSS
    2. Reset
@@ -1323,7 +1323,7 @@ ul {
   align-items: center;
 }
 
-/* ── Colonne gauche — texte ── */
+/* ── Colonne gauche - texte ── */
 
 .commission-banner-text {
   display: flex;
@@ -1411,7 +1411,7 @@ ul {
   margin-top: 0;
 }
 
-/* ── Colonne droite — carte ── */
+/* ── Colonne droite - carte ── */
 
 .commission-banner-card {
   background: var(--white);
@@ -1670,5 +1670,130 @@ main {
   .process-steps {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+}
+
+@media (max-width: 960px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 40px 24px;
+  }
+
+  .about-photo {
+    position: static;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .about-photo img {
+    aspect-ratio: 4/3;
+  }
+
+  .about-body h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-grid {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+
+  .about-photo {
+    max-width: 100%;
+  }
+
+  .about-photo img {
+    aspect-ratio: 4/3;
+  }
+
+  .about-body h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .about-body p {
+    font-size: 0.85rem;
+  }
+
+  .about-tags {
+    gap: 6px;
+    margin-top: 18px;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+  }
+}
+
+/* ── Product — amélioration responsive ── */
+
+@media (max-width: 768px) {
+  .product-detail-title {
+    font-size: 1.8rem;
+  }
+
+  .product-detail-price {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  .product-detail-desc {
+    font-size: 0.85rem;
+  }
+
+  .shipping-info {
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .shipping-row {
+    font-size: 0.78rem;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-page {
+    padding: 20px 12px 40px;
+    gap: 28px;
+  }
+
+  .product-detail-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .product-detail-price {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+  }
+
+  .product-cta {
+    gap: 8px;
+  }
+
+  .btn-wishlist {
+    width: 44px;
+    height: 44px;
+  }
+
+  .breadcrumb {
+    font-size: 0.7rem;
+    padding: 10px 12px;
+    gap: 5px;
+  }
+
+  .related-section {
+    padding: 0 12px 40px;
+  }
+
+  .related-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
   }
 }

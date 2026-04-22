@@ -31,8 +31,7 @@ function CommissionBanner() {
   return (
     <section className="commission-banner">
       <div className="commission-banner-inner">
-
-        {/* Colonne gauche — texte */}
+        {/* Colonne gauche - texte */}
         <div className="commission-banner-text">
           <p className="commission-banner-eyebrow">Commissions sur mesure</p>
 
@@ -50,14 +49,26 @@ function CommissionBanner() {
           {/* Étapes */}
           <ol className="commission-banner-steps">
             {[
-              { n: "1", title: "Brief",     desc: "remplissez le formulaire, je reviens sous 48h" },
-              { n: "2", title: "Esquisse",  desc: "validation & retouches incluses" },
-              { n: "3", title: "Livraison", desc: "fichier haute résolution signé" },
+              {
+                n: "1",
+                title: "Brief",
+                desc: "remplissez le formulaire, je reviens sous 48h",
+              },
+              {
+                n: "2",
+                title: "Esquisse",
+                desc: "validation & retouches incluses",
+              },
+              {
+                n: "3",
+                title: "Livraison",
+                desc: "fichier haute résolution signé",
+              },
             ].map(({ n, title, desc }) => (
               <li key={n} className="commission-banner-step">
                 <span className="commission-banner-step-num">{n}</span>
                 <p className="commission-banner-step-text">
-                  <strong>{title}</strong> — {desc}
+                  <strong>{title}</strong> - {desc}
                 </p>
               </li>
             ))}
@@ -75,15 +86,20 @@ function CommissionBanner() {
 
         <div className="commission-banner-card">
           <div className="commission-banner-card-img">
-            <span className="commission-banner-card-watermark">illustration sur mesure</span>
-            <span className="commission-banner-card-badge">⭑ Le plus demandé</span>
+            <span className="commission-banner-card-watermark">
+              illustration sur mesure
+            </span>
+            <span className="commission-banner-card-badge">
+              ⭑ Le plus demandé
+            </span>
           </div>
           <div className="commission-banner-card-body">
-            <p className="commission-banner-card-title">Illustration personnalisée</p>
+            <p className="commission-banner-card-title">
+              Illustration personnalisée
+            </p>
             <p className="commission-banner-card-price">À partir de 35 €</p>
           </div>
         </div>
-
       </div>
     </section>
   );

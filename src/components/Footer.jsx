@@ -30,7 +30,12 @@ function Footer() {
           <Link to="/commission">Commissions</Link>
         </nav>
         <div className="footer-socials">
-          <a href="#" aria-label="Instagram">
+          <a
+            href="https://www.instagram.com/nympheillustration/"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Instagram size={20} />
           </a>
           {/* <a href="#" aria-label="Pinterest">
@@ -46,7 +51,7 @@ function Footer() {
         )}
       </div>
       <p className="footer-copy">
-        © 2026 Nymphe Illustration — Tous droits réservés
+        © 2026 Nymphe Illustration - Tous droits réservés
       </p>
     </footer>
   );

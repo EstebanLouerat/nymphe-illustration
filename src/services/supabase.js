@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Singleton — évite les instances multiples lors du HMR Vite
+// Singleton - évite les instances multiples lors du HMR Vite
 // qui causent le NavigatorLockAcquireTimeoutError
 const key = "__nymphe_supabase__";
 
@@ -15,7 +15,7 @@ if (!window[key]) {
         autoRefreshToken: true,
         detectSessionInUrl: true,
         // Désactive le navigator lock qui cause des conflits en dev (HMR)
-        // et sur certains navigateurs — sans impact sur la sécurité
+        // et sur certains navigateurs - sans impact sur la sécurité
         lock: async (_name, _timeout, fn) => fn(),
       },
     },

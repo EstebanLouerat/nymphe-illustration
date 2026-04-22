@@ -69,9 +69,9 @@ function Product() {
   };
 
   const formats = [
-    { label: "A5 — 14×21 cm", value: "A5" },
-    { label: "A4 — 21×29 cm", value: "A4" },
-    { label: "A3 — 30×42 cm", value: "A3" },
+    { label: "A5 - 14×21 cm", value: "A5" },
+    { label: "A4 - 21×29 cm", value: "A4" },
+    { label: "A3 - 30×42 cm", value: "A3" },
   ];
 
   if (error) {
@@ -217,7 +217,7 @@ function Product() {
           <div className="shipping-info">
             <div className="shipping-row">
               <Truck size={20} />
-              <span>Livraison en 3–5 jours ouvrés</span>
+              <span>Livraison en 5 à 10 jours ouvrés</span>
             </div>
             <div className="shipping-row">
               <Package size={20} />

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { ContentfulService } from "../services/api";
 import { useStore } from "../services/store";
 import { formatRichText } from "../services/richTextFormatter";
+import ScrollLink from "../components/ScrollLink";
 
 function About() {
   const [aboutContent, setAboutContent] = useState(null);
@@ -54,7 +55,7 @@ function About() {
 
           <p>
             Formée aux Beaux-Arts de [Ville], j'ai développé un style à
-            l'aquarelle qui mêle délicatesse des lavis et précision du trait —
+            l'aquarelle qui mêle délicatesse des lavis et précision du trait -
             une esthétique douce, terreuse, ancrée dans le vivant.
           </p>
 
@@ -95,12 +96,12 @@ function About() {
               flexWrap: "wrap",
             }}
           >
-            <Link to="/commission" className="btn-primary">
+            <ScrollLink to="/commission" className="btn-primary">
               Commander une illustration
-            </Link>
-            <Link to="/contact" className="btn-outline">
+            </ScrollLink>
+            <ScrollLink to="/contact" className="btn-outline">
               Me contacter
-            </Link>
+            </ScrollLink>
           </div>
         </div>
       </div>

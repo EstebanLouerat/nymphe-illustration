@@ -1,0 +1,270 @@
+/* =============================================
+   Commission Banner — Bloc homepage
+   ============================================= */
+
+.commission-banner {
+  background: var(--linen-dark);
+  padding: 80px 24px;
+}
+
+.commission-banner-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+/* ── Colonne texte ── */
+
+.commission-banner-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.commission-banner-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  margin-bottom: 18px;
+}
+
+.commission-banner-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.commission-banner-title em {
+  font-style: italic;
+}
+
+.commission-banner-desc {
+  font-size: 0.88rem;
+  color: var(--brown-light);
+  line-height: 1.85;
+  margin-bottom: 36px;
+  max-width: 380px;
+}
+
+/* ── Étapes ── */
+
+.commission-banner-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.commission-banner-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.commission-banner-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--green-dark);
+}
+
+.commission-banner-step-text {
+  font-size: 0.82rem;
+  color: var(--brown-light);
+  margin: 0;
+}
+
+.commission-banner-step-text strong {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.commission-banner-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.commission-banner-ctas .btn-primary {
+  margin-top: 0;
+}
+
+/* ── Colonne carte ── */
+
+.commission-banner-card {
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.commission-banner-card-img {
+  height: 280px;
+  background: linear-gradient(135deg, var(--sage-light) 0%, var(--tan) 60%, var(--sage) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.commission-banner-card-watermark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--sage-dark);
+  opacity: 0.6;
+}
+
+.commission-banner-card-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--linen);
+  border: 1px solid var(--linen-dark);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+}
+
+.commission-banner-card-body {
+  padding: 20px 22px;
+}
+
+.commission-banner-card-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.commission-banner-card-price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--brown);
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 960px) {
+  .commission-banner {
+    padding: 60px 24px;
+  }
+
+  .commission-banner-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 600px;
+  }
+
+  .commission-banner-title {
+    font-size: 2.2rem;
+  }
+
+  .commission-banner-desc {
+    max-width: 100%;
+  }
+
+  .commission-banner-card-img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .commission-banner {
+    padding: 48px 16px;
+  }
+
+  .commission-banner-inner {
+    gap: 32px;
+  }
+
+  .commission-banner-title {
+    font-size: 1.9rem;
+    margin-bottom: 16px;
+  }
+
+  .commission-banner-br {
+    display: none;
+  }
+
+  .commission-banner-desc {
+    font-size: 0.84rem;
+    margin-bottom: 28px;
+  }
+
+  .commission-banner-steps {
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .commission-banner-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .commission-banner-ctas .btn-primary,
+  .commission-banner-ctas .btn-outline {
+    text-align: center;
+    width: 100%;
+  }
+
+  .commission-banner-card-img {
+    height: 160px;
+  }
+
+  .commission-banner-card-watermark {
+    font-size: 0.95rem;
+  }
+
+  .commission-banner-card-body {
+    padding: 16px 18px;
+  }
+
+  .commission-banner-card-title {
+    font-size: 1.2rem;
+  }
+
+  .commission-banner-card-price {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .commission-banner {
+    padding: 40px 12px;
+  }
+
+  .commission-banner-title {
+    font-size: 1.7rem;
+  }
+
+  .commission-banner-step-num {
+    width: 24px;
+    height: 24px;
+    font-size: 0.78rem;
+  }
+
+  .commission-banner-card-img {
+    height: 130px;
+  }
+}

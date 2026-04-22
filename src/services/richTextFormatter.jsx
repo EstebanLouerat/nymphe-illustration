@@ -1,5 +1,5 @@
 // ============================================================
-//  services/richTextFormatter.js — Formatage du texte riche Contentful
+//  services/richTextFormatter.js - Formatage du texte riche Contentful
 //  Convertit le rich text de Contentful en HTML React
 // ============================================================
 

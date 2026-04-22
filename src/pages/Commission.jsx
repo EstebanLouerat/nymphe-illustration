@@ -1,16 +1,14 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { FormService } from "../services/api";
 import { useStore } from "../services/store";
 import { Mail, Instagram, Clock } from "lucide-react";
 import "../styles/Commission.css";
 
-// Ajoute temporairement une classe CSS pour déclencher l'animation,
-// puis la retire pour permettre de la rejouer au prochain toggle.
 function triggerAnimation(elements, className, duration = 500) {
   elements.forEach((el) => {
     if (!el) return;
     el.classList.remove(className);
-    // Force le reflow pour réinitialiser l'animation
     void el.offsetWidth;
     el.classList.add(className);
     setTimeout(() => el.classList.remove(className), duration);
@@ -18,6 +16,7 @@ function triggerAnimation(elements, className, duration = 500) {
 }
 
 function Commission() {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,9 +32,20 @@ function Commission() {
   const [isPhysical, setIsPhysical] = useState(false);
   const { showSuccess, showError } = useStore();
 
-  // Refs pour cibler les éléments à animer
   const priceRefs = useRef([]);
   const featuresRefs = useRef([]);
+
+  // Scroll vers #tarifs si l'ancre est présente dans l'URL
+  useEffect(() => {
+    if (location.hash === "#tarifs") {
+      const el = document.getElementById("tarifs");
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   const handleToggle = () => {
     setIsPhysical((prev) => !prev);
@@ -188,7 +198,7 @@ function Commission() {
         <h2>Tarifs indicatifs</h2>
 
         <div className="offer-toggle-container">
-          <p>Reçu final: </p>
+          <p>Reçu final : </p>
           <span className={`toggle-label ${!isPhysical ? "active" : ""}`}>
             Digital
           </span>
