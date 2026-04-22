@@ -1,8 +1,6 @@
-# Nymphe Illustration — Site Portfolio & Boutique
+# Nymphe Illustration WebSite
 
 Stack : React + Vite · Netlify Functions · Contentful CMS · Supabase · Stripe  
-Palette : vert sauge · lin chaud · tons terreux  
-Fonts : Cormorant Garamond (display) + Jost (body)
 
 ---
 
