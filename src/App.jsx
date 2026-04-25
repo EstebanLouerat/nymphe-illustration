@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
 import ToastStack from "./components/ToastStack";
+import PageTransition from "./components/PageTransition";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
 import About from "./pages/About";
@@ -26,18 +27,20 @@ function App() {
         <Cart />
         <ToastStack />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<Product />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/commission" element={<Commission />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/checkout/success" element={<CheckoutSuccess />} />
-          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/commission" element={<Commission />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
 
         <Footer />
       </div>

@@ -2,6 +2,7 @@ import { X, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useStore } from "../services/store";
 import "./Cart.css";
+import ScrollLink from "./ScrollLink";
 
 function Cart() {
   const { cart, cartOpen, closeCart, removeFromCart, updateCartQuantity } =
@@ -66,15 +67,15 @@ function Cart() {
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               <p>Votre panier est vide</p>
-              <a
-                href="index.html#galerie"
+              <ScrollLink
+                to="/#galerie"
                 onClick={(e) => {
                   e.preventDefault();
                   closeCart();
                 }}
               >
                 Découvrir les illustrations →
-              </a>
+              </ScrollLink>
             </div>
           ) : (
             cart.map((item) => (

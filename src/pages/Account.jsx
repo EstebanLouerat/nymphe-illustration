@@ -26,7 +26,7 @@ function Account() {
   // Resync les produits favoris quand le store change
   useEffect(() => {
     if (!user) return;
-    ContentfulService.fetchIllustrations().then((all) => {
+    ContentfulService.fetchArticles().then((all) => {
       setFavProducts(all.filter((p) => favorites.includes(p.id)));
     });
   }, [favorites]);
@@ -40,7 +40,7 @@ function Account() {
       .order("created_at", { ascending: false });
     setOrders(ordersData ?? []);
 
-    const all = await ContentfulService.fetchIllustrations();
+    const all = await ContentfulService.fetchArticles();
     setFavProducts(all.filter((p) => favorites.includes(p.id)));
     setLoading(false);
   };

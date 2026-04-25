@@ -34,7 +34,7 @@ function Product() {
           setError(false);
           // Scroll en haut de la page
           window.scrollTo(0, 0);
-          const allProducts = await ContentfulService.fetchIllustrations();
+          const allProducts = await ContentfulService.fetchArticles();
           setRelatedProducts(
             allProducts.filter((p) => p.id !== id).slice(0, 4),
           );

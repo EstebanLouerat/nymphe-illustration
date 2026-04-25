@@ -26,9 +26,9 @@ function ProductGrid({ products = null, showTitle = true }) {
       return;
     }
     const load = async () => {
-      const items = await ContentfulService.fetchIllustrations();
+      const items = await ContentfulService.fetchArticles();
       // const [items, pop] = await Promise.all([
-      //   ContentfulService.fetchIllustrations(),
+      //   ContentfulService.fetchArticles(),
       //   axios
       //     .get("/api/popularity")
       //     .then((r) => r.data)

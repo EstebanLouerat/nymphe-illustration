@@ -43,13 +43,12 @@ export const ContentfulService = {
     }
   },
 
-  async fetchIllustrations() {
+  async fetchArticles() {
     try {
       const { data } = await contentfulAPI.get("/entries", {
         params: {
           content_type: "nympheIllustration",
           order: "-sys.createdAt",
-          limit: 12,
         },
       });
       const assets = {};
@@ -72,7 +71,7 @@ export const ContentfulService = {
         };
       });
     } catch (err) {
-      console.error("Erreur fetchIllustrations:", err);
+      console.error("Erreur fetchArticles:", err);
       return [];
     }
   },
