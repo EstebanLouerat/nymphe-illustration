@@ -133,7 +133,10 @@ function Cart() {
               to="/checkout"
               className="btn-primary"
               style={{ textDecoration: "none", textAlign: "center" }}
-              onClick={closeCart}
+              onClick={() => {
+                window.scrollTo(0, 0);
+                closeCart();
+              }}
             >
               Procéder au paiement
             </Link>

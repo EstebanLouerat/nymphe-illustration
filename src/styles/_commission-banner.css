@@ -59,7 +59,6 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 40px;
 }
 
 .commission-banner-step {
@@ -114,8 +113,13 @@
 }
 
 .commission-banner-card-img {
-  height: 280px;
-  background: linear-gradient(135deg, var(--sage-light) 0%, var(--tan) 60%, var(--sage) 100%);
+  height: 380px;
+  background: linear-gradient(
+    135deg,
+    var(--sage-light) 0%,
+    var(--tan) 60%,
+    var(--sage) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -185,7 +189,7 @@
   }
 
   .commission-banner-card-img {
-    height: 220px;
+    height: 400px;
   }
 }
 
@@ -214,7 +218,6 @@
 
   .commission-banner-steps {
     gap: 12px;
-    margin-bottom: 32px;
   }
 
   .commission-banner-ctas {
@@ -229,7 +232,7 @@
   }
 
   .commission-banner-card-img {
-    height: 160px;
+    height: 260px;
   }
 
   .commission-banner-card-watermark {
@@ -265,6 +268,6 @@
   }
 
   .commission-banner-card-img {
-    height: 130px;
+    height: 230px;
   }
 }

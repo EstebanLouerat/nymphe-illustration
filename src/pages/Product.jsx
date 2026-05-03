@@ -24,6 +24,12 @@ function Product() {
   const isFav = product ? isFavorite(product.id) : false;
 
   useEffect(() => {
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  useEffect(() => {
     const load = async () => {
       setLoading(true);
       setIsZoomOpen(false); // Fermer le zoom si on change de produit
@@ -68,11 +74,17 @@ function Product() {
     }
   };
 
-  const formats = [
-    { label: "A5 - 14×21 cm", value: "A5" },
-    { label: "A4 - 21×29 cm", value: "A4" },
-    { label: "A3 - 30×42 cm", value: "A3" },
-  ];
+  const handleZoomOpen = () => {
+    setIsZoomOpen(true);
+    window.scrollTo(0, 0);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleZoomClose = () => {
+    setIsZoomOpen(false);
+    window.scrollTo(0, 0);
+    document.body.style.overflow = "";
+  };
 
   if (error) {
     return (
@@ -151,10 +163,7 @@ function Product() {
 
       <div className="product-page">
         <div className="product-gallery">
-          <div
-            className="product-gallery-main"
-            onClick={() => setIsZoomOpen(true)}
-          >
+          <div className="product-gallery-main" onClick={handleZoomOpen}>
             {product.image && (
               <img
                 src={product.image}
@@ -241,14 +250,14 @@ function Product() {
 
       {/* Modal de zoom */}
       {isZoomOpen && product.image && (
-        <div className="zoom-modal" onClick={() => setIsZoomOpen(false)}>
+        <div className="zoom-modal" onClick={handleZoomClose}>
           <div
             className="zoom-modal-content"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className="zoom-close-btn"
-              onClick={() => setIsZoomOpen(false)}
+              onClick={handleZoomClose}
               aria-label="Fermer le zoom"
             >
               ✕

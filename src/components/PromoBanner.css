@@ -1,0 +1,129 @@
+/* =============================================
+   Promo Banner — Bande code de réduction
+   ============================================= */
+
+.promo-banner {
+  background: #748e54;
+  color: var(--white);
+  position: relative;
+  z-index: 101;
+}
+
+.promo-banner-inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.promo-banner-icon {
+  color: var(--sage-light);
+  flex-shrink: 0;
+}
+
+.promo-banner-text {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.promo-banner-code {
+  font-family: "Courier New", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 1px 8px;
+  color: var(--sage-light);
+  user-select: all;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: promo-shimmer 2s infinite;
+}
+
+
+@keyframes promo-shimmer {
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 16px rgba(255, 255, 255, 0.6),
+      0 0 24px rgba(162, 209, 173, 0.4);
+  }
+}
+
+.promo-banner-copy-btn {
+  background: none;
+  border: none;
+  color: var(--sage-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.promo-banner-copy-btn:hover {
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.promo-banner-sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.promo-banner-close {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  transition:
+    background var(--transition),
+    color var(--transition);
+}
+
+.promo-banner-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+@media (max-width: 640px) {
+  .promo-banner-inner {
+    padding: 9px 36px;
+    gap: 7px;
+  }
+
+  .promo-banner-text {
+    font-size: 0.72rem;
+    gap: 6px;
+  }
+
+  .promo-banner-code {
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+  }
+}

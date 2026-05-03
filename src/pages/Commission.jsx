@@ -124,7 +124,7 @@ function Commission() {
           "1 ou plusieurs sujets en entier",
           "Fond plus travaillé",
           "Idéal pour les projets plus ambitieux",
-          "Délai : 3 à 4 semaines",
+          "Délai : 4 à 5 semaines",
         ],
       },
       physical: {
@@ -133,7 +133,7 @@ function Commission() {
           "1 ou plusieurs sujets en entier",
           "Fond plus travaillé",
           "Idéal pour les projets plus ambitieux",
-          "Délai : 3 à 4 semaines",
+          "Délai : 4 à 5 semaines",
           "Frais de livraison inclus",
         ],
       },
@@ -151,10 +151,9 @@ function Commission() {
       <div className="commission-intro">
         <h2>Comment ça marche ?</h2>
         <p>
-          Je réalise des illustrations sur mesure à l'aquarelle numérique pour
-          des particuliers, des éditeurs et des marques. Portraits,
-          illustrations botaniques, projets d'identité visuelle… Chaque commande
-          est traitée avec soin et dans un dialogue constant avec vous.
+          Je réalise des illustrations sur mesure à l'aquarelle et aux crayons
+          de couleur pour des particuliers. Chaque commande est traitée avec
+          soin et dans un dialogue constant avec vous.
         </p>
       </div>
 
@@ -169,13 +168,13 @@ function Commission() {
             },
             {
               n: 2,
-              t: "Devis",
-              p: "J'envoie un devis personnalisé. Seulement une fois le paiement effectué, la création peut commencer.",
+              t: "Paiement",
+              p: "J'envoie un facture personnalisé. Seulement une fois le paiement effectué, la création peut commencer.",
             },
             {
               n: 3,
-              t: "Esquisse",
-              p: "À chaque étape de la création, je vous partage le travail et je ferai tous les changements nécessaires pour votre satisfaction.",
+              t: "Crayonné",
+              p: "À chaque étape de la création, je vous partage l'avancé du travail et je ferai tous les changements nécessaires pour votre satisfaction.",
             },
             {
               n: 4,

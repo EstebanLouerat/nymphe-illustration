@@ -1,12 +1,22 @@
 import { useStore } from "../services/store";
 import { useNavigate, Link } from "react-router-dom";
 import { PaymentService } from "../services/api";
-import { useState } from "react";
-import { Lock, ChevronRight, ShoppingBag, ArrowLeft } from "lucide-react";
+import { useState, useEffect } from "react";
+import {
+  Lock,
+  ChevronRight,
+  ShoppingBag,
+  ArrowLeft,
+  Tag,
+  Check,
+  X,
+  Loader,
+  Clock,
+} from "lucide-react";
 import "../styles/Checkout.css";
 
 function Checkout() {
-  const { cart, cartTotal, showError, showInfo } = useStore();
+  const { cart, showError, showInfo } = useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeField, setActiveField] = useState(null);
@@ -19,22 +29,77 @@ function Checkout() {
     country: "",
   });
 
+  // Promo — les données viennent directement de Stripe via /api/validate-promo
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState(null);
+  // shape: { code, promoId, discount: { type, value, label }, expiresAt, usagesLeft }
+  const [promoError, setPromoError] = useState("");
+  const [promoLoading, setPromoLoading] = useState(false);
+
+  const [shippingRate, setShippingRate] = useState(null);
+  useEffect(() => {
+    PaymentService.fetchShippingRate()
+      .then((r) => setShippingRate(r))
+      .catch(() => setShippingRate({ amount: 3, display_name: "Livraison" }));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleApplyPromo = async () => {
+    const code = promoInput.trim();
+    if (!code) return;
+    setPromoLoading(true);
+    setPromoError("");
+    try {
+      const res = await fetch(
+        `/api/validate-promo?code=${encodeURIComponent(code)}`,
+      );
+      const data = await res.json();
+      if (!res.ok || !data.valid) {
+        setPromoError(data.reason || "Code promo invalide");
+        setAppliedPromo(null);
+      } else {
+        setAppliedPromo(data);
+        setPromoError("");
+      }
+    } catch {
+      setPromoError("Impossible de vérifier le code, réessayez.");
+    } finally {
+      setPromoLoading(false);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoInput("");
+    setPromoError("");
   };
 
   const handleCheckout = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await PaymentService.createCheckoutSession(cart, formData);
+      const result = await PaymentService.createCheckoutSession(
+        cart,
+        formData,
+        appliedPromo?.promoId || null,
+      );
       window.location.href = result.checkoutUrl;
     } catch (err) {
       console.error("Erreur paiement:", err);
-      showError(
-        "Une erreur est survenue lors du paiement. Veuillez réessayer.",
-      );
+      // Erreur spécifique au code promo
+      if (err?.response?.data?.error === "Code promo invalide") {
+        setAppliedPromo(null);
+        setPromoError("Ce code promo n'est plus valide");
+        showError("Code promo invalide. Veuillez en saisir un autre.");
+      } else {
+        showError(
+          "Une erreur est survenue lors du paiement. Veuillez réessayer.",
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -55,8 +120,15 @@ function Checkout() {
     );
   }
 
-  const shipping = 4.9;
-  const total = cartTotal + shipping;
+  const shipping = shippingRate?.amount ?? null;
+  const subtotal = cart.reduce((sum, item) => sum + (item.prix || 0) * item.quantity, 0);
+  let discount = 0;
+  if (appliedPromo?.discount) {
+    const { type, value } = appliedPromo.discount;
+    if (type === "percent") discount = subtotal * (value / 100);
+    else if (type === "amount") discount = Math.min(value, subtotal);
+  }
+  const total = shipping !== null ? subtotal - discount + shipping : null;
 
   return (
     <main className="checkout-root">
@@ -71,6 +143,7 @@ function Checkout() {
         <h1 className="checkout-title">Finaliser la commande</h1>
 
         <form onSubmit={handleCheckout} className="checkout-form">
+          {/* Contact */}
           <fieldset className="checkout-fieldset">
             <legend className="checkout-legend">Contact</legend>
             <div
@@ -91,6 +164,7 @@ function Checkout() {
             </div>
           </fieldset>
 
+          {/* Livraison */}
           <fieldset className="checkout-fieldset">
             <legend className="checkout-legend">Livraison</legend>
 
@@ -181,6 +255,103 @@ function Checkout() {
             </div>
           </fieldset>
 
+          {/* Code de réduction */}
+          <fieldset className="checkout-fieldset">
+            <legend className="checkout-legend">
+              <Tag
+                size={11}
+                style={{
+                  display: "inline",
+                  marginRight: 5,
+                  verticalAlign: "middle",
+                }}
+              />
+              Code de réduction
+            </legend>
+
+            {appliedPromo ? (
+              <div className="promo-applied">
+                <div className="promo-applied-left">
+                  <Check size={14} className="promo-applied-icon" />
+                  <span className="promo-applied-code">
+                    {appliedPromo.code}
+                  </span>
+                  <span className="promo-applied-label">
+                    {appliedPromo.discount?.label}
+                  </span>
+                </div>
+                <div className="promo-applied-meta">
+                  {appliedPromo.expiresAt && (
+                    <span className="promo-expires">
+                      <Clock size={10} />
+                      Expire le{" "}
+                      {new Date(
+                        appliedPromo.expiresAt * 1000,
+                      ).toLocaleDateString("fr-FR", {
+                        day: "numeric",
+                        month: "long",
+                      })}
+                    </span>
+                  )}
+                  {appliedPromo.usagesLeft !== null &&
+                    appliedPromo.usagesLeft <= 10 && (
+                      <span className="promo-urgency">
+                        {appliedPromo.usagesLeft} utilisation
+                        {appliedPromo.usagesLeft > 1 ? "s" : ""} restante
+                        {appliedPromo.usagesLeft > 1 ? "s" : ""}
+                      </span>
+                    )}
+                </div>
+                <button
+                  type="button"
+                  className="promo-remove"
+                  onClick={handleRemovePromo}
+                  aria-label="Retirer"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ) : (
+              <div
+                className={`promo-input-wrap ${promoError ? "promo-input-wrap--error" : ""}`}
+              >
+                <input
+                  type="text"
+                  className="promo-input"
+                  placeholder="Code promo"
+                  value={promoInput}
+                  onChange={(e) => {
+                    setPromoInput(e.target.value.toUpperCase());
+                    setPromoError("");
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleApplyPromo();
+                    }
+                  }}
+                  disabled={promoLoading}
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                />
+                <button
+                  type="button"
+                  className="promo-apply-btn"
+                  onClick={handleApplyPromo}
+                  disabled={!promoInput.trim() || promoLoading}
+                >
+                  {promoLoading ? (
+                    <Loader size={13} className="promo-spinner" />
+                  ) : (
+                    "Appliquer"
+                  )}
+                </button>
+              </div>
+            )}
+
+            {promoError && <p className="promo-error">{promoError}</p>}
+          </fieldset>
+
           <button
             type="submit"
             className={`checkout-submit ${loading ? "loading" : ""}`}
@@ -194,7 +365,7 @@ function Checkout() {
             ) : (
               <span className="checkout-submit-inner">
                 <Lock size={14} />
-                Payer · € {total.toFixed(2)}
+                Payer · € {total !== null ? total.toFixed(2) : "…"}
                 <ChevronRight size={16} />
               </span>
             )}
@@ -244,15 +415,26 @@ function Checkout() {
           <div className="checkout-totals">
             <div className="checkout-total-row">
               <span>Sous-total</span>
-              <span>€ {cartTotal.toFixed(2)}</span>
+              <span>€ {subtotal.toFixed(2)}</span>
             </div>
+            {appliedPromo && discount > 0 && (
+              <div className="checkout-total-row checkout-total-discount">
+                <span>
+                  {appliedPromo.discount?.label}{" "}
+                  <span className="checkout-promo-tag">
+                    {appliedPromo.code}
+                  </span>
+                </span>
+                <span>− € {discount.toFixed(2)}</span>
+              </div>
+            )}
             <div className="checkout-total-row">
-              <span>Livraison</span>
-              <span>€ {shipping.toFixed(2)}</span>
+              <span>{shippingRate?.display_name ?? "Livraison"}</span>
+              <span>{shipping !== null ? `€ ${shipping.toFixed(2)}` : "…"}</span>
             </div>
             <div className="checkout-total-row checkout-total-final">
               <span>Total</span>
-              <span>€ {total.toFixed(2)}</span>
+              <span>{total !== null ? `€ ${total.toFixed(2)}` : "…"}</span>
             </div>
           </div>
 

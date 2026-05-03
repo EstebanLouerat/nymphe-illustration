@@ -34,6 +34,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/validate-promo"
+  to = "/.netlify/functions/validate-promo"
+  status = 200
+
+[[redirects]]
+  from = "/api/shipping-rate"
+  to = "/.netlify/functions/get-shipping-rate"
+  status = 200
+
+[[redirects]]
   from = "/api/webhook"
   to = "/.netlify/functions/webhook"
   status = 200

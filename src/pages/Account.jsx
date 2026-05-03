@@ -33,12 +33,28 @@ function Account() {
 
   const loadData = async () => {
     setLoading(true);
-    const { data: ordersData } = await supabase
+
+    // Récupérer les commandes par user_id
+    const { data: byUserId } = await supabase
       .from("orders")
       .select("*")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
-    setOrders(ordersData ?? []);
+
+    // Récupérer aussi les commandes faites avec l'email d'inscription
+    const { data: byEmail } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("email", user.email)
+      .order("created_at", { ascending: false });
+
+    // Fusionner et dédupliquer (par id) puis trier
+    const allOrders = [...(byUserId ?? []), ...(byEmail ?? [])];
+    const uniqueOrders = Array.from(
+      new Map(allOrders.map((o) => [o.id, o])).values(),
+    ).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    setOrders(uniqueOrders);
 
     const all = await ContentfulService.fetchArticles();
     setFavProducts(all.filter((p) => favorites.includes(p.id)));

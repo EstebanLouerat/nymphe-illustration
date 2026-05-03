@@ -24,7 +24,7 @@ function About() {
       {/* PAGE HERO */}
       <div className="page-hero">
         <h1>À propos</h1>
-        <p>L'univers derrière les illustrations</p>
+        <p>La créatrice derrière les illustrations</p>
       </div>
       <hr className="divider" />
 
@@ -45,38 +45,12 @@ function About() {
         {/* Texte */}
         <div className="about-body">
           <h2>{aboutContent && aboutContent.title}</h2>
-
-          {/* <p>
-            Je suis illustratrice indépendante basée en France, passionnée par
-            la nature, les petites créatures et les instants suspendus. Mon
-            travail oscille entre la tendresse du dessin botanique et la poésie
-            du monde animal.
-          </p>
-
-          <p>
-            Formée aux Beaux-Arts de [Ville], j'ai développé un style à
-            l'aquarelle qui mêle délicatesse des lavis et précision du trait -
-            une esthétique douce, terreuse, ancrée dans le vivant.
-          </p>
-
-          <p>
-            Sous le nom <strong>Nymphe Illustration</strong>, je crée des
-            prints, des stickers et des commissions sur mesure pour des
-            particuliers et des éditeurs. Chaque illustration est pensée comme
-            une petite fenêtre ouverte sur un monde parallèle, à la fois
-            familier et féerique.
-          </p>
-
-          <p>
-            Quand je ne dessine pas, je jardine, je collectionne les livres de
-            botanique anciens et je passe trop de temps à observer les insectes
-            dans le jardin.
-          </p> */}
           <div className="about-text">
             {aboutContent && formatRichText(aboutContent.text)}
           </div>
 
           {/* Tags / disciplines */}
+
           <div className="about-tags">
             <span className="tag">Aquarelle</span>
             <span className="tag">Botanique</span>
@@ -85,6 +59,7 @@ function About() {
             <span className="tag">Portraits</span>
             <span className="tag">Entomologie</span>
             <span className="tag">Nature</span>
+            <span className="tag">Illustration jeunesse</span>
           </div>
 
           {/* CTA */}

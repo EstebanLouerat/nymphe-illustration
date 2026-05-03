@@ -114,14 +114,18 @@ export const ContentfulService = {
 };
 
 export const PaymentService = {
-  async createCheckoutSession(items, customer) {
-    try {
-      const response = await axios.post("/api/checkout", { items, customer });
-      return response.data;
-    } catch (err) {
-      console.error("Erreur createCheckoutSession:", err);
-      throw err;
-    }
+  async createCheckoutSession(items, customer, promoId = null) {
+    const response = await axios.post("/api/checkout", {
+      items,
+      customer,
+      promoId,
+    });
+    return response.data;
+  },
+
+  async fetchShippingRate() {
+    const response = await axios.get("/api/shipping-rate");
+    return response.data;
   },
 
   async fetchOrderStatus(sessionId) {

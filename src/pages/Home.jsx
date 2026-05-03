@@ -3,6 +3,7 @@ import { ContentfulService } from "../services/api";
 import { useStore } from "../services/store";
 import Hero from "../components/Hero";
 import ProductGrid from "../components/ProductGrid";
+import PromoBanner from "../components/PromoBanner";
 
 function Home() {
   const [heroContent, setHeroContent] = useState(null);
@@ -21,6 +22,7 @@ function Home() {
   return (
     <main>
       {heroContent && <Hero content={heroContent} />}
+      <PromoBanner />
       <ProductGrid />
       <CommissionBanner />
     </main>
@@ -28,6 +30,20 @@ function Home() {
 }
 
 function CommissionBanner() {
+  const [commissionImg, setCommissionImg] = useState(null);
+
+  useEffect(() => {
+    const loadCommissionImg = async () => {
+      const content = await ContentfulService.fetchContent(
+        "Commission Exemple Image",
+      );
+      if (content?.image) {
+        setCommissionImg(content.image);
+      }
+    };
+    loadCommissionImg();
+  }, []);
+
   return (
     <section className="commission-banner">
       <div className="commission-banner-inner">
@@ -36,14 +52,14 @@ function CommissionBanner() {
           <p className="commission-banner-eyebrow">Commissions sur mesure</p>
 
           <h2 className="commission-banner-title">
-            Une illustration <em>rien que</em>
+            Une illustration rien que&nbsp;
             <br className="commission-banner-br" />
             pour vous
           </h2>
 
           <p className="commission-banner-desc">
-            Chaque commande est pensée dans un dialogue constant avec vous, de
-            l'esquisse à la livraison.
+            Chaque commande est pensée dans un dialogue constant avec vous, du
+            crayonné à la livraison.
           </p>
 
           {/* Étapes */}
@@ -52,17 +68,17 @@ function CommissionBanner() {
               {
                 n: "1",
                 title: "Brief",
-                desc: "remplissez le formulaire, je reviens sous 48h",
+                desc: "contacter moi sur Instagram, je réponds sous 48h",
               },
               {
                 n: "2",
-                title: "Esquisse",
+                title: "Crayonné",
                 desc: "validation & retouches incluses",
               },
               {
                 n: "3",
                 title: "Livraison",
-                desc: "fichier haute résolution signé",
+                desc: "par voie postale ou numérique, à votre convenance",
               },
             ].map(({ n, title, desc }) => (
               <li key={n} className="commission-banner-step">
@@ -73,22 +89,21 @@ function CommissionBanner() {
               </li>
             ))}
           </ol>
-
-          <div className="commission-banner-ctas">
-            <a href="/commission" className="btn-primary">
-              Commander une commission
-            </a>
-            <a href="/commission#tarifs" className="btn-outline">
-              Voir les tarifs →
-            </a>
-          </div>
         </div>
 
         <div className="commission-banner-card">
           <div className="commission-banner-card-img">
-            <span className="commission-banner-card-watermark">
-              illustration sur mesure
-            </span>
+            {commissionImg ? (
+              <img
+                src={commissionImg}
+                alt="Exemple de commission personnalisée"
+                className="commission-banner-card-image"
+              />
+            ) : (
+              <span className="commission-banner-card-watermark">
+                illustration sur mesure
+              </span>
+            )}
             <span className="commission-banner-card-badge">
               ⭑ Le plus demandé
             </span>
@@ -99,6 +114,15 @@ function CommissionBanner() {
             </p>
             <p className="commission-banner-card-price">À partir de 35 €</p>
           </div>
+        </div>
+
+        <div className="commission-banner-ctas">
+          <a href="/commission" className="btn-primary">
+            Commander une commission
+          </a>
+          <a href="/commission#tarifs" className="btn-outline">
+            Voir les tarifs →
+          </a>
         </div>
       </div>
     </section>
