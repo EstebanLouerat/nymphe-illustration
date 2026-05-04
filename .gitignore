@@ -10,3 +10,4 @@ js/.env.js  # ← Ne pas committer les credentials
 node_modules/
 dist/
 build/
+scripts/

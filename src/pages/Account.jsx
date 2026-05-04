@@ -7,7 +7,8 @@ import { ContentfulService } from "../services/api";
 import "../styles/Account.css";
 
 function Account() {
-  const { user, favorites, toggleFavorite, showSuccess } = useStore();
+  const { user, authInitialized, favorites, toggleFavorite, showSuccess } =
+    useStore();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [favProducts, setFavProducts] = useState([]);
@@ -16,12 +17,13 @@ function Account() {
   const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
+    if (!authInitialized) return;
     if (!user) {
       navigate("/");
       return;
     }
     loadData();
-  }, [user]);
+  }, [user?.id, authInitialized]);
 
   // Resync les produits favoris quand le store change
   useEffect(() => {
@@ -34,30 +36,55 @@ function Account() {
   const loadData = async () => {
     setLoading(true);
 
-    // Récupérer les commandes par user_id
+    // Rattache les éventuelles commandes invité passées avec cet email
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        await fetch("/api/link-orders", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        });
+      }
+    } catch {
+      // Non bloquant
+    }
+
+    // Récupérer les commandes liées à ce compte
     const { data: byUserId } = await supabase
       .from("orders")
       .select("*")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
 
-    // Récupérer aussi les commandes faites avec l'email d'inscription
+    // Fallback : commandes invité non rattachées (si le linking a échoué)
     const { data: byEmail } = await supabase
       .from("orders")
       .select("*")
-      .eq("email", user.email)
+      .eq("customer_email", user.email)
+      .is("user_id", null)
       .order("created_at", { ascending: false });
 
-    // Fusionner et dédupliquer (par id) puis trier
     const allOrders = [...(byUserId ?? []), ...(byEmail ?? [])];
     const uniqueOrders = Array.from(
       new Map(allOrders.map((o) => [o.id, o])).values(),
     ).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    setOrders(uniqueOrders);
-
-    const all = await ContentfulService.fetchArticles();
-    setFavProducts(all.filter((p) => favorites.includes(p.id)));
+    // Enrichir les items avec les images Contentful
+    const articles = await ContentfulService.fetchArticles();
+    const imageByContentfulId = Object.fromEntries(
+      articles.map((a) => [a.id, a.image]),
+    );
+    const ordersWithImages = uniqueOrders.map((order) => ({
+      ...order,
+      items: (order.items ?? []).map((item) => ({
+        ...item,
+        image: item.contentful_id ? imageByContentfulId[item.contentful_id] ?? null : null,
+      })),
+    }));
+    console.log("Commandes chargées :", ordersWithImages);
+    setOrders(ordersWithImages);
     setLoading(false);
   };
 
@@ -189,11 +216,6 @@ function Account() {
                               </div>
                               <div className="order-item-info">
                                 <p className="order-item-name">{item.titre}</p>
-                                {item.selectedFormat && (
-                                  <p className="order-item-meta">
-                                    Format {item.selectedFormat}
-                                  </p>
-                                )}
                                 <p className="order-item-price">
                                   € {(item.prix * item.quantity).toFixed(2)}
                                 </p>

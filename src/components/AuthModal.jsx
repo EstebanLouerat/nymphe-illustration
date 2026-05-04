@@ -1,17 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { X, Eye, EyeOff } from "lucide-react";
 import { supabase } from "../services/supabase";
 import { useStore } from "../services/store";
 import "./AuthModal.css";
 
 function AuthModal({ onClose }) {
+  const navigate = useNavigate();
   const [tab, setTab] = useState("login"); // 'login' | 'signup'
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const { showSuccess, showError } = useStore();
+  const { showSuccess, showError, setUser, setAuthInitialized } = useStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,20 +21,29 @@ function AuthModal({ onClose }) {
     setMessage(null);
 
     if (tab === "login") {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
         setMessage({ type: "error", text: "Email ou mot de passe incorrect." });
       } else {
+        setUser(data.user);
+        setAuthInitialized(true);
         showSuccess("Bienvenue !");
         onClose();
+        navigate("/account");
       }
     } else {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         setMessage({ type: "error", text: error.message });
+      } else if (data.session) {
+        setUser(data.user);
+        setAuthInitialized(true);
+        showSuccess("Bienvenue !");
+        onClose();
+        navigate("/account");
       } else {
         setMessage({
           type: "success",

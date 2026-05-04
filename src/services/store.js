@@ -23,6 +23,8 @@ export const useStore = create(
       // ── Auth ──────────────────────────────────────────────
       user: null,
       setUser: (user) => set({ user }),
+      authInitialized: false,
+      setAuthInitialized: (v) => set({ authInitialized: v }),
 
       // ── Panier ───────────────────────────────────────────
       cart: getLocalCart(),
