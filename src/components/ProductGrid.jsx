@@ -5,6 +5,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./ProductGrid.css";
 
+// Sur mobile la barre de catégories défile : on ramène la pastille
+// choisie dans le champ de vision si elle était coupée.
+const centerPill = (el) => {
+  el?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+};
+
 const SORT_OPTIONS = [
   { value: "date", label: "Date d'ajout" },
   { value: "prix-asc", label: "Prix croissant" },
@@ -87,7 +93,10 @@ function ProductGrid({ products = null, showTitle = true }) {
             <div className="filter-pills">
               <button
                 className={`filter-pill ${activeCat === "all" ? "active" : ""}`}
-                onClick={() => setActiveCat("all")}
+                onClick={(e) => {
+                  setActiveCat("all");
+                  centerPill(e.currentTarget);
+                }}
               >
                 Tout
               </button>
@@ -95,7 +104,10 @@ function ProductGrid({ products = null, showTitle = true }) {
                 <button
                   key={cat}
                   className={`filter-pill ${activeCat === cat ? "active" : ""}`}
-                  onClick={() => setActiveCat(cat)}
+                  onClick={(e) => {
+                    setActiveCat(cat);
+                    centerPill(e.currentTarget);
+                  }}
                 >
                   {cat}
                 </button>

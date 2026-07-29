@@ -54,6 +54,23 @@ export const StockService = {
     const { data } = await axios.post("/api/stock", { items });
     return data;
   },
+
+  /**
+   * Libère la réservation d'une session Stripe abandonnée.
+   * Le serveur refuse si la session a été payée.
+   * @param {string} sessionId
+   * @returns {Promise<boolean>} true si le stock a été rendu
+   */
+  async releaseSession(sessionId) {
+    try {
+      const { data } = await axios.post("/api/release-stock", { sessionId });
+      return data?.released === true;
+    } catch (err) {
+      // Pas bloquant : le TTL de la réservation prendra le relais
+      console.error("Libération du stock impossible:", err?.message ?? err);
+      return false;
+    }
+  },
 };
 
 export default StockService;

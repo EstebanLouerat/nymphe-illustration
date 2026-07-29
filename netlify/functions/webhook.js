@@ -4,8 +4,6 @@ import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-console.log("STRIPE KEY:", process.env.STRIPE_SECRET_KEY?.slice(0, 8));
-
 // Service role key pour bypasser RLS côté serveur
 const supabase = createClient(
   process.env.SUPABASE_URL,

@@ -130,7 +130,7 @@ export const handler = async (event) => {
       shipping_options: [{ shipping_rate: SHIPPING_RATE_ID }],
       expires_at: Math.floor(Date.now() / 1000) + SESSION_TTL_MINUTES * 60,
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/checkout/cancel`,
+      cancel_url: `${origin}/checkout/cancel?session_id={CHECKOUT_SESSION_ID}`,
     };
 
     if (promoId) {

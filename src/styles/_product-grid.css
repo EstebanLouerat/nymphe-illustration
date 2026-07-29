@@ -200,4 +200,58 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+
+  /* ── Filtres mobile : 2 lignes maximum ──
+     Les pastilles passent à la ligne normalement, mais la zone est
+     plafonnée à deux lignes et défile verticalement au-delà : ajouter
+     des catégories n'agrandit plus la barre de filtres.
+     Sélecteurs préfixés par .filter-bar pour rester prioritaires sur
+     les règles de base, quel que soit l'ordre d'injection des CSS. */
+
+  .filter-bar {
+    --pill-h: 32px;
+    --pill-gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .filter-bar .filter-bar-controls {
+    gap: 12px;
+    padding-bottom: 14px;
+  }
+
+  .filter-bar .filter-pills {
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    gap: var(--pill-gap);
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* 2 lignes + 6px qui laissent dépasser le haut d'une éventuelle
+       3e ligne → repère visuel qu'il reste des catégories à faire défiler */
+    max-height: calc(var(--pill-h) * 2 + var(--pill-gap) + 6px);
+    scroll-snap-type: y proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .filter-bar .filter-pills::-webkit-scrollbar {
+    display: none; /* Safari / Chrome */
+  }
+
+  .filter-bar .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: var(--pill-h);
+    padding: 0 14px;
+    scroll-snap-align: start;
+  }
+
+  /* Ligne 2 : tri à gauche, compteur à droite */
+  .filter-bar .filter-sort {
+    flex: 0 0 auto;
+  }
+
+  .filter-bar .filter-count {
+    margin-left: auto;
+  }
 }

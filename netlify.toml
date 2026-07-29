@@ -54,6 +54,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/release-stock"
+  to = "/.netlify/functions/release-stock"
+  status = 200
+
+[[redirects]]
   from = "/api/orders"
   to = "/.netlify/functions/orders"
   status = 200

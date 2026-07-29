@@ -1,8 +1,24 @@
 // src/pages/CheckoutCancel.jsx
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { XCircle } from "lucide-react";
+import { StockService } from "../services/stock";
+import { useStore } from "../services/store";
 
 function CheckoutCancel() {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get("session_id");
+  const loadStock = useStore((s) => s.loadStock);
+  const done = useRef(false);
+
+  // Annulation → on rend le stock réservé tout de suite,
+  // sans attendre l'expiration de la session Stripe.
+  useEffect(() => {
+    if (!sessionId || done.current) return;
+    done.current = true;
+    StockService.releaseSession(sessionId).finally(() => loadStock());
+  }, [sessionId, loadStock]);
+
   return (
     <main
       style={{
