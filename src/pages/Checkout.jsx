@@ -16,7 +16,8 @@ import {
 import "../styles/Checkout.css";
 
 function Checkout() {
-  const { cart, showError, showInfo } = useStore();
+  const { cart, showError, showInfo, stock, loadStock, applyStockConflict } =
+    useStore();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeField, setActiveField] = useState(null);
@@ -42,6 +43,16 @@ function Checkout() {
       .then((r) => setShippingRate(r))
       .catch(() => setShippingRate({ amount: 3, display_name: "Livraison" }));
   }, []);
+
+  // Stock rafraîchi à l'arrivée sur la page (le panier peut dater)
+  useEffect(() => {
+    loadStock();
+  }, [loadStock]);
+
+  // Au moins un article dont la quantité dépasse le stock disponible
+  const stockBlocked = cart.some(
+    (item) => item.id in stock && item.quantity > stock[item.id],
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +91,10 @@ function Checkout() {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
+    if (stockBlocked) {
+      showError("Ajustez votre panier avant de payer : stock insuffisant.");
+      return;
+    }
     setLoading(true);
     try {
       const result = await PaymentService.createCheckoutSession(
@@ -90,6 +105,24 @@ function Checkout() {
       window.location.href = result.checkoutUrl;
     } catch (err) {
       console.error("Erreur paiement:", err);
+
+      // Stock parti entre-temps (autre acheteur plus rapide)
+      if (err?.response?.data?.code === "STOCK_UNAVAILABLE") {
+        const unavailable = err.response.data.unavailable ?? [];
+        applyStockConflict(unavailable);
+        loadStock();
+        const titles = unavailable
+          .map((u) => cart.find((i) => i.id === u.id)?.titre)
+          .filter(Boolean)
+          .join(", ");
+        showError(
+          titles
+            ? `Stock insuffisant pour : ${titles}. Ajustez votre panier.`
+            : "Un article de votre panier vient d'être vendu. Ajustez votre panier.",
+        );
+        return;
+      }
+
       // Erreur spécifique au code promo
       if (err?.response?.data?.error === "Code promo invalide") {
         setAppliedPromo(null);
@@ -352,10 +385,17 @@ function Checkout() {
             {promoError && <p className="promo-error">{promoError}</p>}
           </fieldset>
 
+          {stockBlocked && (
+            <p className="checkout-stock-warning">
+              Un article de votre panier n'est plus disponible en quantité
+              suffisante. Modifiez votre panier pour continuer.
+            </p>
+          )}
+
           <button
             type="submit"
             className={`checkout-submit ${loading ? "loading" : ""}`}
-            disabled={loading}
+            disabled={loading || stockBlocked}
           >
             {loading ? (
               <span className="checkout-submit-inner">

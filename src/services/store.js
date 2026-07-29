@@ -1,8 +1,16 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { supabase } from "./supabase";
+import { StockService } from "./stock";
 
 let toastId = 0;
+
+const OUT_OF_STOCK_MSG = "Cette illustration est en rupture de stock.";
+
+const remainingMsg = (available) =>
+  `Il ne reste que ${available} exemplaire${available > 1 ? "s" : ""} disponible${
+    available > 1 ? "s" : ""
+  }.`;
 
 const getLocalCart = () => {
   try {
@@ -61,18 +69,35 @@ export const useStore = create(
         await get()._syncCart(merged);
       },
 
-      addToCart: (item) =>
-        set((state) => {
-          const existing = state.cart.find((p) => p.id === item.id);
-          const newCart = existing
-            ? state.cart.map((p) =>
-                p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p,
+      // Ajout au panier — validé côté serveur (/api/stock).
+      // Retourne { success, available } ; available = null si non suivi.
+      addToCart: async (item, qty = 1) => {
+        const state = get();
+        const existing = state.cart.find((p) => p.id === item.id);
+        const desired = (existing?.quantity ?? 0) + Math.max(1, qty);
+
+        const check = await state._assertAvailable(item.id, desired);
+        if (!check.ok) {
+          state.showError(
+            check.available > 0 ? remainingMsg(check.available) : OUT_OF_STOCK_MSG,
+          );
+          return { success: false, available: check.available };
+        }
+
+        set((s) => {
+          const inCart = s.cart.find((p) => p.id === item.id);
+          const newCart = inCart
+            ? s.cart.map((p) =>
+                p.id === item.id ? { ...p, quantity: desired } : p,
               )
-            : [...state.cart, { ...item, quantity: 1 }];
+            : [...s.cart, { ...item, quantity: desired }];
           saveLocalCart(newCart);
           get()._syncCart(newCart);
           return { cart: newCart };
-        }),
+        });
+
+        return { success: true, available: check.available };
+      },
 
       removeFromCart: (itemId) =>
         set((state) => {
@@ -82,15 +107,35 @@ export const useStore = create(
           return { cart: newCart };
         }),
 
-      updateCartQuantity: (itemId, quantity) =>
+      updateCartQuantity: async (itemId, quantity) => {
+        const target = Math.max(1, quantity);
+        const current =
+          get().cart.find((p) => p.id === itemId)?.quantity ?? target;
+
+        // Seule une augmentation nécessite une vérification
+        if (target > current) {
+          const check = await get()._assertAvailable(itemId, target);
+          if (!check.ok) {
+            get().showError(
+              check.available > 0
+                ? remainingMsg(check.available)
+                : OUT_OF_STOCK_MSG,
+            );
+            return { success: false, available: check.available };
+          }
+        }
+
         set((state) => {
           const newCart = state.cart.map((p) =>
-            p.id === itemId ? { ...p, quantity: Math.max(1, quantity) } : p,
+            p.id === itemId ? { ...p, quantity: target } : p,
           );
           saveLocalCart(newCart);
           get()._syncCart(newCart);
           return { cart: newCart };
-        }),
+        });
+
+        return { success: true };
+      },
 
       clearCart: () => {
         saveLocalCart([]);
@@ -110,6 +155,79 @@ export const useStore = create(
       },
       get cartCount() {
         return get().cart.reduce((sum, item) => sum + item.quantity, 0);
+      },
+
+      // ── Stock ────────────────────────────────────────────
+      // { [contentful_id]: quantité disponible }
+      // Une illustration absente de la map n'est pas suivie = illimitée.
+      stock: {},
+      stockLoaded: false,
+
+      loadStock: async () => {
+        const map = await StockService.fetchStockMap();
+        set({ stock: map, stockLoaded: true });
+      },
+
+      // Quantité disponible, ou null si l'illustration n'est pas suivie
+      stockFor: (contentfulId) => {
+        const q = get().stock[contentfulId];
+        return q === undefined ? null : q;
+      },
+
+      isOutOfStock: (contentfulId) => {
+        const q = get().stock[contentfulId];
+        return q !== undefined && q <= 0;
+      },
+
+      // Quantité encore ajoutable au panier (null = illimité)
+      remainingFor: (contentfulId) => {
+        const q = get().stock[contentfulId];
+        if (q === undefined) return null;
+        const inCart =
+          get().cart.find((p) => p.id === contentfulId)?.quantity ?? 0;
+        return Math.max(0, q - inCart);
+      },
+
+      // Vérification serveur (source de vérité) + mise à jour de la map locale
+      _assertAvailable: async (contentfulId, desired) => {
+        const local = get().stock[contentfulId];
+        if (local !== undefined && local < desired) {
+          return { ok: false, available: local };
+        }
+
+        try {
+          const res = await StockService.checkAvailability([
+            { id: contentfulId, quantity: desired },
+          ]);
+          const line = res.items?.find((i) => i.id === contentfulId);
+
+          if (line?.tracked) {
+            set((s) => ({
+              stock: { ...s.stock, [contentfulId]: line.available },
+            }));
+          }
+
+          if (res.ok === false || line?.ok === false) {
+            return { ok: false, available: line?.available ?? 0 };
+          }
+          return { ok: true, available: line?.tracked ? line.available : null };
+        } catch (err) {
+          // API injoignable : on ne bloque pas la vente, la réservation
+          // atomique à la création de la session Stripe reste le garde-fou.
+          console.error("Vérification du stock impossible:", err?.message ?? err);
+          return { ok: true, available: local ?? null };
+        }
+      },
+
+      // Applique la réponse 409 du checkout (STOCK_UNAVAILABLE)
+      applyStockConflict: (unavailable = []) => {
+        set((s) => {
+          const stock = { ...s.stock };
+          for (const u of unavailable) {
+            if (u?.id) stock[u.id] = u.available ?? 0;
+          }
+          return { stock };
+        });
       },
 
       // ── Favoris ──────────────────────────────────────────

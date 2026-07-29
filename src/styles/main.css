@@ -31,6 +31,9 @@
 @import "./_commission.css";
 @import "./_commission-banner.css";
 
+/* ── Feature transverse : stock ── */
+@import "./_stock.css";
+
 /* ── Pages standalone (leurs propres fichiers CSS) ── */
 /* Checkout  → src/styles/Checkout.css  (inchangé) */
 /* Account   → src/styles/Account.css   (inchangé) */

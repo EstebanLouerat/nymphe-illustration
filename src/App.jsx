@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
+import { useStore } from "./services/store";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Footer from "./components/Footer";
@@ -19,6 +21,11 @@ import PreviewIllustration from "./pages/PreviewIllustration";
 
 function App() {
   useAuth();
+
+  const loadStock = useStore((s) => s.loadStock);
+  useEffect(() => {
+    loadStock();
+  }, [loadStock]);
 
   return (
     <BrowserRouter>

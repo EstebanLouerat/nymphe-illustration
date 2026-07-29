@@ -1,0 +1,132 @@
+/* =============================================
+   Stock / rupture de stock
+   Badges, rubans et états désactivés
+   ============================================= */
+
+/* ── Badge inline (fiche produit) ── */
+
+.product-detail-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stock-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stock-badge--out {
+  background: var(--linen-dark);
+  color: var(--brown);
+  border: 1px solid var(--brown-light);
+}
+
+.stock-badge--low {
+  background: var(--sage-light);
+  color: var(--sage-dark);
+}
+
+/* ── Ruban sur l'image (grille + galerie produit) ── */
+
+.product-gallery-main {
+  position: relative;
+}
+
+.stock-ribbon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 4px 12px;
+  border-radius: var(--radius);
+  background: rgba(41, 45, 37, 0.82);
+  color: var(--white);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(2px);
+}
+
+.product-card--out .product-img {
+  opacity: 0.55;
+  filter: grayscale(35%);
+}
+
+.product-card--out:hover .product-img {
+  transform: none;
+}
+
+.product-stock-note {
+  margin-top: 3px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brown-light);
+}
+
+/* ── Panier ── */
+
+.cart-item-stock {
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: var(--sage-dark);
+}
+
+.cart-item-stock--out {
+  color: #a4553c;
+}
+
+.cart-stock-warning {
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #a4553c;
+}
+
+/* ── Checkout ── */
+
+.checkout-stock-warning {
+  margin: 4px 0 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--linen-dark);
+  border-left: 2px solid #a4553c;
+  border-radius: var(--radius);
+  background: var(--white);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: #a4553c;
+}
+
+/* ── États désactivés ── */
+
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"],
+.checkout-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary:disabled:hover,
+.btn-primary[aria-disabled="true"]:hover,
+.checkout-submit:disabled:hover {
+  background: var(--green-dark);
+  transform: none;
+}
+
+.qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qty-btn:disabled:hover {
+  color: var(--text);
+}

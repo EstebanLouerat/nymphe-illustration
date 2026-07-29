@@ -16,12 +16,27 @@ function Product() {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [heartAnim, setHeartAnim] = useState(false); // animation cœur
   const [isZoomOpen, setIsZoomOpen] = useState(false); // zoom modal
+  const [adding, setAdding] = useState(false);
 
-  const { addToCart, openCart, toggleFavorite, isFavorite, favorites } =
-    useStore();
+  const {
+    addToCart,
+    openCart,
+    toggleFavorite,
+    isFavorite,
+    favorites,
+    loadStock,
+    stockFor,
+    remainingFor,
+  } = useStore();
 
   // isFav est recalculé à chaque changement du store favorites
   const isFav = product ? isFavorite(product.id) : false;
+
+  // null = illustration non suivie en stock (illimitée)
+  const stockLevel = product ? stockFor(product.id) : null;
+  const remaining = product ? remainingFor(product.id) : null;
+  const outOfStock = stockLevel !== null && stockLevel <= 0;
+  const maxedInCart = !outOfStock && remaining !== null && remaining <= 0;
 
   useEffect(() => {
     return () => {
@@ -38,6 +53,7 @@ function Product() {
         if (item) {
           setProduct(item);
           setError(false);
+          loadStock(); // stock à jour à l'ouverture de la fiche
           // Scroll en haut de la page
           window.scrollTo(0, 0);
           const allProducts = await ContentfulService.fetchArticles();
@@ -55,12 +71,16 @@ function Product() {
       }
     };
     load();
-  }, [id]);
+  }, [id, loadStock]);
 
-  const handleAddToCart = () => {
-    if (product) {
-      addToCart({ ...product, selectedFormat });
-      openCart();
+  const handleAddToCart = async () => {
+    if (!product || outOfStock || maxedInCart || adding) return;
+    setAdding(true);
+    try {
+      const result = await addToCart({ ...product, selectedFormat });
+      if (result?.success) openCart();
+    } finally {
+      setAdding(false);
     }
   };
 
@@ -171,6 +191,9 @@ function Product() {
                 className="product-img"
               />
             )}
+            {outOfStock && (
+              <span className="stock-ribbon">Rupture de stock</span>
+            )}
           </div>
         </div>
 
@@ -179,7 +202,29 @@ function Product() {
             <p className="product-detail-category">{product.category}</p>
           )}
           <h1 className="product-detail-title">{product.titre}</h1>
-          <p className="product-detail-price">€ {product.prix}</p>
+          <div
+            className="product-detail-price-row"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <p className="product-detail-price">€ {product.prix}</p>
+            {outOfStock ? (
+              <span className="stock-badge stock-badge--out">
+                Rupture de stock
+              </span>
+            ) : (
+              stockLevel !== null &&
+              stockLevel <= 3 && (
+                <span className="stock-badge stock-badge--low">
+                  Plus que {stockLevel} exemplaire
+                  {stockLevel > 1 ? "s" : ""}
+                </span>
+              )
+            )}
+          </div>
           <hr className="product-detail-divider" />
 
           {product.description && (
@@ -206,8 +251,16 @@ function Product() {
               className="btn-primary"
               style={{ flex: 1 }}
               onClick={handleAddToCart}
+              disabled={outOfStock || maxedInCart || adding}
+              aria-disabled={outOfStock || maxedInCart || adding}
             >
-              Ajouter au panier
+              {outOfStock
+                ? "Rupture de stock"
+                : maxedInCart
+                  ? "Stock déjà dans le panier"
+                  : adding
+                    ? "Ajout…"
+                    : "Ajouter au panier"}
             </button>
 
             <button

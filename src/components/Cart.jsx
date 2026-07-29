@@ -5,13 +5,26 @@ import "./Cart.css";
 import ScrollLink from "./ScrollLink";
 
 function Cart() {
-  const { cart, cartOpen, closeCart, removeFromCart, updateCartQuantity } =
-    useStore();
+  const {
+    cart,
+    cartOpen,
+    closeCart,
+    removeFromCart,
+    updateCartQuantity,
+    stock,
+  } = useStore();
 
   const cartTotal = cart.reduce(
     (sum, item) => sum + (item.prix || 0) * item.quantity,
     0,
   );
+
+  // Un id absent de `stock` = illustration non suivie (stock illimité)
+  const availableFor = (id) => (id in stock ? stock[id] : null);
+  const blocked = cart.some((item) => {
+    const available = availableFor(item.id);
+    return available !== null && item.quantity > available;
+  });
 
   return (
     <>
@@ -78,7 +91,12 @@ function Cart() {
               </ScrollLink>
             </div>
           ) : (
-            cart.map((item) => (
+            cart.map((item) => {
+              const available = availableFor(item.id);
+              const outOfStock = available !== null && available <= 0;
+              const atMax = available !== null && item.quantity >= available;
+
+              return (
               <div key={item.id} className="cart-item">
                 {item.image && (
                   <img
@@ -90,6 +108,19 @@ function Cart() {
                 <div className="cart-item-info">
                   <h4>{item.titre}</h4>
                   <p className="cart-item-price">€ {item.prix}</p>
+                  {outOfStock ? (
+                    <p className="cart-item-stock cart-item-stock--out">
+                      Rupture de stock
+                    </p>
+                  ) : (
+                    atMax && (
+                      <p className="cart-item-stock">
+                        Dernier{available > 1 ? "s" : ""} exemplaire
+                        {available > 1 ? "s" : ""} disponible
+                        {available > 1 ? "s" : ""}
+                      </p>
+                    )
+                  )}
                 </div>
                 <div className="cart-item-qty">
                   <button
@@ -97,6 +128,7 @@ function Cart() {
                       updateCartQuantity(item.id, item.quantity - 1)
                     }
                     className="qty-btn"
+                    disabled={item.quantity <= 1}
                   >
                     −
                   </button>
@@ -106,6 +138,8 @@ function Cart() {
                       updateCartQuantity(item.id, item.quantity + 1)
                     }
                     className="qty-btn"
+                    disabled={atMax}
+                    title={atMax ? "Stock maximum atteint" : undefined}
                   >
                     +
                   </button>
@@ -118,7 +152,8 @@ function Cart() {
                   <Trash2 size={16} />
                 </button>
               </div>
-            ))
+              );
+            })
           )}
         </div>
 
@@ -129,17 +164,29 @@ function Cart() {
               <span>Total:</span>
               <span>€ {cartTotal.toFixed(2)}</span>
             </div>
-            <Link
-              to="/checkout"
-              className="btn-primary"
-              style={{ textDecoration: "none", textAlign: "center" }}
-              onClick={() => {
-                window.scrollTo(0, 0);
-                closeCart();
-              }}
-            >
-              Procéder au paiement
-            </Link>
+            {blocked && (
+              <p className="cart-stock-warning">
+                Un article de votre panier n'est plus disponible en quantité
+                suffisante. Ajustez la quantité ou retirez-le pour continuer.
+              </p>
+            )}
+            {blocked ? (
+              <button className="btn-primary" disabled style={{ width: "100%" }}>
+                Procéder au paiement
+              </button>
+            ) : (
+              <Link
+                to="/checkout"
+                className="btn-primary"
+                style={{ textDecoration: "none", textAlign: "center" }}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  closeCart();
+                }}
+              >
+                Procéder au paiement
+              </Link>
+            )}
           </div>
         )}
       </aside>

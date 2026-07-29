@@ -18,6 +18,8 @@ function ProductGrid({ products = null, showTitle = true }) {
   const [popularity, setPopularity] = useState({});
   const [activeCat, setActiveCat] = useState("all");
   const [activeSort, setActiveSort] = useState("date");
+  // { [contentful_id]: quantité } — un id absent = illustration non suivie
+  const stock = useStore((s) => s.stock);
 
   useEffect(() => {
     if (products) {
@@ -156,11 +158,15 @@ function ProductGrid({ products = null, showTitle = true }) {
       )}
 
       <div className="product-grid">
-        {filtered.map((item, i) => (
+        {filtered.map((item, i) => {
+          const outOfStock =
+            stock[item.id] !== undefined && stock[item.id] <= 0;
+
+          return (
           <Link
             key={item.id}
             to={`/product/${item.id}`}
-            className="product-card"
+            className={`product-card ${outOfStock ? "product-card--out" : ""}`}
             style={{ animationDelay: `${i * 0.05}s` }}
           >
             <div className="product-img-wrap">
@@ -172,6 +178,9 @@ function ProductGrid({ products = null, showTitle = true }) {
                 alt={item.titre}
                 className="product-img"
               />
+              {outOfStock && (
+                <span className="stock-ribbon">Rupture de stock</span>
+              )}
               <div className="product-overlay">
                 <span>Voir</span>
               </div>
@@ -182,9 +191,13 @@ function ProductGrid({ products = null, showTitle = true }) {
               )}
               <h3 className="product-name">{item.titre}</h3>
               {item.prix && <p className="product-price">€ {item.prix}</p>}
+              {outOfStock && (
+                <p className="product-stock-note">Rupture de stock</p>
+              )}
             </div>
           </Link>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

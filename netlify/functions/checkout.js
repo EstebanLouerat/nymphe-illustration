@@ -2,9 +2,22 @@
 // POST /api/checkout → appelé depuis PaymentService.createCheckoutSession()
 
 import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const SHIPPING_RATE_ID = "shr_1TNTsDLMUOoqSMpemmbp6C4V";
+
+// Service role : la réservation de stock doit bypasser RLS
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
+
+// La session Stripe expire au bout de 31 min (minimum autorisé : 30),
+// la réservation de stock quelques minutes après → aucune fenêtre où
+// le stock serait libre alors que la session est encore payable.
+const SESSION_TTL_MINUTES = 31;
+const RESERVATION_TTL_MINUTES = 40;
 
 const sanitizeImageUrl = (url) => {
   if (!url) return null;
@@ -14,6 +27,20 @@ const sanitizeImageUrl = (url) => {
     return null;
   }
 };
+
+const stockConflict = (unavailable) => ({
+  statusCode: 409,
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    error: "Stock insuffisant",
+    code: "STOCK_UNAVAILABLE",
+    unavailable: (unavailable ?? []).map((u) => ({
+      id: u.contentful_id,
+      requested: u.requested,
+      available: u.available,
+    })),
+  }),
+});
 
 export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -39,7 +66,36 @@ export const handler = async (event) => {
     process.env.URL ||
     "https://nympheillustration.com"; /* fallback en cas de dev local sans proxy */
 
+  // Articles au format attendu par les RPC de stock
+  const stockItems = items
+    .map((item) => ({
+      contentful_id: item?.id ?? null,
+      quantity: Math.max(1, Number(item?.quantity) || 1),
+    }))
+    .filter((i) => typeof i.contentful_id === "string" && i.contentful_id.length > 0);
+
   try {
+    // ── Pré-vérification : évite de créer une session vouée à l'échec
+    if (stockItems.length > 0) {
+      const { data: availability, error: checkError } = await supabase.rpc(
+        "check_stock",
+        { p_items: stockItems },
+      );
+      if (checkError) {
+        console.error("check_stock error:", checkError.message);
+      } else if (availability?.ok === false) {
+        return stockConflict(
+          (availability.items ?? [])
+            .filter((i) => i.ok === false)
+            .map((i) => ({
+              contentful_id: i.contentful_id,
+              requested: i.requested,
+              available: i.available,
+            })),
+        );
+      }
+    }
+
     const lineItems = items.map((item) => ({
       price_data: {
         currency: "eur",
@@ -72,6 +128,7 @@ export const handler = async (event) => {
         promo_id: promoId || "",
       },
       shipping_options: [{ shipping_rate: SHIPPING_RATE_ID }],
+      expires_at: Math.floor(Date.now() / 1000) + SESSION_TTL_MINUTES * 60,
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/cancel`,
     };
@@ -81,6 +138,36 @@ export const handler = async (event) => {
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
+
+    // ── Réservation atomique du stock, liée à la session Stripe.
+    // Deux acheteurs sur le dernier exemplaire : les lignes sont
+    // verrouillées côté Postgres, le second reçoit un 409.
+    if (stockItems.length > 0) {
+      const { data: reservation, error: reserveError } = await supabase.rpc(
+        "reserve_stock",
+        {
+          p_session_id: session.id,
+          p_items: stockItems,
+          p_ttl_minutes: RESERVATION_TTL_MINUTES,
+        },
+      );
+
+      if (reserveError || reservation?.ok === false) {
+        // Session inutilisable → on l'expire pour éviter un paiement fantôme
+        await stripe.checkout.sessions
+          .expire(session.id)
+          .catch((e) => console.error("session expire failed:", e.message));
+
+        if (reserveError) {
+          console.error("reserve_stock error:", reserveError.message);
+          return {
+            statusCode: 500,
+            body: JSON.stringify({ error: "Impossible de réserver le stock" }),
+          };
+        }
+        return stockConflict(reservation.unavailable);
+      }
+    }
 
     return {
       statusCode: 200,
