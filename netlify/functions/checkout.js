@@ -19,6 +19,63 @@ const supabase = createClient(
 const SESSION_TTL_MINUTES = 31;
 const RESERVATION_TTL_MINUTES = 40;
 
+// Prix, titre et image font foi depuis Contentful, jamais depuis le client
+// (token Delivery en lecture seule, le même que celui du front)
+const CONTENTFUL_SPACE_ID =
+  process.env.CONTENTFUL_SPACE_ID ?? process.env.VITE_CONTENTFUL_SPACE_ID;
+const CONTENTFUL_ACCESS_TOKEN =
+  process.env.CONTENTFUL_ACCESS_TOKEN ?? process.env.VITE_CONTENTFUL_ACCESS_TOKEN;
+
+const MAX_LINE_ITEMS = 50;
+const MAX_QUANTITY = 99;
+const ENTRY_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
+const FORMAT_RE = /^[\p{L}\p{N} ._-]{1,20}$/u;
+
+const badRequest = (error, extra = {}) => ({
+  statusCode: 400,
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ error, ...extra }),
+});
+
+// Map contentful_id → { titre, prix, image } pour les illustrations demandées
+const fetchCatalog = async (ids) => {
+  if (!CONTENTFUL_SPACE_ID || !CONTENTFUL_ACCESS_TOKEN) {
+    throw new Error("Contentful credentials missing");
+  }
+
+  const url = new URL(
+    `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries`,
+  );
+  url.searchParams.set("content_type", "nympheIllustration");
+  url.searchParams.set("sys.id[in]", ids.join(","));
+  url.searchParams.set("limit", "100");
+
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${CONTENTFUL_ACCESS_TOKEN}` },
+  });
+  if (!res.ok) throw new Error(`Contentful HTTP ${res.status}`);
+  const data = await res.json();
+
+  const assets = new Map(
+    (data.includes?.Asset ?? []).map((a) => [a.sys.id, a.fields?.file?.url]),
+  );
+
+  return new Map(
+    (data.items ?? []).map((entry) => {
+      const f = entry.fields ?? {};
+      const assetUrl = assets.get(f.image?.sys?.id);
+      return [
+        entry.sys.id,
+        {
+          titre: f.titre || "Sans titre",
+          prix: Number(f.prix),
+          image: assetUrl ? `https:${assetUrl}?w=600&fm=webp&q=80` : null,
+        },
+      ];
+    }),
+  );
+};
+
 const sanitizeImageUrl = (url) => {
   if (!url) return null;
   try {
@@ -54,11 +111,33 @@ export const handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON" }) };
   }
 
-  if (!items || items.length === 0) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "No items provided" }),
-    };
+  if (!Array.isArray(items) || items.length === 0) {
+    return badRequest("No items provided");
+  }
+  if (items.length > MAX_LINE_ITEMS) {
+    return badRequest("Trop d'articles dans le panier");
+  }
+
+  // Du panier client on ne garde que l'identifiant, la quantité et le format
+  const cartItems = [];
+  for (const item of items) {
+    const id = item?.id;
+    const quantity = Number(item?.quantity ?? 1);
+    if (
+      typeof id !== "string" ||
+      !ENTRY_ID_RE.test(id) ||
+      !Number.isInteger(quantity) ||
+      quantity < 1 ||
+      quantity > MAX_QUANTITY
+    ) {
+      return badRequest("Article invalide", { code: "ITEM_INVALID" });
+    }
+    const format =
+      typeof item.selectedFormat === "string" &&
+      FORMAT_RE.test(item.selectedFormat)
+        ? item.selectedFormat
+        : null;
+    cartItems.push({ id, quantity, format });
   }
 
   const origin =
@@ -67,12 +146,31 @@ export const handler = async (event) => {
     "https://nympheillustration.com"; /* fallback en cas de dev local sans proxy */
 
   // Articles au format attendu par les RPC de stock
-  const stockItems = items
-    .map((item) => ({
-      contentful_id: item?.id ?? null,
-      quantity: Math.max(1, Number(item?.quantity) || 1),
-    }))
-    .filter((i) => typeof i.contentful_id === "string" && i.contentful_id.length > 0);
+  const stockItems = cartItems.map((item) => ({
+    contentful_id: item.id,
+    quantity: item.quantity,
+  }));
+
+  let catalog;
+  try {
+    catalog = await fetchCatalog([...new Set(cartItems.map((i) => i.id))]);
+  } catch (err) {
+    console.error("Contentful error:", err.message);
+    return {
+      statusCode: 502,
+      body: JSON.stringify({ error: "Catalogue indisponible" }),
+    };
+  }
+
+  const unknownIds = cartItems
+    .filter((item) => !(catalog.get(item.id)?.prix > 0))
+    .map((item) => item.id);
+  if (unknownIds.length > 0) {
+    return badRequest("Article introuvable", {
+      code: "ITEM_UNAVAILABLE",
+      ids: unknownIds,
+    });
+  }
 
   try {
     // ── Pré-vérification : évite de créer une session vouée à l'échec
@@ -96,26 +194,26 @@ export const handler = async (event) => {
       }
     }
 
-    const lineItems = items.map((item) => ({
-      price_data: {
-        currency: "eur",
-        product_data: {
-          name: item.titre,
-          metadata: { contentful_id: item.id },
-          description: item.selectedFormat
-            ? `Format : ${item.selectedFormat}`
-            : undefined,
-          images: sanitizeImageUrl(item.image)
-            ? [sanitizeImageUrl(item.image)]
-            : [],
+    const lineItems = cartItems.map((item) => {
+      const product = catalog.get(item.id);
+      const image = sanitizeImageUrl(product.image);
+      return {
+        price_data: {
+          currency: "eur",
+          product_data: {
+            name: product.titre,
+            metadata: { contentful_id: item.id },
+            description: item.format ? `Format : ${item.format}` : undefined,
+            images: image ? [image] : [],
+          },
+          unit_amount: Math.round(product.prix * 100),
         },
-        unit_amount: Math.round((item.prix || 0) * 100),
-      },
-      quantity: item.quantity || 1,
-    }));
+        quantity: item.quantity,
+      };
+    });
 
     const sessionParams = {
-      payment_method_types: ["card"],
+      allowed_payment_method_types: ["card"],
       mode: "payment",
       line_items: lineItems,
       customer_email: customer?.email || undefined,

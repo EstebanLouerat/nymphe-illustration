@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Filter, Instagram } from "lucide-react";
+import { Filter } from "lucide-react";
+import Instagram from "./InstagramIcon";
 import { useState, useEffect } from "react";
 import "./Footer.css";
 import Logo from "./Logo";

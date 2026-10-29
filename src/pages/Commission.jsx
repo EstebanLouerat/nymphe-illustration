@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FormService } from "../services/api";
 import { useStore } from "../services/store";
-import { Mail, Instagram, Clock } from "lucide-react";
+import { Mail, Clock } from "lucide-react";
+import Instagram from "../components/InstagramIcon";
 import "../styles/Commission.css";
 
 function triggerAnimation(elements, className, duration = 500) {

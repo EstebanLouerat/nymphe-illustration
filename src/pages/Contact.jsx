@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Mail, Instagram, Clock } from "lucide-react";
+import { Mail, Clock } from "lucide-react";
+import Instagram from "../components/InstagramIcon";
 import { FormService } from "../services/api";
 import { useStore } from "../services/store";
 

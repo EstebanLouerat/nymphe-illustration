@@ -123,6 +123,20 @@ function Checkout() {
         return;
       }
 
+      // Article retiré du catalogue Contentful mais resté dans le panier
+      if (err?.response?.data?.code === "ITEM_UNAVAILABLE") {
+        const titles = (err.response.data.ids ?? [])
+          .map((id) => cart.find((i) => i.id === id)?.titre)
+          .filter(Boolean)
+          .join(", ");
+        showError(
+          titles
+            ? `Article plus disponible : ${titles}. Retirez-le du panier.`
+            : "Un article de votre panier n'est plus disponible.",
+        );
+        return;
+      }
+
       // Erreur spécifique au code promo
       if (err?.response?.data?.error === "Code promo invalide") {
         setAppliedPromo(null);
