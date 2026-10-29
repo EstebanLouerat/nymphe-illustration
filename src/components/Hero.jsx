@@ -23,15 +23,8 @@ function Hero({ content }) {
       <div className="hero-text">
         <h2 className="hero-headline">Nouveauté</h2>
         <p className="hero-tagline">
-          {/* {lilouMatcha && (
-            <img
-              src={lilouMatcha}
-              alt={lilouMatcha.label}
-              className="lilou-img"
-            />
-          )} */}
-          {/* Si tu veux découvrir mes illustrations, c'est ici que ça se passe ! */}
-          Découvrez mes colliers féériques 100% faits main ♡
+          Découvrez des prints, des stickers, des porte-clés et bien d'autres
+          créations faites avec amour ♡
         </p>
         {/* <p
           className="hero-quote"

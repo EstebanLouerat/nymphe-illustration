@@ -10,6 +10,7 @@
 
 /* ── Fondations ── */
 @import "./_tokens.css";
+@import "./_fonts.css";
 @import "./_reset.css";
 @import "./_animations.css";
 

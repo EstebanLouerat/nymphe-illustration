@@ -21,6 +21,7 @@
   /* ── Typographie ── */
   --font-display: "Sour Gummy", "Trebuchet MS", sans-serif;
   --font-body:    "Jost", sans-serif;
+  --font-script:  "Curly Story", cursive;
 
   /* ── Dimensions ── */
   --nav-h:  68px;

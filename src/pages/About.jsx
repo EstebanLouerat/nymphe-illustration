@@ -23,7 +23,8 @@ function About() {
     <main>
       {/* PAGE HERO */}
       <div className="page-hero">
-        <h1>À propos</h1>
+        {/* Minuscule : Curly Story a le glyphe « à » mais pas « À » */}
+        <h1>à propos</h1>
         <p>La créatrice derrière les illustrations</p>
       </div>
       <hr className="divider" />
@@ -71,9 +72,9 @@ function About() {
               flexWrap: "wrap",
             }}
           >
-            <ScrollLink to="/commission" className="btn-primary">
+            {/* <ScrollLink to="/commission" className="btn-primary">
               Commander une illustration
-            </ScrollLink>
+            </ScrollLink> */}
             <ScrollLink to="/contact" className="btn-outline">
               Me contacter
             </ScrollLink>

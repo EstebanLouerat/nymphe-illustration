@@ -1,0 +1,32 @@
+/* =============================================
+   Polices locales
+   (Sour Gummy et Jost restent chargées via Google Fonts dans index.html)
+   ============================================= */
+
+/* ── Curly Story — manuscrite à spirales ── */
+@font-face {
+  font-family: "Curly Story";
+  src:
+    url("../assets/fonts/CurlyStory-Regular.woff2") format("woff2"),
+    url("../assets/fonts/CurlyStory-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Classe utilitaire : à poser sur n'importe quel élément */
+.curly-story {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none; /* pas de faux gras / faux italique (h1, strong…) */
+  letter-spacing: 0; /* tout espacement casse les liaisons entre lettres */
+  text-transform: none;
+  font-kerning: none;
+  line-height: 1.7; /* les boucles débordent haut et bas */
+}
+
+/* Minuscules alternatives à spirales (Stylistic Set 1) */
+.curly-story--spirales {
+  font-feature-settings: "ss01" 1;
+}

@@ -3,7 +3,7 @@
    ============================================= */
 
 .footer {
-  background: var(--brown);
+  background: var(--green-dark);
   color: rgba(255, 255, 255, 0.75);
   padding: 40px 24px 20px;
 }
