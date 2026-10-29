@@ -93,8 +93,8 @@ function CheckoutSuccess() {
           <Link to="/" className="btn-primary">
             Retour à la boutique
           </Link>
-          <Link to="/commission" className="btn-outline">
-            Commander une illustration
+          <Link to="/portfolio" className="btn-outline">
+            Voir le portfolio
           </Link>
         </div>
       </div>

@@ -6,7 +6,6 @@ import "./styles/main.css";
 import "./styles/richText.css";
 import "./styles/Checkout.css";
 import "./styles/Account.css";
-import "./styles/Commission.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

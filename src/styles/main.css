@@ -29,8 +29,7 @@
 @import "./_product-page.css";
 @import "./_about.css";
 @import "./_contact.css";
-@import "./_commission.css";
-@import "./_commission-banner.css";
+@import "./_portfolio.css";
 
 /* ── Feature transverse : stock ── */
 @import "./_stock.css";

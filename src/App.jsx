@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { useStore } from "./services/store";
 import Navbar from "./components/Navbar";
@@ -11,7 +11,7 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Commission from "./pages/Commission";
+import Portfolio from "./pages/Portfolio";
 import Checkout from "./pages/Checkout";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
@@ -40,7 +40,9 @@ function App() {
             <Route path="/product/:id" element={<Product />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/commission" element={<Commission />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            {/* Ancienne page Commission : les liens existants mènent au portfolio */}
+            <Route path="/commission" element={<Navigate to="/portfolio" replace />} />
             <Route path="/account" element={<Account />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/checkout/success" element={<CheckoutSuccess />} />

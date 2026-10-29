@@ -1,0 +1,58 @@
+/* =============================================
+   Portfolio — pages du PDF affichées en images
+   ============================================= */
+
+.portfolio {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.portfolio-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.portfolio-pages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.portfolio-pages a {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--linen-dark);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: box-shadow var(--transition);
+}
+
+.portfolio-pages a:hover {
+  box-shadow: var(--shadow);
+}
+
+.portfolio-pages img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .portfolio {
+    padding: 32px 16px 56px;
+  }
+
+  .portfolio-actions {
+    margin-bottom: 28px;
+  }
+
+  .portfolio-pages {
+    gap: 20px;
+  }
+}

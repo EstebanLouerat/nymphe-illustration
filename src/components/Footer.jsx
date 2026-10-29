@@ -28,7 +28,7 @@ function Footer() {
         <nav className="footer-links">
           <Link to="/about">À propos</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/commission">Commissions</Link>
+          <Link to="/portfolio">Portfolio</Link>
         </nav>
         <div className="footer-socials">
           <a

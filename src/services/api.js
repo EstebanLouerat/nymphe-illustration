@@ -151,18 +151,6 @@ export const FormService = {
       return { ok: false, message: "Erreur lors de l'envoi" };
     }
   },
-
-  async submitCommission(data) {
-    try {
-      await axios.post(
-        `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_COMMISSION_ID}`,
-        data,
-      );
-      return { ok: true, message: "Demande envoyée !" };
-    } catch {
-      return { ok: false, message: "Erreur lors de l'envoi" };
-    }
-  },
 };
 
 export default { ContentfulService, PaymentService, FormService };

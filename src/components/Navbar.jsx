@@ -38,10 +38,10 @@ function Navbar() {
             Bio
           </ScrollLink>
           <ScrollLink
-            to="/commission"
-            className={`nav-link ${isActive("/commission") ? "active" : ""}`}
+            to="/portfolio"
+            className={`nav-link ${isActive("/portfolio") ? "active" : ""}`}
           >
-            Commission
+            Portfolio
           </ScrollLink>
           <ScrollLink
             to="/contact"
@@ -123,14 +123,14 @@ function Navbar() {
           Bio
         </Link>
         <Link
-          to="/commission"
+          to="/portfolio"
           className="mobile-link"
           onClick={() => {
             setMobileMenuOpen(false);
             window.scrollTo(0, 0);
           }}
         >
-          Commission
+          Portfolio
         </Link>
         <Link
           to="/contact"
